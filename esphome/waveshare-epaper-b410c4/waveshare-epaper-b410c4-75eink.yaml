@@ -457,12 +457,11 @@ display:
       } else {
 
         // Dividers
-        it.line(0, 80, 480, 80, COLOR_ON); // Top Horizontal
+        it.line(0, 110, 480, 110, COLOR_ON); // Top Horizontal
 
         // Top Panel - Header
-        it.printf(15, 40, id(text_title), COLOR_ON, TextAlign::CENTER_LEFT, "Good %s", id(timeofday_greeting).state.c_str());
-        it.strftime(465, 25, id(text_large), COLOR_ON, TextAlign::CENTER_RIGHT, "%A", id(homeassistant_time).now());
-        it.strftime(465, 55, id(text_large), COLOR_ON, TextAlign::CENTER_RIGHT, "%e %b %Y", id(homeassistant_time).now());
+        it.printf(panel_x_mid, 40, id(text_title), COLOR_ON, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
+        it.strftime(panel_x_mid, 85, id(text_large), COLOR_ON, TextAlign::CENTER, "It's %A %e %b %Y", id(homeassistant_time).now());
 
         // Refresh Timestamp
         it.strftime(panel_x - 10, panel_y - 10, id(text_extra_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
