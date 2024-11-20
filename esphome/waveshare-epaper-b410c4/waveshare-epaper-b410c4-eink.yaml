@@ -770,17 +770,6 @@ font:
         weight: 500
       glyphs: [ "'", "£" ]
 
-
-
-  - file: "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf"
-    id: mdi_glyphs_extra_small
-    size: 15
-    glyphs:
-      - "\U000F19B2" # arrow-up-thin
-      - "\U000F0737" # arrow-up-bold
-      - "\U000F19B3" # arrow-down-thin
-      - "\U000F072E" # arrow-down-bold
-
   - file: "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf"
     id: mdi_glyphs_med
     size: 40
@@ -801,27 +790,9 @@ font:
       - "\U000F059E" # weather-windy-variant / windy-variant
       - "\U000F1C78" # weather-hurricane-outline / exceptional
       - "\U000F0F31" # weather-night-partly-cloudy / partlycloudy-night
-      - "\U000F02D6" # Blank
       - "\U000F05CE" # clock-alert-outline
-      - "\U000F0F61" # moon-first-quarter
-      - "\U000F0F62" # moon-full
-      - "\U000F0F63" # moon-last-quarter
-      - "\U000F0F64" # moon-new
-      - "\U000F0F65" # moon-waning-crescent
-      - "\U000F0F66" # moon-waning-gibbous
-      - "\U000F0F67" # moon-waxing-crescent
-      - "\U000F0F68" # moon-waxing-gibbous
-      - "\U000F0D3E" # transmission-tower
-      - "\U000F0535" # trending-up
-      - "\U000F0533" # trending-down
-      - "\U000F0534" # trending-neutral
-      - "\U000F0143" # chevron-up
-      - "\U000F013F" # chevron-double-up
-      - "\U000F0DBC" # chevron-triple-up
-      - "\U000F0140" # chevron-down
-      - "\U000F013C" # chevron-double-down
-      - "\U000F0DB9" # chevron-triple-down
       - "\U000F018C" # compass-outline
+      - "\U000F02D6" # Blank
 
   - file: "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf"
     id: mdi_glyphs_large
@@ -869,43 +840,8 @@ display:
         {"exceptional", "\U000F1C78"},
         {"partlycloudy-night", "\U000F0F31"},
         {"clock-alert-outline", "\U000F05CE"},
-        {"first_quarter", "\U000F0F61"}, // moon-first-quarter
-        {"full_moon", "\U000F0F62"}, // moon-full
-        {"last_quarter", "\U000F0F63"}, // moon-last-quarter
-        {"new_moon", "\U000F0F64"}, // moon-new
-        {"waning_crescent", "\U000F0F65"}, // moon-waning-crescent
-        {"waning_gibbous", "\U000F0F66"}, // moon-waning-gibbous
-        {"waxing_crescent", "\U000F0F67"}, // moon-waxing-crescent
-        {"waxing_gibbous", "\U000F0F68"}, // moon-waxing-gibbous
-        {"transmission_tower", "\U000F0D3E"}, // transmission-tower
-        {"rising", "\U000F0535"}, // trending-up
-        {"falling", "\U000F0533"}, // trending-down
-        {"same", "\U000F0534"}, // trending-neutral
-        {"chevron_up", "\U000F0143"}, // chevron-up
-        {"chevron_double_up", "\U000F013F"}, // chevron-double-up
-        {"chevron_triple_up", "\U000F0DBC"}, // chevron-triple-up
-        {"chevron_down", "\U000F0140"}, // chevron-down
-        {"chevron_double_down", "\U000F013C"}, // chevron-double-down
-        {"chevron_triple_down", "\U000F0DB9"}, // chevron-triple-down
-        {"unknown", "\U000F02D6"},
-        {"", "\U000F02D6"},
-        {"arrow_up_thin", "\U000F19B2"}, // arrow-up-thin
-        {"arrow_up_bold", "\U000F0737"}, // arrow-up-bold
-        {"arrow_down_thin", "\U000F19B3"}, // arrow-down-thin
-        {"arrow_down_bold", "\U000F072E"}, // arrow-down-bold
         {"compass-outline", "\U000F018C"}, // compass-outline
-      };
-
-      std::map<std::string, std::string> moon_map
-      {
-        {"first_quarter", "First Quarter"}, // moon-first-quarter
-        {"full_moon", "Full Moon"}, // moon-full
-        {"last_quarter", "Last Quarter"}, // moon-last-quarter
-        {"new_moon", "New Moon"}, // moon-new
-        {"waning_crescent", "Waning Crescent"}, // moon-waning-crescent
-        {"waning_gibbous", "Waning Gibbous"}, // moon-waning-gibbous
-        {"waxing_crescent", "Waxing Crescent"}, // moon-waxing-crescent
-        {"waxing_gibbous", "Waxing Gibbous"}, // moon-waxing-gibbous
+        {"", "\U000F02D6"},
       };
 
       // Panel
@@ -932,35 +868,35 @@ display:
 
         // Left-Top - Daily Forecast
         // Today - 55 (70) 125 (70) 195
-        it.printf(125, 145, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "Today");
-        it.printf(60, 185, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
-        it.printf(155, 185, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f - %2.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
+        it.printf(120, 145, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "Today");
+        it.printf(55, 185, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
+        it.printf(150, 185, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f - %2.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
 
-        it.printf(50, 230, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["windy"].c_str());
-        it.printf(100, 230, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f", id(wind_speed0).state);
-        it.printf(150, 230, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["compass-outline"].c_str());
-        it.printf(200, 230, id(text_med), COLOR_ON, TextAlign::CENTER, "%3.0f°", id(wind_bearing0).state);
+        it.printf(45, 230, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["windy"].c_str());
+        it.printf(95, 230, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f", id(wind_speed0).state);
+        it.printf(145, 230, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["compass-outline"].c_str());
+        it.printf(195, 230, id(text_med), COLOR_ON, TextAlign::CENTER, "%3.0f°", id(wind_bearing0).state);
 
         // Left-Side - Hourly Forecast
-        it.printf(55, 280, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime0).state.c_str());
-        it.printf(125, 280, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition0).state.c_str()].c_str());
-        it.printf(195, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature0).state);
+        it.printf(50, 280, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime0).state.c_str());
+        it.printf(120, 280, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition0).state.c_str()].c_str());
+        it.printf(190, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature0).state);
 
-        it.printf(55, 330, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime1).state.c_str());
-        it.printf(125, 330, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition1).state.c_str()].c_str());
-        it.printf(195, 330, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature1).state);
+        it.printf(50, 330, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime1).state.c_str());
+        it.printf(120, 330, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition1).state.c_str()].c_str());
+        it.printf(190, 330, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature1).state);
 
-        it.printf(55, 380, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime2).state.c_str());
-        it.printf(125, 380, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition2).state.c_str()].c_str());
-        it.printf(195, 380, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature2).state);
+        it.printf(50, 380, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime2).state.c_str());
+        it.printf(120, 380, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition2).state.c_str()].c_str());
+        it.printf(190, 380, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature2).state);
 
-        it.printf(55, 430, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime3).state.c_str());
-        it.printf(125, 430, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition3).state.c_str()].c_str());
-        it.printf(195, 430, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature3).state);
+        it.printf(50, 430, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime3).state.c_str());
+        it.printf(120, 430, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition3).state.c_str()].c_str());
+        it.printf(190, 430, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature3).state);
 
-        it.printf(55, 480, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime4).state.c_str());
-        it.printf(125, 480, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition4).state.c_str()].c_str());
-        it.printf(195, 480, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature4).state);
+        it.printf(50, 480, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(hourly_forecast_shorttime4).state.c_str());
+        it.printf(120, 480, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition4).state.c_str()].c_str());
+        it.printf(190, 480, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature4).state);
 
         // Refresh Timestamp
         it.strftime(panel_x - 10, panel_y - 10, id(text_extra_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
