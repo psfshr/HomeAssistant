@@ -7,7 +7,7 @@ substitutions:
   friendly_name: Study S3 Voice 5a7854
   micro_wake_word_model: okay_nabu #hey_jarvis hey_mycroft alexa
 packages:
-  esphome.voice-assistant: github://esphome/firmware/wake-word-voice-assistant/esp32-s3-box-3.yaml@main
+  esphome.voice-assistant: github://esphome/wake-word-voice-assistants/esp32-s3-box-3/esp32-s3-box-3.yaml@main
 esphome:
   name: ${name}
   name_add_mac_suffix: false

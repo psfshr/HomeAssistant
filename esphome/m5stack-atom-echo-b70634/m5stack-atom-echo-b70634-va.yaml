@@ -15,7 +15,7 @@ esp32:
     type: esp-idf
 
 packages:
-  voice_assistant: github://esphome/firmware/voice-assistant/m5stack-atom-echo.yaml@main
+  voice_assistant: github://esphome/wake-word-voice-assistants/m5stack-atom-echo/m5stack-atom-echo.yaml@main
 
 ################################################################################
 
