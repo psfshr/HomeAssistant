@@ -3,8 +3,8 @@
 ###############################################################################
 
 substitutions:
-  name: waveshare-epaper-b410c4
-  friendly_name: Kitchen SmartFrame b410c4
+  name: waveshare-epaper-6625d8
+  friendly_name: Study SmartFrame 6625d8
 
 esphome:
   name: ${name}
