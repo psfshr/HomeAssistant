@@ -1,5 +1,3 @@
-
-
 MyMetro:
   card-mod-row-yaml: |
     .: |
@@ -78,6 +76,22 @@ MyMetro:
       }
       .entities {
         align-items: flex-start !important;
+      }
+
+      ha-card.type-heading {
+        #background-color: var(--ha-card-background) !important;
+        border-radius: 0;
+        border-bottom: 1px solid var(--accent-color) !important;
+      }
+      ha-card.type-heading .title > p {
+        font-size: 1.25em;
+      }
+      ha-card.type-heading .title ha-icon {
+        --mdc-icon-size: 24px;
+        color: var(--accent-color) !important;
+      }
+      ha-card.type-heading .subtitle ha-icon {
+        color: var(--accent-color) !important;
       }
 
   card-mod-glance-yaml: |
@@ -587,8 +601,6 @@ MyMetro:
   rgb-state-update-color: var(--rgb-success-color)
   rgb-state-update-installing-color: var(--rgb-warning-color)
   rgb-state-vacuum-color: var(--rgb-primary-color)
-
-
 
   # Background Colors
   mdc-ripple-color: "#AAAAAA"
