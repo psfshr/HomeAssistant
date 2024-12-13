@@ -339,6 +339,31 @@ sensor:
             value: !lambda return x * 100;
 
   - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: max_rate
+    id: octopus_max_rate
+    # on_value:
+    #   then:
+    #     - lvgl.indicator.update:
+    #         id: val_arc_minmax
+    #         end_value: !lambda return x * 100;
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: min_rate
+    id: octopus_min_rate
+    # on_value:
+    #   then:
+    #     - lvgl.indicator.update:
+    #         id: val_arc_minmax
+    #         start_value: !lambda return x * 100;
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: average_rate
+    id: octopus_average_rate
+
+  - platform: homeassistant
     entity_id: sensor.octopus_energy_electricity_23l3520058_2700001750370_current_demand
     id: octopus_current_demand
     on_value:
@@ -510,12 +535,20 @@ lvgl:
                             width: 2
                             r_mod: 12
                             value: 0
-                        - tick_style:
-                            start_value: -10
-                            end_value: 100
-                            color_start: 0x00bd00
-                            color_end: 0xbd0000
-                            width: 1
+                    - range_from: -20
+                      range_to: 100
+                      angle_range: 120
+                      rotation: 120
+                      ticks:
+                        count: 0
+                      indicators:
+                        - arc:
+                            id: val_arc_minmax
+                            color: 0xff0000
+                            end_value: 20
+                            r_mod: 10
+                            start_value: 0
+                            width: 5
 
               - meter: # Current demand meter
                   height: 100%
