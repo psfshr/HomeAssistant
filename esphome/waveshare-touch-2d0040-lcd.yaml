@@ -342,21 +342,21 @@ sensor:
     entity_id: sensor.octopus_rates
     attribute: max_rate
     id: octopus_max_rate
-    # on_value:
-    #   then:
-    #     - lvgl.indicator.update:
-    #         id: val_arc_minmax
-    #         end_value: !lambda return x * 100;
+    on_value:
+      then:
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            end_value: !lambda return x * 100;
 
   - platform: homeassistant
     entity_id: sensor.octopus_rates
     attribute: min_rate
     id: octopus_min_rate
-    # on_value:
-    #   then:
-    #     - lvgl.indicator.update:
-    #         id: val_arc_minmax
-    #         start_value: !lambda return x * 100;
+    on_value:
+      then:
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            start_value: !lambda return x * 100;
 
   - platform: homeassistant
     entity_id: sensor.octopus_rates
@@ -535,18 +535,11 @@ lvgl:
                             width: 2
                             r_mod: 12
                             value: 0
-                    - range_from: -20
-                      range_to: 100
-                      angle_range: 120
-                      rotation: 120
-                      ticks:
-                        count: 0
-                      indicators:
                         - arc:
                             id: val_arc_minmax
                             color: 0xff0000
                             end_value: 20
-                            r_mod: 10
+                            r_mod: 0
                             start_value: 0
                             width: 5
 
