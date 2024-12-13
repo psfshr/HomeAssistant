@@ -72,7 +72,9 @@ template:
             {% endif %}
           next_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate','start')) | timestamp_custom('%H:%M') }}"
           next_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate') }}"
-
+          max_rate: "{{ state_attr('event.octopus_energy_electricity_23l3520058_2700001750370_current_day_rates', 'max_rate') }}"
+          min_rate: "{{ state_attr('event.octopus_energy_electricity_23l3520058_2700001750370_current_day_rates', 'min_rate') }}"
+          average_rate: "{{ state_attr('event.octopus_energy_electricity_23l3520058_2700001750370_current_day_rates', 'average_rate') }}"
 
   ################################################################################
   # SMARTFRAME WEATHER ###########################################################
