@@ -321,11 +321,11 @@ sensor:
       then:
         - lvgl.indicator.update:
             id: val_needle_current_rate
-            value: !lambda return x * 100;
+            value: !lambda return (int) round(x * 100);
         - lvgl.label.update:
             id: val_text_current_rate
             text:
-              format: "%.0f"
+              format: "%.1f"
               args: [ 'x * 100' ]
 
   - platform: homeassistant
@@ -336,7 +336,7 @@ sensor:
       then:
         - lvgl.indicator.update:
             id: val_needle_next_rate
-            value: !lambda return x * 100;
+            value: !lambda return (int) round(x * 100);
 
   - platform: homeassistant
     entity_id: sensor.octopus_rates
@@ -346,7 +346,10 @@ sensor:
       then:
         - lvgl.indicator.update:
             id: val_arc_minmax
-            end_value: !lambda return x * 100;
+            end_value: !lambda return (int) round(x * 100);
+        - logger.log:
+            format: "Updating Max Rate %d"
+            args: [ '(int) round(x * 100)' ]
 
   - platform: homeassistant
     entity_id: sensor.octopus_rates
@@ -356,8 +359,11 @@ sensor:
       then:
         - lvgl.indicator.update:
             id: val_arc_minmax
-            start_value: !lambda return x * 100;
-
+            start_value: !lambda return (int) round(x * 100);
+        - logger.log:
+            format: "Updating Min Rate %d"
+            args: [ '(int) round(x * 100)' ]
+  
   - platform: homeassistant
     entity_id: sensor.octopus_rates
     attribute: average_rate
@@ -523,6 +529,13 @@ lvgl:
                           color: 0x404040
                           label_gap: 10
                       indicators:
+                        - arc:
+                            id: val_arc_minmax
+                            color: 0xff0000
+                            end_value: 20
+                            r_mod: 0
+                            start_value: 0
+                            width: 5
                         - line:
                             id: val_needle_current_rate
                             color: 0x0000bd
@@ -535,13 +548,6 @@ lvgl:
                             width: 2
                             r_mod: 12
                             value: 0
-                        - arc:
-                            id: val_arc_minmax
-                            color: 0xff0000
-                            end_value: 20
-                            r_mod: 0
-                            start_value: 0
-                            width: 5
 
               - meter: # Current demand meter
                   height: 100%
@@ -591,7 +597,7 @@ lvgl:
 
               - label: # Current rate numeric indicator
                   id: val_text_current_rate
-                  text_font: montserrat_30
+                  text_font: montserrat_26
                   align: CENTER
                   x: -35
                   y: 0
@@ -605,7 +611,7 @@ lvgl:
 
               - label: # Current demand numeric indicator
                   id: val_text_current_demand
-                  text_font: montserrat_30
+                  text_font: montserrat_26
                   align: CENTER
                   x: 35
                   y: 0
