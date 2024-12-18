@@ -5,17 +5,19 @@
 substitutions:
   name: m5stack-atom-echo-b70634
   friendly_name: Bedroom Atom Echo Speaker b70634
+
 esphome:
   name: ${name}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
+
 esp32:
   board: m5stack-atom
   framework:
-    type: arduino
+    type: arduino # Required for I2S audio
 
 packages:
-  m5stack.atom-echo: github://esphome/firmware/media-player/m5stack-atom-echo.yaml@main
+  m5stack.atom-echo: github://esphome/media-players/m5stack/m5stack-atom-echo.yaml@main
 
 ################################################################################
 
@@ -33,7 +35,6 @@ api:
     key: u2TzqM15NfFCjK1tUO3HtM4LLPe38rO5T4YY67TYcT0=
 #ota:
 #  platform: esphome
-#  password: vCsLi39nZlYd96vt/aiuAWr8U2pTkeWXPsEx9RA3atI=
 
 # Enable logging
 logger:

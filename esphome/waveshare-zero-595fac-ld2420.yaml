@@ -65,7 +65,6 @@ api:
     key: FtxZJUW5UnYAXtdnnvAPgS/z7DlSP1ixst114hwFL+k=
 ota:
   platform: esphome
-#  password: FtxZJUW5UnYAXtdnnvAPgS/z7DlSP1ixst114hwFL+k=
 
 # Enable logging
 logger:

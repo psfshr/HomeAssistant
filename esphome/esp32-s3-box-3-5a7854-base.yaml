@@ -3,31 +3,21 @@
 ###############################################################################
 
 substitutions:
-  name: waveshare-zero-5b7094
-  friendly_name: WaveShare Zero 5b7094 Base
+  name: esp32-s3-box-3-5a7854
+  friendly_name: S3 Voice 5a7854 Base
 
 esphome:
   name: ${name}
-  friendly_name: ${friendly_name}
   name_add_mac_suffix: false
-  platformio_options:
-    board_build.flash_mode: dio
+  friendly_name: ${friendly_name}
 
 esp32:
-  board: esp32-s3-devkitc-1
-  variant: esp32s3
+  board: esp32s3box
+  flash_size: 16MB
   framework:
     type: esp-idf
-    version: recommended
-    sdkconfig_options:
-      CONFIG_ESP32_S3_BOX_BOARD: "y"
-   
-psram:
-  mode: quad
-  speed: 80MHz
 
-
-################################################################################
+###############################################################################
 
 # Wifi information
 wifi:
@@ -37,15 +27,13 @@ wifi:
     ssid: ${name}
     password: ${name}
 
-captive_portal:
-
 # Enable Home Assistant API
 api:
   encryption:
-    key: "XbC7pgXBoGvZRAHQOmt1KSZOnKW+sYSlKd4aPu2tHPQ="
+    key: lVB3Eddi7iRL1fYdX5PHH/0htdZgPkOCMZbuAWlgTgc=
 ota:
   platform: esphome
-
+  
 # Enable logging
 logger:
 

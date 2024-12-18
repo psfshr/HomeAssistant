@@ -4,7 +4,7 @@
 
 substitutions:
   name: waveshare-epaper-6625d8
-  friendly_name: Study SmartFrame 6625d8
+  friendly_name: WaveShare ePaper 6625d8 Base
 
 esphome:
   name: ${name}
@@ -27,10 +27,22 @@ wifi:
     password: ${name}
 
 api:
+  encryption:
+    key: "VJMi9X5Fk8nSx/45ycpJzCBrWyF4XxG2TyTheGcjgdY="
 ota:
   platform: esphome
 
 # Enable logging
 logger:
-#  level: VERBOSE #DEBUG
 
+###############################################################################
+# HOME ASSISTANT BUTTONS ######################################################
+###############################################################################
+
+button:
+  - platform: shutdown
+    name: "Shutdown"
+  - platform: restart
+    name: "Restart"
+  - platform: safe_mode
+    name: "Restart (Safe Mode)"

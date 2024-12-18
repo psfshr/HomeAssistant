@@ -5,17 +5,19 @@
 substitutions:
   name: m5stack-atom-lite-315bd0
   friendly_name: Study Atom Lite Speaker 315bd0
+
 esphome:
   name: ${name}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
+
 esp32:
   board: m5stack-atom
   framework:
-    type: arduino
+    type: arduino # Required for I2S audio
 
 packages:
-  m5stack.atom-speaker-kit: github://esphome/firmware/media-player/m5stack-atom-speaker-kit.yaml@main
+  m5stack.atom-speaker-kit: github://esphome/media-players/m5stack/m5stack-atom-speaker-kit.yaml@main
 
 ###############################################################################
 
@@ -33,7 +35,6 @@ api:
     key: PDqaggnKXPtyz2GE4WA8j/kFTvauCuZ9kdugv4CRZUM=
 #ota:
 #  platform: esphome
-#  password: 9bANiFOqgVV/EtH8AlZ+K0CZ29T/+mBwcVdfxoGE0VI=
 
 # Enable logging
 logger:

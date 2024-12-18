@@ -4,15 +4,17 @@
 
 substitutions:
   name: m5stack-atom-lite-315bd0
-  friendly_name: Study Atom Lite 315bd0
+  friendly_name: Atom Lite 315bd0 Base
+
 esphome:
   name: ${name}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
+
 esp32:
   board: m5stack-atom
   framework:
-    type: arduino
+    type: esp-idf
 
 ###############################################################################
 
@@ -30,37 +32,9 @@ api:
     key: PDqaggnKXPtyz2GE4WA8j/kFTvauCuZ9kdugv4CRZUM=
 ota:
   platform: esphome
-#  password: 9bANiFOqgVV/EtH8AlZ+K0CZ29T/+mBwcVdfxoGE0VI=
 
 # Enable logging
 logger:
-
-###############################################################################
-# INPUTS & OUTPUTS ############################################################
-###############################################################################
-
-light:
-  - platform: fastled_clockless
-    chipset: WS2812B
-    pin: 27
-    num_leds: 1
-    rgb_order: GRB
-    id: status_led
-    name: ${friendly_name} Light
-    effects:
-      - random:
-      - flicker:
-      - addressable_rainbow:
-
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: 39
-      inverted: true
-    name: ${friendly_name} Button
-    on_press:
-      then:
-        - light.toggle: status_led
 
 ###############################################################################
 # HOME ASSISTANT BUTTONS ######################################################
