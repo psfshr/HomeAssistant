@@ -13,7 +13,7 @@
 
 substitutions:
   name: panlee-bc02-eb14d4
-  friendly_name: PanLee BC02 Base
+  friendly_name: PanLee BC02 eb14d4 Base
 
 esphome:
   name: ${name}

@@ -4,7 +4,7 @@
 
 substitutions:
   name: esp32-s3-box-3-5a7854
-  friendly_name: S3 Voice 5a7854 Base
+  friendly_name: ESP32 S3 Box 3 5a7854 Base
 
 esphome:
   name: ${name}

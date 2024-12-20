@@ -4,7 +4,7 @@
 
 substitutions:
   name: m5stack-atom-lite-315bd0
-  friendly_name: Atom Lite 315bd0 Base
+  friendly_name: M5Stack Atom Lite 315bd0 Base
 
 esphome:
   name: ${name}

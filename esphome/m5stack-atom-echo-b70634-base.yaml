@@ -4,7 +4,7 @@
 
 substitutions:
   name: m5stack-atom-echo-b70634
-  friendly_name: Atom Echo b70634 Base
+  friendly_name: M5Stack Atom Echo b70634 Base
 
 esphome:
   name: ${name}
