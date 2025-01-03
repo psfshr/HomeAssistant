@@ -122,13 +122,6 @@ MyMetro:
           background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
         }
       }
-      .mdc-dialog .mdc-dialog__container .mdc-dialog__surface,
-      .mdc-dialog .mdc-dialog__content {
-        overflow: visible;
-      }
-      .mdc-dialog__surface {
-        box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5) !important;
-      }
     ha-header-bar$: |
       .mdc-top-app-bar {
         background: none !important;
