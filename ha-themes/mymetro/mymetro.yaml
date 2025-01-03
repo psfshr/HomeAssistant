@@ -93,6 +93,13 @@ MyMetro:
       ha-card.type-heading .subtitle ha-icon {
         color: var(--accent-color) !important;
       }
+      
+      ha-card.type-entities > div.card-content > div {
+        margin: 0 !important;
+      }
+      ha-card.type-entities > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
+        padding: 0 !important;
+      }
 
   card-mod-glance-yaml: |
     .: |
