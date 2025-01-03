@@ -162,6 +162,30 @@ number:
     move_threshold:
       name: mmWave Move Threshold Value
 
+  - platform: homeassistant
+    id: lcd_test_high
+    entity_id: input_number.lcd_test_high
+    on_value:
+      then:
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            end_value: !lambda return (int) x;
+        - logger.log:
+            format: "Updating Max Rate %d"
+            args: [ '(int) x' ]
+
+  - platform: homeassistant
+    id: lcd_test_low
+    entity_id: input_number.lcd_test_low
+    on_value:
+      then:
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            start_value: !lambda return (int) x;
+        - logger.log:
+            format: "Updating Min Rate %d"
+            args: [ '(int) x' ]
+
 time:
   - platform: homeassistant
     id: homeassistant_time
@@ -532,9 +556,9 @@ lvgl:
                         - arc:
                             id: val_arc_minmax
                             color: 0xff0000
-                            end_value: 20
+                            end_value: 10
                             r_mod: 0
-                            start_value: 0
+                            start_value: -10
                             width: 5
                         - line:
                             id: val_needle_current_rate
