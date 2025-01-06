@@ -124,8 +124,6 @@ MyMetro:
     $: |
       @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
         .mdc-dialog__surface {
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
           background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
         }
       }
@@ -172,24 +170,30 @@ MyMetro:
       state-badge[icon] {
         margin: 0 0 0 8px !important;
       }
-    ha-more-info-info$more-info-default$ha-attributes$: |
+    ha-more-info-info$more-info-content$more-info-default$ha-attributes$: |
       .data-entry { flex-direction: column !important; }
       .key {
-        font-size: var(--h6-font-size);
         text-transform: uppercase;
         line-height: 1.1;
       }
       .data-entry .value {
         text-align: left !important;
-        font-size: var(--h2-font-size);
-        font-weight: var(--h2-font-weight);
         line-height: 1.1;
         margin-bottom: 16px;
         max-width: none !important;
       }
       .data-entry:last-child .value {
         margin-bottom: 0;
-      }      
+      }
+
+    ha-more-info-info$more-info-content$more-info-default$ha-attributes$ha-expansion-panel$: |
+      div.top {
+        border-radius: 0px !important;
+      }
+      div.top.focused {
+        background-color: background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
+      }
+
     ha-more-info-history$state-history-charts:
       $:
         state-history-chart-timeline$: |
@@ -238,7 +242,7 @@ MyMetro:
     }
     .iron-selected paper-icon-item {
       border-left: 3px solid var(--accent-color) !important;
-      border-radius: var(--ha-card-border-radius) !important;
+      #border-radius: var(--ha-card-border-radius) !important;
       padding-left: 9px !important;
     }
     .profile.iron-selected paper-icon-item {
@@ -632,11 +636,11 @@ MyMetro:
   card-background-color: "rgb(19,19,19)"
   rgb-card-background-color: "19,19,19"
 
-  ha-card-border-radius: 0
-  ha-config-card-border-radius: 0
-  ha-dialog-border-radius: 0
+  ha-card-border-radius: 20px
+  ha-config-card-border-radius: 20px
+  ha-dialog-border-radius: 20px
   vertical-stack-card-margin: "1px 0px 1px 0px"
-  mush-control-border-radius: 0px
+  mush-control-border-radius: 20px
   mdc-shape-small: 0
 
   mdc-button-raised-box-shadow: none
