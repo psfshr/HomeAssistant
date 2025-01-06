@@ -2,16 +2,24 @@
 
 usage()
 {
-    echo "usage: zzrun.sh [-o] [-f file]| [-h]"
+    echo "usage: zzrun.sh [-c] [-o] [-f file]| [-h]"
 }
 
 runesphome ()
 { 
     if [ -f "$filename" ]; then
-        if [[ $filename =~ "-base" ]] && $override=0; then
-            echo "Trying to install a base file, please run manually!!"
+        if [[ $filename =~ "-base" ]] && [ $override -eq 0 ]; then
+            echo "Trying to install a base file, please run with -o or run manually!!"
+            exit
+        fi
+
+        if [ $clean -eq 1 ]; then
+            echo "Running esphome CLEAN for file => $filename"
+            source .venv/bin/activate
+            esphome clean $filename
+            deactivate            
         else
-            echo "Running esphome for file => $filename"
+            echo "Running esphome RUN for file => $filename"
             source .venv/bin/activate
             esphome run $filename
             deactivate
@@ -24,6 +32,7 @@ runesphome ()
 ##### Main
 
 filename=
+clean=0
 override=0
 
 if [ $# -eq 0 ]; then
@@ -34,6 +43,8 @@ fi
 
 while [ "$1" != "" ]; do
     case $1 in
+        -c | --clean )      clean=1
+                            ;;
         -o | --override )   override=1
                             ;;
         -f | --filename )   shift
