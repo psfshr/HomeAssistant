@@ -162,6 +162,55 @@ number:
     move_threshold:
       name: mmWave Move Threshold Value
 
+
+  - platform: template
+    id: rate_num_min
+    min_value: -10
+    max_value: 100
+    step: 1
+    disabled_by_default: true
+    internal: true
+    optimistic: true
+    on_value:
+      then:
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            start_value: !lambda return (int) x;
+        - logger.log:
+            format: "Updating Arc Min Rate to %d"
+            args: [ '(int) x' ]
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            end_value: !lambda return (int) id(rate_num_max).state;
+        - logger.log:
+            format: "Updating Arc Max Rate to %d"
+            args: [ '(int) id(rate_num_max)' ]
+
+  - platform: template
+    id: rate_num_max
+    min_value: -10
+    max_value: 100
+    step: 1
+    disabled_by_default: true
+    internal: true
+    optimistic: true
+    on_value:
+      then:
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            start_value: !lambda return (int) id(rate_num_min).state;
+        - logger.log:
+            format: "Updating Arc Min Rate to %d"
+            args: [ '(int) id(rate_num_min)' ]
+        - lvgl.indicator.update:
+            id: val_arc_minmax
+            end_value: !lambda return (int) x;
+        - logger.log:
+            format: "Updating Arc Max Rate to %d"
+            args: [ '(int) x' ]
+
+
+
 time:
   - platform: homeassistant
     id: homeassistant_time
@@ -340,29 +389,42 @@ sensor:
 
   - platform: homeassistant
     entity_id: sensor.octopus_rates
-    attribute: max_rate
-    id: octopus_max_rate
-    on_value:
-      then:
-        - lvgl.indicator.update:
-            id: val_arc_minmax
-            end_value: !lambda return (int) round(x * 100);
-        - logger.log:
-            format: "Updating Max Rate %d"
-            args: [ '(int) round(x * 100)' ]
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
     attribute: min_rate
     id: octopus_min_rate
     on_value:
       then:
-        - lvgl.indicator.update:
-            id: val_arc_minmax
-            start_value: !lambda return (int) round(x * 100);
+        - number.set:
+            id: rate_num_min
+            value: !lambda return (int) round(x * 100);
         - logger.log:
-            format: "Updating Min Rate %d"
+            format: "Updating Number Min Rate to %d"
             args: [ '(int) round(x * 100)' ]
+        # - lvgl.indicator.update:
+        #     id: val_arc_minmax
+        #     start_value: !lambda return (int) round(x * 100);
+        # - logger.log:
+        #     format: "Updating Arc Min Rate to %d"
+        #     args: [ '(int) round(x * 100)' ]
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: max_rate
+    id: octopus_max_rate
+    on_value:
+      then:
+        - number.set:
+            id: rate_num_max
+            value: !lambda return (int) round(x * 100);
+        - logger.log:
+            format: "Updating Number Max Rate to %d"
+            args: [ '(int) round(x * 100)' ]
+        # - lvgl.indicator.update:
+        #     id: val_arc_minmax
+        #     end_value: !lambda return (int) round(x * 100);
+        # - logger.log:
+        #     format: "Updating Arc Max Rate to %d"
+        #     args: [ '(int) round(x * 100)' ]
+
   
   - platform: homeassistant
     entity_id: sensor.octopus_rates
