@@ -1,0 +1,254 @@
+# Include in configuration.yaml via package include
+# pack_1: !include pack_waveshare_epaper_6625d8.yaml
+
+template:
+  ################################################################################
+  # SMARTFRAME TIME OF DAY #######################################################
+  ################################################################################
+
+  - trigger:
+      - platform: time_pattern
+        hours: /1
+        minutes: 0
+        seconds: 0
+    sensor:
+      - name: TimeOfDay Greeting
+        unique_id: timeofday_greeting
+        state: >
+          {% set state = states('sensor.time') %}
+          {% if '06:00' <= state < '12:00' %}
+          Morning
+          {% elif '12:00' <= state < '18:00' %}
+          Afternoon
+          {% elif '18:00' <= state < '22:00' %}
+          Evening
+          {% else %}
+          Night
+          {% endif %}
+
+  ################################################################################
+  # SMARTFRAME ENERGY ############################################################
+  ################################################################################
+
+  - trigger:
+      - platform: state
+        entity_id:
+          - sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate
+          - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate
+          - sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate
+    sensor:
+      - name: Octopus Rates
+        unique_id: octopus_rates
+        state: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') }}"
+        attributes:
+          timestamp: "{{ states('sensor.date_time_iso') }}"
+          prev_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate','start')) | timestamp_custom('%H:%M') }}"
+          prev_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate') }}"
+          prev_curr_dir: >
+            {% set rate1 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate') %}
+            {% set rate2 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') %}
+            {% if rate1 < rate2 %}
+                rising
+            {% elif rate1 > rate2 %}
+                falling
+            {% elif rate1 == rate2 %}
+                same
+            {% else %}
+                unknown
+            {% endif %}
+          curr_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate','start')) | timestamp_custom('%H:%M') }}"
+          curr_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') }}"
+          curr_next_dir: >
+            {% set rate1 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') %}
+            {% set rate2 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate') %}
+            {% if rate1 < rate2 %}
+                rising
+            {% elif rate1 > rate2 %}
+                falling
+            {% elif rate1 == rate2 %}
+                same
+            {% else %}
+                unknown
+            {% endif %}
+          next_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate','start')) | timestamp_custom('%H:%M') }}"
+          next_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate') }}"
+
+
+  ################################################################################
+  # SMARTFRAME WEATHER ###########################################################
+  ################################################################################
+
+  - trigger:
+      - platform: time_pattern
+        minutes: /15
+        seconds: 0
+    sensor:
+      - name: Weather Now
+        unique_id: weather_now
+        state: >
+          {% set cond_now = states('weather.forecast_home') %}
+          {% if states('sun.sun') == 'below_horizon' %}
+              {% if cond_now == 'sunny' %} clear-night {% elif cond_now == 'partlycloudy' %} partlycloudy-night {% else %} {{ cond_now }} {% endif %}
+          {% else %}
+              {{ cond_now }}
+          {% endif %}
+
+  - trigger:
+      - platform: time_pattern
+        hours: /1
+        minutes: 0
+        seconds: 0
+    action:
+      - service: weather.get_forecasts
+        data:
+          type: hourly
+        target:
+          entity_id:
+            - weather.forecast_home
+        response_variable: forecast_hourly
+    sensor:
+      - name: Weather Forecast Hourly
+        unique_id: weather_forecast_hourly
+        state: "none"
+        attributes:
+          datetime0: "{{ forecast_hourly['weather.forecast_home'].forecast[0].datetime }}"
+          shorttime0: "{{ as_timestamp(forecast_hourly['weather.forecast_home'].forecast[0].datetime) | timestamp_custom('%H:%M') }}"
+          condition0: >
+            {% set cond0 = forecast_hourly['weather.forecast_home'].forecast[0].condition %}
+            {% set next_setting = as_timestamp(state_attr('sun.sun', 'next_setting')) %}
+            {% set next_rising = as_timestamp(state_attr('sun.sun', 'next_rising')) %}
+            {% set cond0_time = as_timestamp(forecast_hourly['weather.forecast_home'].forecast[0].datetime) %}
+            {% if cond0_time < next_rising and next_rising < next_setting %}
+                {% if cond0 == 'sunny' %} clear-night {% elif cond0 == 'partlycloudy' %} partlycloudy-night {% else %} {{ cond0 }} {% endif %}
+            {% else %}
+                {{ cond0 }}
+            {% endif %}
+          temperature0: "{{ forecast_hourly['weather.forecast_home'].forecast[0].temperature }}"
+          datetime1: "{{ forecast_hourly['weather.forecast_home'].forecast[1].datetime }}"
+          shorttime1: "{{ as_timestamp(forecast_hourly['weather.forecast_home'].forecast[1].datetime) | timestamp_custom('%H:%M') }}"
+          condition1: >
+            {% set cond1 = forecast_hourly['weather.forecast_home'].forecast[1].condition %}
+            {% set next_setting = as_timestamp(state_attr('sun.sun', 'next_setting')) %}
+            {% set next_rising = as_timestamp(state_attr('sun.sun', 'next_rising')) %}
+            {% set cond1_time = as_timestamp(forecast_hourly['weather.forecast_home'].forecast[1].datetime) %}
+            {% if cond1_time < next_rising and next_rising < next_setting %}
+                {% if cond1 == 'sunny' %} clear-night {% elif cond1 == 'partlycloudy' %} partlycloudy-night {% else %} {{ cond1 }} {% endif %}
+            {% else %}
+                {{ cond1 }}
+            {% endif %}
+          temperature1: "{{ forecast_hourly['weather.forecast_home'].forecast[1].temperature }}"
+          datetime2: "{{ forecast_hourly['weather.forecast_home'].forecast[2].datetime }}"
+          shorttime2: "{{ as_timestamp(forecast_hourly['weather.forecast_home'].forecast[2].datetime) | timestamp_custom('%H:%M') }}"
+          condition2: >
+            {% set cond2 = forecast_hourly['weather.forecast_home'].forecast[2].condition %}
+            {% set next_setting = as_timestamp(state_attr('sun.sun', 'next_setting')) %}
+            {% set next_rising = as_timestamp(state_attr('sun.sun', 'next_rising')) %}
+            {% set cond2_time = as_timestamp(forecast_hourly['weather.forecast_home'].forecast[2].datetime) %}
+            {% if cond2_time < next_rising and next_rising < next_setting %}
+                {% if cond2 == 'sunny' %} clear-night {% elif cond2 == 'partlycloudy' %} partlycloudy-night {% else %} {{ cond2 }} {% endif %}
+            {% else %}
+                {{ cond2 }}
+            {% endif %}
+          temperature2: "{{ forecast_hourly['weather.forecast_home'].forecast[2].temperature }}"
+          datetime3: "{{ forecast_hourly['weather.forecast_home'].forecast[3].datetime }}"
+          shorttime3: "{{ as_timestamp(forecast_hourly['weather.forecast_home'].forecast[3].datetime) | timestamp_custom('%H:%M') }}"
+          condition3: >
+            {% set cond3 = forecast_hourly['weather.forecast_home'].forecast[3].condition %}
+            {% set next_setting = as_timestamp(state_attr('sun.sun', 'next_setting')) %}
+            {% set next_rising = as_timestamp(state_attr('sun.sun', 'next_rising')) %}
+            {% set cond3_time = as_timestamp(forecast_hourly['weather.forecast_home'].forecast[3].datetime) %}
+            {% if cond3_time < next_rising and next_rising < next_setting %}
+                {% if cond3 == 'sunny' %} clear-night {% elif cond3 == 'partlycloudy' %} partlycloudy-night {% else %} {{ cond3 }} {% endif %}
+            {% else %}
+                {{ cond3 }}
+            {% endif %}
+          temperature3: "{{ forecast_hourly['weather.forecast_home'].forecast[3].temperature }}"
+          datetime4: "{{ forecast_hourly['weather.forecast_home'].forecast[4].datetime }}"
+          shorttime4: "{{ as_timestamp(forecast_hourly['weather.forecast_home'].forecast[4].datetime) | timestamp_custom('%H:%M') }}"
+          condition4: >
+            {% set cond4 = forecast_hourly['weather.forecast_home'].forecast[4].condition %}
+            {% set next_setting = as_timestamp(state_attr('sun.sun', 'next_setting')) %}
+            {% set next_rising = as_timestamp(state_attr('sun.sun', 'next_rising')) %}
+            {% set cond4_time = as_timestamp(forecast_hourly['weather.forecast_home'].forecast[4].datetime) %}
+            {% if cond4_time < next_rising and next_rising < next_setting %}
+                {% if cond4 == 'sunny' %} clear-night {% elif cond4 == 'partlycloudy' %} partlycloudy-night {% else %} {{ cond4 }} {% endif %}
+            {% else %}
+                {{ cond4 }}
+            {% endif %}
+          temperature4: "{{ forecast_hourly['weather.forecast_home'].forecast[4].temperature }}"
+
+  - trigger:
+      - platform: time_pattern
+        hours: /1
+        minutes: 0
+        seconds: 0
+    action:
+      - service: weather.get_forecasts
+        data:
+          type: daily
+        target:
+          entity_id:
+            - weather.forecast_home
+        response_variable: forecast_daily
+    sensor:
+      - name: Weather Forecast Daily
+        unique_id: weather_forecast_daily
+        state: "none"
+        attributes: #0-5
+          datetime0: "{{ forecast_daily['weather.forecast_home'].forecast[0].datetime }}"
+          shorttime0: "{{ as_timestamp(forecast_daily['weather.forecast_home'].forecast[0].datetime) | timestamp_custom('%a') | string }}"
+          condition0: "{{ forecast_daily['weather.forecast_home'].forecast[0].condition }}"
+          temperature0: "{{ forecast_daily['weather.forecast_home'].forecast[0].temperature }}"
+          templow0: "{{ forecast_daily['weather.forecast_home'].forecast[0].templow }}"
+          humidity0: "{{ forecast_daily['weather.forecast_home'].forecast[0].humidity }}"
+          wind_speed0: "{{ forecast_daily['weather.forecast_home'].forecast[0].wind_speed }}"
+          wind_bearing0: "{{ forecast_daily['weather.forecast_home'].forecast[0].wind_bearing }}"
+          precipitation0: "{{ forecast_daily['weather.forecast_home'].forecast[0].precipitation }}"
+          datetime1: "{{ forecast_daily['weather.forecast_home'].forecast[1].datetime }}"
+          shorttime1: "{{ as_timestamp(forecast_daily['weather.forecast_home'].forecast[1].datetime) | timestamp_custom('%a') | string }}"
+          condition1: "{{ forecast_daily['weather.forecast_home'].forecast[1].condition }}"
+          temperature1: "{{ forecast_daily['weather.forecast_home'].forecast[1].temperature }}"
+          templow1: "{{ forecast_daily['weather.forecast_home'].forecast[1].templow }}"
+          humidity1: "{{ forecast_daily['weather.forecast_home'].forecast[1].humidity }}"
+          wind_speed1: "{{ forecast_daily['weather.forecast_home'].forecast[1].wind_speed }}"
+          wind_bearing1: "{{ forecast_daily['weather.forecast_home'].forecast[1].wind_bearing }}"
+          precipitation1: "{{ forecast_daily['weather.forecast_home'].forecast[1].precipitation }}"
+          datetime2: "{{ forecast_daily['weather.forecast_home'].forecast[2].datetime }}"
+          shorttime2: "{{ as_timestamp(forecast_daily['weather.forecast_home'].forecast[2].datetime) | timestamp_custom('%a') | string }}"
+          condition2: "{{ forecast_daily['weather.forecast_home'].forecast[2].condition }}"
+          temperature2: "{{ forecast_daily['weather.forecast_home'].forecast[2].temperature }}"
+          templow2: "{{ forecast_daily['weather.forecast_home'].forecast[2].templow }}"
+          humidity2: "{{ forecast_daily['weather.forecast_home'].forecast[2].humidity }}"
+          wind_speed2: "{{ forecast_daily['weather.forecast_home'].forecast[2].wind_speed }}"
+          wind_bearing2: "{{ forecast_daily['weather.forecast_home'].forecast[2].wind_bearing }}"
+          precipitation2: "{{ forecast_daily['weather.forecast_home'].forecast[2].precipitation }}"
+          datetime3: "{{ forecast_daily['weather.forecast_home'].forecast[3].datetime }}"
+          shorttime3: "{{ as_timestamp(forecast_daily['weather.forecast_home'].forecast[3].datetime) | timestamp_custom('%a') | string }}"
+          condition3: "{{ forecast_daily['weather.forecast_home'].forecast[3].condition }}"
+          temperature3: "{{ forecast_daily['weather.forecast_home'].forecast[3].temperature }}"
+          templow3: "{{ forecast_daily['weather.forecast_home'].forecast[3].templow }}"
+          humidity3: "{{ forecast_daily['weather.forecast_home'].forecast[3].humidity }}"
+          wind_speed3: "{{ forecast_daily['weather.forecast_home'].forecast[3].wind_speed }}"
+          wind_bearing3: "{{ forecast_daily['weather.forecast_home'].forecast[3].wind_bearing }}"
+          precipitation3: "{{ forecast_daily['weather.forecast_home'].forecast[3].precipitation }}"
+          datetime4: "{{ forecast_daily['weather.forecast_home'].forecast[4].datetime }}"
+          shorttime4: "{{ as_timestamp(forecast_daily['weather.forecast_home'].forecast[4].datetime) | timestamp_custom('%a') | string }}"
+          condition4: "{{ forecast_daily['weather.forecast_home'].forecast[4].condition }}"
+          temperature4: "{{ forecast_daily['weather.forecast_home'].forecast[4].temperature }}"
+          templow4: "{{ forecast_daily['weather.forecast_home'].forecast[4].templow }}"
+          humidity4: "{{ forecast_daily['weather.forecast_home'].forecast[4].humidity }}"
+          wind_speed4: "{{ forecast_daily['weather.forecast_home'].forecast[4].wind_speed }}"
+          wind_bearing4: "{{ forecast_daily['weather.forecast_home'].forecast[4].wind_bearing }}"
+          precipitation4: "{{ forecast_daily['weather.forecast_home'].forecast[4].precipitation }}"
+          datetime5: "{{ forecast_daily['weather.forecast_home'].forecast[5].datetime }}"
+          shorttime5: "{{ as_timestamp(forecast_daily['weather.forecast_home'].forecast[5].datetime) | timestamp_custom('%a') | string }}"
+          condition5: "{{ forecast_daily['weather.forecast_home'].forecast[5].condition }}"
+          temperature5: "{{ forecast_daily['weather.forecast_home'].forecast[5].temperature }}"
+          templow5: "{{ forecast_daily['weather.forecast_home'].forecast[5].templow }}"
+          humidity5: "{{ forecast_daily['weather.forecast_home'].forecast[5].humidity }}"
+          wind_speed5: "{{ forecast_daily['weather.forecast_home'].forecast[5].wind_speed }}"
+          wind_bearing5: "{{ forecast_daily['weather.forecast_home'].forecast[5].wind_bearing }}"
+          precipitation5: "{{ forecast_daily['weather.forecast_home'].forecast[5].precipitation }}"
+################################################################################
+################################################################################
+################################################################################

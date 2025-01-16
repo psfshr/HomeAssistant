@@ -1,0 +1,67 @@
+mqtt:
+  sensor:
+
+  # Node #1 
+
+    - name: "Mesh Node 1 Battery Voltage"
+      unique_id: "mesh_node1_battery_voltage"
+      state_topic: "msh/EU_868/2/json/LongFast/!da5ae054"
+      state_class: measurement
+      value_template: >-
+        {% if value_json.from == 3663388756 and
+              value_json.payload.voltage is defined and
+              value_json.payload.temperature is not defined %}
+          {{ (value_json.payload.voltage | float) | round(2) }}
+        {% else %}
+          {{ this.state }}
+        {% endif %}
+      unit_of_measurement: "Volts"
+      # Telemetry packets come in two flavors: The default node telemetry, and the I2C sensor data.
+      # Both packets contain "voltage" so we check for temperature to ignore the sensor packet here.
+
+    - name: "Mesh Node 1 Battery Percent"
+      unique_id: "mesh_node1_battery_percent"
+      state_topic: "msh/EU_868/2/json/LongFast/!da5ae054"
+      state_class: measurement
+      value_template: >-
+        {% if value_json.from == 3663388756 and value_json.payload.battery_level is defined %}
+          {{ (value_json.payload.battery_level | float) | round(2) }}
+        {% else %}
+          {{ this.state }}
+        {% endif %}
+      device_class: "battery"
+      unit_of_measurement: "%"
+
+    - name: "Mesh Node 1 ChUtil"
+      unique_id: "mesh_node1_chutil"
+      state_topic: "msh/EU_868/2/json/LongFast/!da5ae054"
+      state_class: measurement
+      value_template: >-
+        {% if value_json.from == 3663388756 and value_json.payload.channel_utilization is defined %}
+          {{ (value_json.payload.channel_utilization | float) | round(2) }}
+        {% else %}
+          {{ this.state }}
+        {% endif %}
+      unit_of_measurement: "%"
+
+    - name: "Mesh Node 1 AirUtilTX"
+      unique_id: "mesh_node1_airutiltx"
+      state_topic: "msh/EU_868/2/json/LongFast/!da5ae054"
+      state_class: measurement
+      value_template: >-
+        {% if value_json.from == 3663388756 and value_json.payload.air_util_tx is defined %}
+          {{ (value_json.payload.air_util_tx | float) | round(2) }}
+        {% else %}
+          {{ this.state }}
+        {% endif %}
+      unit_of_measurement: "%"
+
+    - name: "Mesh Node 1 Messages"
+      unique_id: "mesh_node1_messages"
+      state_topic: "msh/EU_868/2/json/LongFast/!da5ae054"
+      value_template: >-
+        {% if value_json.from == 3663388756 and value_json.payload.text is defined %}
+          {{ value_json.payload.text }}
+        {% else %}
+          {{ this.state }}
+        {% endif %}

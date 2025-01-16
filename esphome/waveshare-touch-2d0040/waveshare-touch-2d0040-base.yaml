@@ -1,0 +1,138 @@
+###############################################################################
+# BASE DEVICE CONFIG ##########################################################
+###############################################################################
+
+substitutions:
+  name: waveshare-touch-2d0040
+  friendly_name: WaveShare Touch Base 2d0040
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+    build_flags: "-DBOARD_HAS_PSRAM"
+    board_build.arduino.memory_type: qio_opi
+    board_upload.maximum_ram_size: 524288
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
+      CONFIG_SPIRAM_RODATA: y
+
+psram:
+  mode: quad
+  speed: 80MHz
+
+
+################################################################################
+
+# Wifi information
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: ${name}
+    password: ${name}
+
+captive_portal:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "y7+oPSvCkFAQtx0elE6fIzDNnEw7+NDULyWp/kus/Xc="
+ota:
+  platform: esphome
+
+# Enable logging
+logger:
+
+###############################################################################
+# INPUTS & OUTPUTS ############################################################
+###############################################################################
+
+
+###############################################################################
+# VARIABLES & SCRIPTS #########################################################
+###############################################################################
+
+globals:
+  - id: cpu_speed
+    type: int
+    restore_value: no
+    initial_value: "0"
+
+
+###############################################################################
+# HOME ASSISTANT BUTTONS ######################################################
+###############################################################################
+
+button:
+  - platform: shutdown
+    name: "Shutdown"
+  - platform: restart
+    name: "Restart"
+  - platform: safe_mode
+    name: "Restart (Safe Mode)"
+
+  - platform: factory_reset
+    disabled_by_default: True
+    name: "Factory Reset ESP"
+    id: factory_reset_all
+
+###############################################################################
+# SENSORS #####################################################################
+###############################################################################
+
+#binary_sensor:
+
+
+###############################################################################
+
+#text_sensor:
+
+###############################################################################
+
+sensor:
+    #Device UPTIME
+  - platform: uptime
+    name: Uptime
+    id: sys_uptime
+    update_interval: 60s
+
+    #Device CPU Speed
+  - platform: template
+    name: "ESP Cpu Speed"
+    accuracy_decimals: 0
+    unit_of_measurement: Mhz
+    lambda: |-
+      return (id(cpu_speed));
+    entity_category: "diagnostic"
+
+    #Device Memory
+  - platform: template
+    id: esp_memory
+    icon: mdi:memory
+    name: ESP Free Memory
+    lambda: return heap_caps_get_free_size(MALLOC_CAP_INTERNAL) / 1024;
+    unit_of_measurement: "kB"
+    state_class: measurement
+    entity_category: "diagnostic"
+
+    #Device RSSI
+  - platform: wifi_signal
+    name: RSSI
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+################################################################################

@@ -1,0 +1,42 @@
+template:
+  - sensor:
+      - name: "Count Of Lights On"
+        unique_id: "countlightson"
+        state_class: measurement
+        icon: mdi:lightbulb
+        state: >
+          {{ states.light
+            | selectattr('state', 'eq', 'on')
+            | rejectattr('attributes.entity_id', 'defined')
+            | rejectattr('attributes.friendly_name','search','Screen')
+            | map(attribute='attributes.friendly_name')
+            | list
+            | count }}
+        attributes:
+          entities: >
+            {{ states.light
+              | selectattr('state', 'eq', 'on')
+              | rejectattr('attributes.entity_id', 'defined')
+              | rejectattr('attributes.friendly_name','search','Screen')
+              | map(attribute='attributes.friendly_name')
+              | list }}
+      - name: "Count Of Switches On"
+        unique_id: "countswitcheson"
+        state_class: measurement
+        icon: mdi:toggle-switch-variant
+        state: >
+          {{ states.switch
+            | selectattr('state', 'eq', 'on')
+            | rejectattr('attributes.entity_id', 'defined')
+            | rejectattr('attributes.friendly_name','search','Screen')
+            | map(attribute='attributes.friendly_name')
+            | list
+            | count }}
+        attributes:
+          entities: >
+            {{ states.switch
+            | selectattr('state', 'eq', 'on')
+            | rejectattr('attributes.entity_id', 'defined')
+            | rejectattr('attributes.friendly_name','search','Screen')
+            | map(attribute='attributes.friendly_name')
+            | list }}

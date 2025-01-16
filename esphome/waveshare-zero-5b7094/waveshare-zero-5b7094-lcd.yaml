@@ -1,0 +1,563 @@
+###############################################################################
+# NOTES #######################################################################
+###############################################################################
+
+# https://www.waveshare.com/wiki/ESP32-S3-Zero
+# https://files.waveshare.com/wiki/ESP32-S3-Zero/ESP32-S3-Zero-Sch.pdf
+
+
+# https://www.aliexpress.com/item/1005005791515997.html
+# Resolution:480*320
+# Drive ic:ili9488
+
+# 1 VCC power input (3.3V~5V) - 5V - White
+# 2 GND power supply ground - Purple
+
+# 3 CS LCD film selection - GPIO7 - Brown
+# 4 RESET LCD reset - GPIO8 - Red
+# 5 DC LCD bus command/data selection - GPIO9 - Orange
+# 6 SDI (MoSi) LCD SPI display bus data input - GPIO10 - Yellow
+# 7 SCK LCD SPI display bus clock signal - GPIO11 - Green
+# 8 LED LCD backlight control (high level lighting) - GPIO12 - Blue
+# 9 SDO (MISO) LCD SPI display bus data input and output - GPIO13 - Purple
+
+# 10 t _ clk SPI bus clock signal of touch panel - GPIO06 - Yellow
+# 11 t _ cs Chip selection of SPI bus for touch panel - GPIO05 - Green
+# 12 t _ din touch panel SPI bus data input - GPIO04 - Blue
+# 13 t _ do touch panel SPI bus data output - GPIO03 - Purple
+# 14 t _ IRQ touch panel interrupts IRQ signal - GPIO02 - Grey
+
+###############################################################################
+# BASE DEVICE CONFIG ##########################################################
+###############################################################################
+
+substitutions:
+  name: waveshare-zero-5b7094
+  friendly_name: WaveShare LCD 5b7094
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+  on_boot:
+      priority: 200.0
+      then:
+        - component.update: lcd_display
+        - light.turn_on: 
+            id: back_light
+            brightness: 100%
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_ESP32_S3_BOX_BOARD: "y"
+   
+psram:
+  mode: quad
+  speed: 80MHz
+
+
+################################################################################
+
+# Wifi information
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: ${name}
+    password: ${name}
+
+captive_portal:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "XbC7pgXBoGvZRAHQOmt1KSZOnKW+sYSlKd4aPu2tHPQ="
+ota:
+  platform: esphome
+
+# Enable logging
+logger:
+
+###############################################################################
+# INPUTS & OUTPUTS ############################################################
+###############################################################################
+
+spi:
+  - id: spi_lcd
+    mosi_pin: GPIO10
+    clk_pin: GPIO11
+    miso_pin: GPIO13
+    interface: any
+  - id: spi_touch
+    mosi_pin: GPIO4
+    clk_pin: GPIO6
+    miso_pin: GPIO3
+    interface: any
+
+output:
+  - platform: gpio
+    pin:
+      number: GPIO21
+      mode: output
+    id: LED
+  - platform: ledc # Define a PWM output on the ESP32
+    pin: GPIO12
+    id: backlight_pwm
+
+# Define a monochromatic, dimmable light for the backlight
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "Display Backlight"
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+###############################################################################
+# VARIABLES & SCRIPTS #########################################################
+###############################################################################
+
+# Global variables for detecting if the display needs to be refreshed
+globals:
+  - id: cpu_speed
+    type: int
+    restore_value: no
+    initial_value: "0"
+  - id: initial_data_received
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+  - id: time_since_refresh
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+# Check whether the display needs to be refreshed
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    on_time_sync:
+      then:
+        - logger.log: "Synchronized system clock"
+    on_time:
+      # Every morning everyday at 7am
+      - seconds: 0
+        minutes: 0
+        hours: 7
+        then:
+          - light.turn_on: 
+              id: back_light
+              brightness: 100%
+      # Every morning everyday at 7pm brightness decreased to 50%
+      - seconds: 0
+        minutes: 0
+        hours: 19
+        then:
+          - light.turn_on: 
+              id: back_light
+              brightness: 50%
+
+
+###############################################################################
+# HOME ASSISTANT BUTTONS ######################################################
+###############################################################################
+
+button:
+  - platform: shutdown
+    name: ESP32 Shutdown
+  - platform: restart
+    name: ESP32 Restart
+  - platform: safe_mode
+    name: ESP32 Restart (Safe Mode)
+
+switch:
+  - platform: factory_reset
+    name: ESP32 Factory Reset
+
+###############################################################################
+# SENSORS #####################################################################
+###############################################################################
+
+binary_sensor:
+  - platform: status
+    name: ESP32 Status
+
+  - platform: touchscreen
+    id: general_touch
+    x_min: 0
+    x_max: 319
+    y_min: 0
+    y_max: 479
+    on_click:
+      min_length: 0ms
+      max_length: 500ms
+      then:
+        - component.update: lcd_display
+
+###############################################################################
+
+text_sensor:
+  # Home Assistant General Sensors
+  - platform: homeassistant
+    entity_id: sensor.timeofday_greeting
+    id: timeofday_greeting
+
+  # Octopus Sensors
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: prev_rate_start
+    id: octopus_prev_rate_start
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: curr_rate_start
+    id: octopus_curr_rate_start
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: next_rate_start
+    id: octopus_next_rate_start
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: prev_curr_dir
+    id: octopus_prev_curr_dir
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: curr_next_dir
+    id: octopus_curr_next_dir
+
+###############################################################################
+
+sensor:
+    #Device UPTIME
+  - platform: uptime
+    name: Uptime
+    id: sys_uptime
+    update_interval: 60s
+
+  # Device Sensors - for monitoring device remotely
+  - platform: wifi_signal
+    name: ESP32 WiFi Signal
+    id: wifisignal
+    unit_of_measurement: "dBm"
+    entity_category: "diagnostic"
+    update_interval: 60s
+
+    #Device CPU Speed
+  - platform: template
+    name: "ESP Cpu Speed"
+    accuracy_decimals: 0
+    unit_of_measurement: Mhz
+    lambda: |-
+      return (id(cpu_speed));
+    entity_category: "diagnostic"
+
+    #Device Memory
+  - platform: template
+    id: esp_memory
+    icon: mdi:memory
+    name: ESP Free Memory
+    lambda: return heap_caps_get_free_size(MALLOC_CAP_INTERNAL) / 1024;
+    unit_of_measurement: "kB"
+    state_class: measurement
+    entity_category: "diagnostic"
+
+  # Weather Sensors - Now
+  - platform: homeassistant
+    entity_id: sensor.front_garden_climate_temperature
+    id: temperature_now
+
+  - platform: homeassistant
+    entity_id: sensor.front_garden_climate_humidity
+    id: humidity_now
+
+  - platform: homeassistant
+    entity_id: sensor.front_garden_climate_pressure
+    id: pressure_now
+
+
+  # Octopus Sensors
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: prev_rate_value
+    id: octopus_prev_rate_value
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: curr_rate_value
+    id: octopus_curr_rate_value
+
+  - platform: homeassistant
+    entity_id: sensor.octopus_rates
+    attribute: next_rate_value
+    id: octopus_next_rate_value
+
+
+################################################################################
+
+
+
+
+
+###############################################################################
+# FONTS & TEXT ################################################################
+###############################################################################
+
+# Include custom fonts
+font:
+  - file:
+      type: gfonts
+      family: Montserrat
+      weight: 500
+    id: text_med
+    size: 25
+    extras:
+      file:
+        type: gfonts
+        family: Montserrat
+        weight: 500
+      glyphs: [ "'", "£" ]
+
+  - file: "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_glyphs_med
+    size: 40
+    glyphs: &mdi-glyphs
+      - "\U000F0594" # weather-night / clear-night
+      - "\U000F0590" # weather-cloudy / cloudy
+      - "\U000F0591" # weather-fog / fog
+      - "\U000F0592" # weather-hail / hail
+      - "\U000F0593" # weather-lightning / lightning
+      - "\U000F067E" # weather-lightning-rainy / lightning-rainy
+      - "\U000F0595" # weather-partly-cloudy / partlycloudy
+      - "\U000F0596" # weather-pouring / pouring
+      - "\U000F0597" # weather-rainy / rainy
+      - "\U000F0598" # weather-snowy / snowy
+      - "\U000F067F" # weather-snowy-rainy / snowy-rainy
+      - "\U000F0599" # weather-sunny / sunny
+      - "\U000F059D" # weather-windy / windy
+      - "\U000F059E" # weather-windy-variant / windy-variant
+      - "\U000F1C78" # weather-hurricane-outline / exceptional
+      - "\U000F0F31" # weather-night-partly-cloudy / partlycloudy-night
+      - "\U000F02D6" # Blank
+      - "\U000F05CE" # clock-alert-outline
+      - "\U000F0531" # tree
+      - "\U000F1510" # grass
+      - "\U000F07A6" # weed
+      - "\U000F0F61" # moon-first-quarter
+      - "\U000F0F62" # moon-full
+      - "\U000F0F63" # moon-last-quarter
+      - "\U000F0F64" # moon-new
+      - "\U000F0F65" # moon-waning-crescent
+      - "\U000F0F66" # moon-waning-gibbous
+      - "\U000F0F67" # moon-waxing-crescent
+      - "\U000F0F68" # moon-waxing-gibbous
+      - "\U000F0D3E" # transmission-tower
+      - "\U000F0535" # trending-up
+      - "\U000F0533" # trending-down
+      - "\U000F0534" # trending-neutral
+      - "\U000F0143" # chevron-up
+      - "\U000F013F" # chevron-double-up
+      - "\U000F0DBC" # chevron-triple-up
+      - "\U000F0140" # chevron-down
+      - "\U000F013C" # chevron-double-down
+      - "\U000F0DB9" # chevron-triple-down
+
+  - file: "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_glyphs_large
+    size: 60
+    glyphs: *mdi-glyphs
+
+
+color:
+  - id: my_fg
+    red: 100%
+    green: 90%
+    blue: 100%
+  - id: my_bg
+    red: 0%
+    green: 0%
+    blue: 0%
+
+  - id: my_fg_dim
+    red: 50%
+    green: 45%
+    blue: 50%
+
+  - id: my_red
+    red: 100%
+    green: 0%
+    blue: 0%
+  - id: my_green
+    red: 0%
+    green: 100%
+    blue: 0%
+  - id: my_blue
+    red: 0%
+    green: 0%
+    blue: 100%
+  - id: my_white
+    red: 100%
+    green: 90%
+    blue: 100%
+  - id: my_black
+    red: 0%
+    green: 0%
+    blue: 0%
+
+
+###############################################################################
+# DISPLAY RENDERING ###########################################################
+###############################################################################
+
+touchscreen:
+  - platform: xpt2046
+    id: my_touchscreen
+    spi_id: spi_touch
+    display: lcd_display
+    cs_pin: GPIO5
+    #interrupt_pin: GPIO2
+    update_interval: 50ms
+    threshold: 400
+    transform:
+      swap_xy: false
+      mirror_x: false
+      mirror_y: false
+    calibration:
+      x_min: 250
+      x_max: 3800
+      y_min: 3896
+      y_max: 208
+    on_touch:
+      - lambda: |-
+            ESP_LOGI("Touch:touch : ", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
+                touch.x,
+                touch.y,
+                touch.x_raw,
+                touch.y_raw
+                );
+
+display:
+  - platform: ili9xxx
+    model: ILI9488_A
+    id: lcd_display
+    spi_id: spi_lcd
+    dc_pin: GPIO9
+    reset_pin: GPIO8
+    cs_pin: GPIO7
+    color_order: bgr
+    invert_colors: false
+    transform:
+      swap_xy: false
+      mirror_x: true
+      mirror_y: false
+    dimensions:
+      height: 480
+      width: 320
+    update_interval: 5s
+#    show_test_card: true
+    lambda: |-
+      std::map<std::string, std::string> font_icon_map
+      {
+        {"clear-night", "\U000F0594"},
+        {"cloudy", "\U000F0590"},
+        {"fog", "\U000F0591"},
+        {"hail", "\U000F0592"},
+        {"lightning", "\U000F0593"},
+        {"lightning-rainy", "\U000F067E"},
+        {"partlycloudy", "\U000F0595"},
+        {"pouring", "\U000F0596"},
+        {"rainy", "\U000F0597"},
+        {"snowy", "\U000F0598"},
+        {"snowy-rainy", "\U000F067F"},
+        {"sunny", "\U000F0599"},
+        {"windy", "\U000F059D"},
+        {"windy-variant", "\U000F059E"},
+        {"exceptional", "\U000F1C78"},
+        {"partlycloudy-night", "\U000F0F31"},
+        {"clock-alert-outline", "\U000F05CE"},
+        {"tree", "\U000F0531"},
+        {"grass", "\U000F1510"},
+        {"weed", "\U000F07A6"},
+        {"first_quarter", "\U000F0F61"}, // moon-first-quarter
+        {"full_moon", "\U000F0F62"}, // moon-full
+        {"last_quarter", "\U000F0F63"}, // moon-last-quarter
+        {"new_moon", "\U000F0F64"}, // moon-new
+        {"waning_crescent", "\U000F0F65"}, // moon-waning-crescent
+        {"waning_gibbous", "\U000F0F66"}, // moon-waning-gibbous
+        {"waxing_crescent", "\U000F0F67"}, // moon-waxing-crescent
+        {"waxing_gibbous", "\U000F0F68"}, // moon-waxing-gibbous
+        {"transmission_tower", "\U000F0D3E"}, // transmission-tower
+        {"rising", "\U000F0535"}, // trending-up
+        {"falling", "\U000F0533"}, // trending-down
+        {"same", "\U000F0534"}, // trending-neutral
+        {"chevron_up", "\U000F0143"}, // chevron-up
+        {"chevron_double_up", "\U000F013F"}, // chevron-double-up
+        {"chevron_triple_up", "\U000F0DBC"}, // chevron-triple-up
+        {"chevron_down", "\U000F0140"}, // chevron-down
+        {"chevron_double_down", "\U000F013C"}, // chevron-double-down
+        {"chevron_triple_down", "\U000F0DB9"}, // chevron-triple-down
+        {"unknown", "\U000F02D6"},
+        {"", "\U000F02D6"},
+      };
+
+      id(time_since_refresh) = 0;
+
+      // Panel
+      int panel_x = it.get_width();
+      int panel_y = it.get_height();
+      int panel_x_mid = panel_x / 2;
+      int panel_y_mid = panel_y / 2;
+
+      float power_rate_high_high = 0.30;
+      float power_rate_high = 0.25;
+      float power_rate_neutral = 0.20;
+      float power_rate_low = 0.15;
+      float power_rate_low_low = 0.10;
+
+      std::string power_rate_indicator;
+
+      if ( id(octopus_curr_rate_value).state >= power_rate_high_high ) {
+        power_rate_indicator = "chevron_triple_up";
+      }
+      else if ( power_rate_high_high > id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state >= power_rate_high ) {
+        power_rate_indicator = "chevron_double_up";
+      }
+      else if ( power_rate_high > id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state >= power_rate_neutral ) {
+        power_rate_indicator = "chevron_up";
+      }
+      else if ( power_rate_neutral > id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state > power_rate_low ) {
+        power_rate_indicator = "chevron_down";
+      }
+      else if ( power_rate_low >= id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state > power_rate_low_low ) {
+        power_rate_indicator = "chevron_double_down";
+      }
+      else if ( id(octopus_curr_rate_value).state <= power_rate_low_low ) {
+        power_rate_indicator = "chevron_triple_down";
+      }
+      else {
+        power_rate_indicator = "unknown";
+      }
+
+      it.fill(my_bg);
+
+      // Top Panel - Header
+      it.filled_rectangle(0, 0, panel_x, 30, my_blue);
+      it.printf(panel_x_mid, 40, id(text_med), my_white, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
+
+      it.printf(40, 100, id(text_med), my_white, TextAlign::CENTER, "%s", id(octopus_curr_rate_start).state.c_str());
+      it.printf(40, 140, id(text_med), my_white, TextAlign::CENTER, "£%1.3f", id(octopus_curr_rate_value).state);
+      it.printf(40, 180, id(mdi_glyphs_large), my_white, TextAlign::CENTER, "%s", font_icon_map[power_rate_indicator].c_str());
+
+      it.printf(panel_x_mid, 220, id(text_med), my_fg, TextAlign::CENTER, "%2.0f °C", id(temperature_now).state);
+      it.printf(panel_x_mid, 260, id(text_med), my_fg, TextAlign::CENTER, "%2.0f %%", id(humidity_now).state);
+      it.printf(panel_x_mid, 300, id(text_med), my_fg, TextAlign::CENTER, "%2.0f hPa", id(pressure_now).state);
+
+

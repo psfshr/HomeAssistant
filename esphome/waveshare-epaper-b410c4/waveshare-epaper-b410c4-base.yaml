@@ -1,0 +1,36 @@
+###############################################################################
+# BASE DEVICE CONFIG ##########################################################
+###############################################################################
+
+substitutions:
+  name: waveshare-epaper-b410c4
+  friendly_name: Dev SmartFrame b410c4
+
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+###############################################################################
+
+# Wifi information
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: ${name}
+    password: ${name}
+
+api:
+ota:
+  platform: esphome
+
+# Enable logging
+logger:
+#  level: VERBOSE #DEBUG
+
