@@ -1,4 +1,4 @@
-MyMetro:
+fshr:
   card-mod-row-yaml: |
     .: |
       hui-generic-entity-row {
@@ -267,7 +267,7 @@ MyMetro:
       justify-content: left;
     }
 
-  card-mod-theme: "MyMetro"
+  card-mod-theme: "fshr"
 
   primary-color: "#0078d7"
   rgb-primary-color: "0,120,215"
