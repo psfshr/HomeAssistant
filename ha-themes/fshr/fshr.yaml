@@ -1,4 +1,5 @@
 fshr:
+  card-mod-theme: "fshr"
   card-mod-row-yaml: |
     .: |
       hui-generic-entity-row {
@@ -32,7 +33,10 @@ fshr:
   card-mod-card-yaml: |
     .: |
       ha-card {
-        --mdc-icon-size: 20px
+        --mdc-icon-size: 20px;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        background-color: rgba(var(--rgb-primary-background-color),.33) !important;
       }
       ha-card .value {
         font-size: var(--h1-font-size);
@@ -78,8 +82,15 @@ fshr:
         align-items: flex-start !important;
       }
 
+      :host(.type-custom-mushroom-chips-card) ha-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: transparent !important;
+        --chip-background: rgba(var(--rgb-primary-background-color),.33);
+      }
+
       :host(.type-heading) ha-card {
-        #background-color: var(--ha-card-background) !important;
+        background-color: transparent !important;
         border-radius: 0;
         border-bottom: 1px solid var(--accent-color) !important;
       }
@@ -212,7 +223,7 @@ fshr:
     .: |
       @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
         app-header, app-toolbar {
-          background-color: "rgba(var(--rgb-primary-background-color),.33)"
+          background-color: rgba(var(--rgb-primary-background-color),.33);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
         }
@@ -267,7 +278,8 @@ fshr:
       justify-content: left;
     }
 
-  card-mod-theme: "fshr"
+
+
 
   primary-color: "#0078d7"
   rgb-primary-color: "0,120,215"
@@ -620,7 +632,7 @@ fshr:
 
   # Other Mode Specific Variables
   mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.5)"
-  dialog-backdrop-filter: none
+  dialog-backdrop-filter: blur(5px)
   dialog-box-shadow: var(--rgb-accent-color)
   slider-thumb-color: "#121212"
 
