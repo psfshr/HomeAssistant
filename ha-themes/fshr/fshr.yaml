@@ -1,5 +1,6 @@
 fshr:
   card-mod-theme: "fshr"
+
   card-mod-row-yaml: |
     .: |
       hui-generic-entity-row {
@@ -17,6 +18,7 @@ fshr:
         font-size: var(--h5-font-size);
         font-weight: 400;
       }
+
     hui-generic-entity-row$: |
       .info, .info > * {
         white-space: normal !important;
@@ -34,9 +36,9 @@ fshr:
     .: |
       ha-card {
         --mdc-icon-size: 20px;
-        backdrop-filter: blur(5px) !important;
-        -webkit-backdrop-filter: blur(5px) !important;
-        background-color: rgba(var(--rgb-primary-background-color),.33) !important;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        background-color: rgba(var(--rgb-primary-background-color),.33);
       }
       ha-card .value {
         font-size: var(--h1-font-size);
@@ -82,20 +84,15 @@ fshr:
         align-items: flex-start !important;
       }
 
-      :host(.type-custom-mushroom-chips-card) ha-card {
+      :host(.type-heading) ha-card {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
-        --chip-background: rgba(var(--rgb-primary-background-color),.33);
-      }
-
-      :host(.type-heading) ha-card {
-        background-color: transparent !important;
-        border-radius: 0;
+        border-radius: 0 !important;
         border-bottom: 1px solid var(--accent-color) !important;
       }
       :host(.type-heading) .title > p {
-        font-size: 1.25em;
+        font-size: 1.25em !important;
       }
       :host(.type-heading) .title ha-icon {
         --mdc-icon-size: 24px;
@@ -111,6 +108,33 @@ fshr:
       :host(.type-entities) ha-card > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
         padding: 0 !important;
       }
+
+      :host(.type-media-control) ha-card {
+        .background.no-image > * {
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          background-color: transparent !important;
+        }  
+      }
+
+      :host(.type-custom-auto-entities) hui-entities-card {
+        background-color: blue !important;
+        border-radius: 0;
+      }
+
+      :host(.type-custom-mushroom-chips-card) ha-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: transparent !important;
+        --chip-background: rgba(var(--rgb-primary-background-color),.33);
+      }
+
+      :host(.type-custom-mushroom-title-card) ha-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: transparent !important;
+      }
+
 
   card-mod-glance-yaml: |
     .: |
@@ -293,6 +317,28 @@ fshr:
   text-primary-color: var(--primary-text-color)
   accent-text-color: "rgb(255,255,255)"
   text-accent-color: var(--accent-text-color)
+
+  dark-mode-filter: "invert(1) hue-rotate(.5turn)"
+  primary-background-color: "rgb(0,0,0)"
+  rgb-primary-background-color: "0,0,0"
+  secondary-background-color: "rgb(24,24,24)"
+  rgb-secondary-background-color: "24,24,24"
+  card-background-color: "rgb(19,19,19)"
+  rgb-card-background-color: "19,19,19"
+ 
+  ha-card-border-radius: 20px
+  ha-config-card-border-radius: 20px
+  ha-dialog-border-radius: 20px
+  vertical-stack-card-margin: "1px 0px 1px 0px"
+  mush-control-border-radius: 20px
+  mdc-shape-small: 0
+
+  mdc-button-raised-box-shadow: none
+  mdc-button-raised-box-shadow-hover: none
+
+  mdc-theme-surface: "rgb(24,24,24)"
+  rgb-mdc-theme-surface: "24,24,24"
+
 
   # Main Interface Colors
   divider-color: transparent
@@ -639,24 +685,3 @@ fshr:
   sidebar-icon-color: var(--secondary-text-color)
   sidebar-background-color: var(--secondary-background-color)
 
-  # Custom
-  dark-mode-filter: "invert(1) hue-rotate(.5turn)"
-  primary-background-color: "rgb(0,0,0)"
-  rgb-primary-background-color: "0,0,0"
-  secondary-background-color: "rgb(24,24,24)"
-  rgb-secondary-background-color: "24,24,24"
-  card-background-color: "rgb(19,19,19)"
-  rgb-card-background-color: "19,19,19"
-
-  ha-card-border-radius: 20px
-  ha-config-card-border-radius: 20px
-  ha-dialog-border-radius: 20px
-  vertical-stack-card-margin: "1px 0px 1px 0px"
-  mush-control-border-radius: 20px
-  mdc-shape-small: 0
-
-  mdc-button-raised-box-shadow: none
-  mdc-button-raised-box-shadow-hover: none
-
-  mdc-theme-surface: "rgb(24,24,24)"
-  rgb-mdc-theme-surface: "24,24,24"
