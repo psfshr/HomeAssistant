@@ -84,32 +84,32 @@ fshr:
         align-items: flex-start !important;
       }
 
-      :host(.type-heading) ha-card {
+      ha-card.type-heading {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
         border-radius: 0 !important;
         border-bottom: 1px solid var(--accent-color) !important;
       }
-      :host(.type-heading) .title > p {
+      ha-card.type-heading .title > p {
         font-size: 1.25em !important;
       }
-      :host(.type-heading) .title ha-icon {
+      ha-card.type-heading .title ha-icon {
         --mdc-icon-size: 24px;
         color: var(--accent-color) !important;
       }
-      :host(.type-heading) .subtitle ha-icon {
+      ha-card.type-heading .subtitle ha-icon {
         color: var(--accent-color) !important;
       }
       
-      :host(.type-entities) ha-card > div.card-content > div {
+      ha-card.type-entities > div.card-content > div {
         margin: 0 !important;
       }
-      :host(.type-entities) ha-card > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
+      ha-card.type-entities > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
         padding: 0 !important;
       }
 
-      :host(.type-media-control) ha-card {
+      ha-card.type-media-control {
         .background.no-image > * {
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
@@ -117,19 +117,14 @@ fshr:
         }  
       }
 
-      :host(.type-custom-auto-entities) hui-entities-card {
-        background-color: blue !important;
-        border-radius: 0;
-      }
-
-      :host(.type-custom-mushroom-chips-card) ha-card {
+      ha-card.type-custom-mushroom-chips-card {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
         --chip-background: rgba(var(--rgb-primary-background-color),.33);
       }
 
-      :host(.type-custom-mushroom-title-card) ha-card {
+      ha-card.type-custom-mushroom-title-card {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
