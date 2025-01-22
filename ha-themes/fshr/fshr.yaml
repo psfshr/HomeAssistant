@@ -241,10 +241,10 @@ fshr:
   card-mod-root-yaml: |
     .: |
       @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-        app-header, app-toolbar {
-          background-color: rgba(var(--rgb-primary-background-color),.33);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+        app-header, app-toolbar, div.header {
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+          background-color: rgba(var(--app-header-background-color),.66);
         }
       }
       app-toolbar [main-title] {
