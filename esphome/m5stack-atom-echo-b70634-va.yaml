@@ -11,13 +11,6 @@ esphome:
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 
-esp32: # Temporary, to be removed at a later date
-  board: m5stack-atom # Temporary, to be removed at a later date
-  framework: # Temporary, to be removed at a later date
-    type: esp-idf # Temporary, to be removed at a later date
-    version: 4.4.8 # Temporary, to be removed at a later date
-    platform_version: 5.4.0 # Temporary, to be removed at a later date
-
 packages:
   voice_assistant: github://esphome/wake-word-voice-assistants/m5stack-atom-echo/m5stack-atom-echo.yaml@main
 

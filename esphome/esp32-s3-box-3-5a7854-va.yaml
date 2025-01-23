@@ -12,12 +12,6 @@ esphome:
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 
-esp32: # Temporary, to be removed at a later date
-  framework: # Temporary, to be removed at a later date
-    type: esp-idf # Temporary, to be removed at a later date
-    version: 4.4.8 # Temporary, to be removed at a later date
-    platform_version: 5.4.0 # Temporary, to be removed at a later date
-
 packages:
   esphome.voice-assistant: github://esphome/wake-word-voice-assistants/esp32-s3-box-3/esp32-s3-box-3.yaml@main
 
