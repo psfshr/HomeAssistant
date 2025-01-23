@@ -2,7 +2,7 @@
 
 usage()
 {
-    echo "usage: zzrun.sh [-c] [-o] [-f file]| [-h]"
+    echo "usage: zzrun.sh -f file [-c] [-o] | [-h]"
 }
 
 runesphome ()
