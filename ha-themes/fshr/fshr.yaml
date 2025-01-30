@@ -38,7 +38,7 @@ fshr:
         --mdc-icon-size: 20px;
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
-        background-color: rgba(var(--rgb-primary-background-color),.33);
+        background-color: rgba(var(--rgb-card-background-color),.33);
       }
       ha-card .value {
         font-size: var(--h1-font-size);
@@ -124,7 +124,7 @@ fshr:
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
-        --chip-background: rgba(var(--rgb-primary-background-color),.33);
+        --chip-background: rgba(var(--rgb-card-background-color),.33);
       }
 
       ha-card.type-custom-mushroom-title-card {
@@ -253,15 +253,16 @@ fshr:
         app-header, app-toolbar, div.header {
           backdrop-filter: blur(5px);
           -webkit-backdrop-filter: blur(5px);
-          background-color: rgba(var(--app-header-background-color),.66);
-          box-shadow: 0px 2px 2px rgba(var(--rgb-primary-background-color),.66);
         }
       }
+      app-header, app-toolbar, div.header {
+        background-color: rgba(var(--app-header-background-color),.66);
+        }
       app-toolbar [main-title] {
         font-size: var(--h5-font-size);
         line-height: 1.1;
         font-weight: var(--h5-font-weight);
-        text-transform: uppercase;
+        #text-transform: uppercase;
         margin-left: 8px !important;
       }
     app-header$: |
@@ -270,7 +271,6 @@ fshr:
       }
     ha-app-layout$app-header$app-toolbar$ha-tabs$: |
       .iron-selected paper-tab {
-      
       }
 
   card-mod-sidebar: |
@@ -311,13 +311,15 @@ fshr:
 
 
   # Main Interface Colors
-  primary-color: rgb(0, 120, 215)
-  rgb-primary-color: "0, 120, 215"
+  primary-color: rgb(0,120,215)
+  rgb-primary-color: "0,120,215"
+  primary-color-darker: rgb(0, 60, 107)
+  rgb-primary-color-darker: "0,60,107"
   primary-background-color: rgb(0,0,0)
   rgb-primary-background-color: "0,0,0"
-  secondary-background-color: rgb(24,24,24)
-  rgb-secondary-background-color: "24,24,24"
-  accent-color: rgb(0, 141, 253)
+  secondary-background-color: rgb(12,12,12)
+  rgb-secondary-background-color: "12,12,12"
+  accent-color: rgb(0,141,253)
   rgb-accent-color: "0,141,253"
   hue-primary-color: "207deg"
 
@@ -330,7 +332,7 @@ fshr:
   app-header-selection-bar-color: var(--primary-color)
   app-header-edit-background-color: rgb(var(--rgb-primary-color-darker))
   app-header-edit-text-color: var(--accent-text-color)
-  app-header-border-bottom: none
+  app-header-border-bottom: 1px solid var(--divider-color)
 
   # Text
   primary-text-color: "rgb(255,255,255)"
@@ -340,6 +342,8 @@ fshr:
   disabled-text-color: "rgba(255,255,255,.55)"
   rgb-disabled-text-color: "140,140,140"
   text-primary-color: var(--primary-text-color)
+  accent-text-color: "rgb(255,255,255)"
+  text-accent-color: var(--accent-text-color)
 
   # Borders
   ha-card-border-radius: 20px
@@ -382,8 +386,8 @@ fshr:
   label-badge-gray: rgb(95, 98, 103)
 
   # Cards
-  card-background-color: rgb(19,19,19)
-  rgb-card-background-color: "19,19,19"
+  card-background-color: rgb(12,12,12)
+  rgb-card-background-color: "12,12,12"
   ha-card-background: var(--card-background-color)
   paper-dialog-background-color: var(--card-background-color)
   paper-listbox-background-color: var(--card-background-color)
@@ -411,8 +415,8 @@ fshr:
   material-secondary-background-color: var(--table-row-alternative-background-color)
   dialog-backdrop-filter: blur(5px)
   dialog-box-shadow: var(--rgb-accent-color)
-  mdc-theme-surface: rgb(24,24,24)
-  rgb-mdc-theme-surface: "24,24,24"
+  mdc-theme-surface: var(--card-background-color)
+  rgb-mdc-theme-surface: "12,12,12"
   
   # Pre/Code
   markdown-code-background-color: rgb(23, 23, 23)
