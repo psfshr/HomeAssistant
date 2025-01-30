@@ -163,7 +163,7 @@ fshr:
     $: |
       @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
         .mdc-dialog__surface {
-          background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
+          background-color: rgba(var(--rgb-mdc-theme-surface), .9) !important;
         }
       }
     ha-header-bar$: |
@@ -309,113 +309,140 @@ fshr:
 
 
 
-  primary-color: "#0078d7"
-  rgb-primary-color: "0,120,215"
-  rgb-primary-color-darker: "0,91,163"
-  rgb-primary-color-lighter: "0,141,253"
+
+  # Main Interface Colors
+  primary-color: rgb(0, 120, 215)
+  rgb-primary-color: "0, 120, 215"
+  primary-background-color: rgb(0,0,0)
+  rgb-primary-background-color: "0,0,0"
+  secondary-background-color: rgb(24,24,24)
+  rgb-secondary-background-color: "24,24,24"
+  accent-color: rgb(0, 141, 253)
+  rgb-accent-color: "0,141,253"
   hue-primary-color: "207deg"
 
-  accent-color: "#008dfd"
-  rgb-accent-color: "0,141,253"
-
-  text-primary-color: var(--primary-text-color)
-  accent-text-color: "rgb(255,255,255)"
-  text-accent-color: var(--accent-text-color)
-
-  dark-mode-filter: "invert(1) hue-rotate(.5turn)"
-  primary-background-color: "rgb(0,0,0)"
-  rgb-primary-background-color: "0,0,0"
-  secondary-background-color: "rgb(24,24,24)"
-  rgb-secondary-background-color: "24,24,24"
-  card-background-color: "rgb(19,19,19)"
-  rgb-card-background-color: "19,19,19"
-
-  ha-card-border-radius: 20px
-  ha-config-card-border-radius: 20px
-  ha-dialog-border-radius: 20px
-  vertical-stack-card-margin: "1px 0px 1px 0px"
-  mush-control-border-radius: 20px
-  mdc-shape-small: 0
-
-  mdc-button-raised-box-shadow: none
-  mdc-button-raised-box-shadow-hover: none
-
-  mdc-theme-surface: "rgb(24,24,24)"
-  rgb-mdc-theme-surface: "24,24,24"
-
-
-  # Main Interface Colors
-  divider-color: transparent
-  disabled-color: "rgba(255,255,255,.55)"
-  rgb-disabled-color: "128,128,128"
-  error-color: "#FF4400"
-  rgb-error-color: "255,64,0"
-  warning-color: "#ffa600"
-  rgb-warning-color: "255,166,0"
-  success-color: "#008a17"
-  rgb-success-color: "0,138,23"
-  info-color: "#039be5"
-  rgb-info-color: "3,155,229"
-
-  # Main Interface Colors
+  divider-color: var(--primary-background-color) 
   lovelace-background: var(--primary-background-color)
-  ha-card-background: var(--card-background-color)
 
-  app-header-background-color: "rgba(var(--rgb-primary-background-color),1)"
+  # Header
+  app-header-background-color: rgba(var(--rgb-primary-background-color),1)
   app-header-text-color: var(--primary-text-color)
   app-header-selection-bar-color: var(--primary-color)
   app-header-edit-background-color: rgb(var(--rgb-primary-color-darker))
   app-header-edit-text-color: var(--accent-text-color)
   app-header-border-bottom: none
 
-  # Material and Paper
-  light-theme-disabled-color: var(--disabled-color)
-  dark-theme-disabled-color: var(--disabled-color)
-
-  material-disabled-color: var(--disabled-color)
-  material-divider-color: var(--divider-color)
-
-  light-theme-base-color: var(--primary-color)
-  dark-theme-base-color: var(--primary-color)
-
-  dark-primary-color: var(--primary-color)
-  light-primary-color: var(--primary-color)
-
-  mdc-theme-primary: var(--accent-color)
-  mdc-theme-on-primary: var(--accent-text-color)
+  # Text
+  primary-text-color: "rgb(255,255,255)"
+  rgb-primary-text-color: "255,255,255"
+  secondary-text-color: "rgba(255,255,255,.75)"
+  rgb-secondary-text-color: "192,192,192"
+  disabled-text-color: "rgba(255,255,255,.55)"
+  rgb-disabled-text-color: "140,140,140"
+  text-primary-color: var(--primary-text-color)
 
   # Borders
+  ha-card-border-radius: 20px
+  ha-config-card-border-radius: 20px
+  ha-dialog-border-radius: 20px
   ha-card-border-width: 0px
   ha-card-border-color: transparent
 
-  # Typography
-  font-stack: &font-stack "Segoe UI Variable Static Text, Segoe UI, SegoeUI, -apple-system,BlinkMacSystemFont, system-ui, sans-serif"
-  display-font-stack: &display-font-stack "Segoe UI Variable Static Display, Segoe UI, SegoeUI, -apple-system,BlinkMacSystemFont, system-ui, sans-serif"
-  mdc-typography-button-font-family: var(--font-stack)
-  mdc-typography-font-family: var(--font-stack)
-  paper-font-common-base_-_font-family: var(--font-stack)
-  paper-font-title_-_font-family: var(--display-font-stack)
-  paper-font-headline_-_font-family: var(--display-font-stack)
-  paper-font-subhead_-_font-family: var(--display-font-stack)
-  paper-font-display1_-_font-family: var(--display-font-stack)
-  paper-font-display2_-_font-family: var(--display-font-stack)
-  paper-font-display3_-_font-family: var(--display-font-stack)
-  paper-font-display4_-_font-family: var(--display-font-stack)
+  # Sidebar Menu
+  sidebar-icon-color: rgb(169, 177, 188)
+  sidebar-text-color: rgb(198, 203, 210)
+  sidebar-background-color: rgb(32, 33, 36)
+  sidebar-selected-icon-color: rgb(138, 180, 248)
+  sidebar-selected-text-color: var(--sidebar-selected-icon-color)
 
-  # Body at 14px = 10.5pt = 1rem
+  # Buttons
+  paper-item-icon-color: rgb(169, 177, 188)
+  paper-item-icon-active-color: rgb(138, 180, 248)
+  mdc-button-outline-color: rgb(138, 180, 248)
+
+  # States and Badges
+  state-icon-color: var(--paper-item-icon-color)
+  state-icon-active-color: var(--paper-item-icon-active-color)
+  state-icon-unavailable-color: var(--disabled-text-color)
+
+  # Sliders
+  paper-slider-knob-color: rgb(138, 180, 248)
+  paper-slider-knob-start-color: var(--paper-slider-knob-color)
+  paper-slider-pin-color: var(--paper-slider-knob-color)
+  paper-slider-active-color: var(--paper-slider-knob-color)
+  paper-slider-secondary-color: var(--light-primary-color)
+
+  # Labels
+  label-badge-background-color: var(--secondary-background-color)
+  label-badge-text-color: var(--primary-text-color)
+  label-badge-red: rgb(208, 101, 104)
+  label-badge-green: rgb(128, 200, 132)
+  label-badge-blue: rgb(138, 180, 248)
+  label-badge-yellow: rgb(223, 194, 113)
+  label-badge-gray: rgb(95, 98, 103)
+
+  # Cards
+  card-background-color: rgb(19,19,19)
+  rgb-card-background-color: "19,19,19"
+  ha-card-background: var(--card-background-color)
+  paper-dialog-background-color: var(--card-background-color)
+  paper-listbox-background-color: var(--card-background-color)
+  paper-card-background-color: var(--card-background-color)
+
+  # Switches
+  switch-checked-button-color: rgb(138, 180, 248)
+  switch-checked-track-color: rgb(138, 180, 248)
+  switch-unchecked-button-color: rgb(172, 176, 185)
+  switch-unchecked-track-color: rgb(154, 160, 166)
+
+  # Toggles
+  paper-toggle-button-checked-button-color: var(--switch-checked-button-color)
+  paper-toggle-button-checked-bar-color: var(--switch-checked-track-color)
+  paper-toggle-button-unchecked-button-color: var(--switch-unchecked-button-color)
+  paper-toggle-button-unchecked-bar-color: var(--switch-unchecked-track-color)
+
+  # Table
+  table-row-background-color: var(--primary-background-color)
+  table-row-alternative-background-color: var(--secondary-background-color)
+  data-table-background-color: var(--primary-background-color)
+
+  # Dropdowns
+  material-background-color: var(--table-row-background-color)
+  material-secondary-background-color: var(--table-row-alternative-background-color)
+  dialog-backdrop-filter: blur(5px)
+  dialog-box-shadow: var(--rgb-accent-color)
+  mdc-theme-surface: rgb(24,24,24)
+  rgb-mdc-theme-surface: "24,24,24"
+  
+  # Pre/Code
+  markdown-code-background-color: rgb(23, 23, 23)
+  code-editor-background-color: rgb(23, 23, 23)
+
+  # Checkboxes
+  mdc-checkbox-unchecked-color: rgb(169, 177, 188)
+  mdc-checkbox-disable-color: var(--disabled-text-color)
+  mdc-select-fill-color: rgb(42, 43, 46)
+  mdc-select-ink-color: var(--primary-text-color)
+  mdc-select-label-ink-color: var(--secondary-text-color)
+  mdc-select-idle-line-color: var(--primary-text-color)
+  mdc-select-dropdown-icon-color: var(--secondary-text-color)
+  mdc-select-hover-line-color: var(--accent-color)
+  mdc-text-field-fill-color: var(--mdc-select-fill-color)
+
+  # Input
+  input-fill-color: var(--secondary-background-color)
+  input-dropdown-icon-color: var(--secondary-text-color)
+  input-ink-color: var(--primary-text-color)
+  input-label-ink-color: var(--secondary-text-color)
+  input-idle-line-color: var(--primary-text-color)
+  input-hover-line-color: var(--accent-color)
+
+  #Fonts
+  small-font-size: 0.9rem
+
   body-font-size: 1rem
   body-font-weight: normal
-  body-line-height: normal
-  card-title-font-size: 1.5rem
-  card-title-font-weight: 600
-  card-title-line-height: normal
-  title-font-size: 3.5rem
-  title-font-weight: 600
-  title-line-height: normal
-  subtitle-font-size: 1rem
-  subtitle-font-weight: 600
-  subtitle-line-height: normal
-  small-font-size: 0.9rem
+  body-line-height: normal  
 
   h1-font-size: 2.85rem
   h2-font-size: 2.25rem
@@ -431,261 +458,12 @@ fshr:
   h5-font-weight: 400
   h6-font-weight: 400
 
-  body-font: "var(--body-font-weight) var(--body-font-size) var(--font-stack)"
-  card-title-font: "var(--card-title-font-weight) var(--card-title-font-size) var(--display-font-stack)"
-  h1-font: "var(--h1-font-weight) var(--h1-font-size) var(--display-font-stack)"
-  h2-font: "var(--h2-font-weight) var(--h2-font-size) var(--display-font-stack)"
-  h3-font: "var(--h3-font-weight) var(--h3-font-size) var(--display-font-stack)"
-  h4-font: "var(--h4-font-weight) var(--h4-font-size) var(--display-font-stack)"
-  h5-font: "var(--h5-font-weight) var(--h5-font-size) var(--font-stack)"
-  h6-font: "var(--h6-font-weight) var(--h6-font-size) var(--font-stack)"
-
-  ha-card-header-font-size: var(--card-title-font-size)
-
-  paper-font-headline_-_font-size: 3.5rem
-  paper-font-headline_-_font-weight: 600
-  paper-font-headline_-_letter-spacing: 0
-  paper-font-headline_-_line-height: 1.4
-
-  paper-font-title_-_font-size: var(--card-title-font-size)
-  paper-font-title_-_font-weight: var(--card-title-font-weight)
-  paper-font-title_-_line-height: var(--card-title-line-height)
-
-  material-small-font-size: 0.875rem
-  material-caption-font-size: 0.7rem
-  material-button-font-size: 1rem
-
-  # Disabled this because without button borders, the buttons have bad affordance.
-  # mdc-typography-button-font-size: var(--body-font-size)
-  # mdc-typography-button-line-height: var(--body-line-height)
-  # mdc-typography-button-font-weight: var(--body-font-weight)
-  # mdc-typography-button-letter-spacing: 0
-  # mdc-typography-button-text-decoration: none
-  # mdc-typography-button-text-transform: none
-
-  mush-title-font-size: var(--title-font-size)
-  mush-title-font-weight: 600
-  mush-title-padding: 24px 16px 16px
-  mush-subtitle-font-size: var(--subtitle-font-size)
-  mush-subtitle-font-weight: 600
-  mush-card-primary-font-size: var(--body-font-size)
-  mush-card-secondary-font-size: var(--small-font-size)
-  mush-card-primary-font-weight: 600
-  mush-card-secondary-font-weight: normal
-  mush-chip-font-size: var(--body-font-size)
-  mush-chip-font-weight: normal
-
-  # Layout
-  masonry-view-card-margin: "2px 1px"
-  grid-card-gap: "2px"
-  stack-card-margin: "1px"
-  horizontal-stack-card-margin: "1px"
-
-  mush-spacing: 16px
-  mush-icon-border-radius: 32px
-
-  mdc-icon-size: 24px
-  header-height: 56px
-
-  expansion-panel-summary-padding: 0
-  expansion-panel-content-padding: 0
-
-  mush-badge-size: 16px
-  mush-badge-icon-size: 10px
-  mush-button-size: 32px
-  mush-button-icon-size: 20px
-  mush-shape-size: 48px
-  mush-shape-avatar-size: 48px
-  mush-shape-icon-size: 20px
-  #mush-shape-animation:
-  mush-slider-height: 16px
-
-  # Color Reset
-  # Map all the colors to the defaults above
-
-  # Icons
-  state-icon-color: var(--primary-text-color)
-  state-icon-active-color: var(--primary-color)
-  state-icon-unavailable-color: var(--disabled-color)
-
-  # Sidebar Menu
-  sidebar-text-color: var(--primary-text-color)
-  sidebar-selected-background-color: var(--primary-background-color)
-  sidebar-selected-icon-color: var(--primary-color)
-  sidebar-selected-text-color: var(--sidebar-selected-icon-color))
-
-  # Sliders
-  paper-slider-knob-color: var(--accent-color)
-  paper-slider-knob-start-color: var(--paper-slider-knob-color)
-  paper-slider-pin-color: var(--paper-slider-knob-color)
-  paper-slider-active-color: var(--paper-slider-knob-color)
-  paper-slider-secondary-color: rgb(var(--rgb-primary-color-darker))
-
-  # Labels
-  label-badge-background-color: var(--primary-background-color)
-  label-badge-text-color: var(--primary-text-color)
-  label-badge-red: "#BE3A3E"
-  label-badge-green: "#5CB861"
-  label-badge-blue: "#44A4CD"
-  label-badge-yellow: "#D5AE43"
-  label-badge-gray: "#5F6267"
-
-  # Cards
-  paper-dialog-background-color: var(--card-background-color)
-  paper-listbox-background-color: var(--secondary-background-color)
-  paper-card-background-color: var(--card-background-color)
-
-  # Switches
-  switch-checked-button-color: var(--primary-color)
-  switch-checked-track-color: var(--primary-text-color)
-  switch-unchecked-button-color: rgb(var(--rgb-primary-color-darker))
-  switch-unchecked-track-color: var(--primary-text-color)
-  mdc-radio-unchecked-color: var(--primary-text-color)
-
-  # Color Picker
-  ha-color-picker-wheel-borderwidth: 4
-  ha-color-picker-wheel-bordercolor: var(--primary-text-color)
-  ha-color-picker-wheel-shadow: none
-  ha-color-picker-marker-borderwidth: 4
-  ha-color-picker-marker-bordercolor: var(--accent-text-color)
-
-  # Toggles
-  paper-toggle-button-checked-button-color: var(--switch-checked-button-color)
-  paper-toggle-button-checked-bar-color: var(--switch-checked-track-color)
-  paper-toggle-button-unchecked-button-color: var(--switch-unchecked-button-color)
-  paper-toggle-button-unchecked-bar-color: var(--switch-unchecked-track-color)
-
-  # Table
-  table-row-background-color: var(--primary-background-color)
-  table-row-alternative-background-color: var(--secondary-background-color)
-  data-table-background-color: var(--primary-background-color)
-
-  # Dropdowns
-  material-background-color: var(--secondary-background-color)
-  material-secondary-background-color: var(--primary-background-color)
-  mdc-text-field-idle-line-color: var(--secondary-text-color)
-
-  # HACS
-  hacs-chip-background-color: var(--primary-color)
-
-  # Code
-  markdown-code-background-color: var(--primary-background-color)
-
-  # Checkboxes
-  mdc-select-fill-color: var(--primary-background-color)
-  mdc-select-ink-color: var(--primary-text-color)
-  mdc-select-label-ink-color: var(--secondary-text-color)
-  mdc-select-idle-line-color: var(--primary-text-color)
-  mdc-select-dropdown-icon-color: var(--secondary-text-color)
-  mdc-select-hover-line-color: var(--primary-color)
-
-  # Input
-  input-fill-color: var(--primary-background-color)
-  input-disabled-fill-color: var(--disabled-color)
-  input-dropdown-icon-color: var(--secondary-text-color)
-
-  input-ink-color: var(--primary-text-color)
-  input-label-ink-color: var(--secondary-text-color)
-  input-disabled-ink-color: var(--disabled-text-color)
-
-  input-idle-line-color: var(--primary-text-color)
-  input-hover-line-color: var(--primary-color)
-  input-disabled-line-color: var(--disabled-text-color)
-
-  input-outlined-idle-border-color: none
-  input-outlined-hover-border-color: none
-  input-outlined-disabled-border-color: var(--disabled-text-color)
-
-  code-editor-background-color: var(--primary-background-color)
-  mdc-text-field-fill-color: var(--primary-background-color)
-
-  # Buttons
-  btn-bg-color-off: var(--primary-background-color)
-  mdc-button-disabled-fill-color: var(--disabled-color)
-  mdc-button-disabled-ink-color: var(--disabled-text-color)
-  # mdc-button-raised-box-shadow:
-
-  # Home Assistant override
-  ha-card-box-shadow: "none"
-
-  # Mushroom
-  mush-rgb-pink: var(--rgb-primary-color)
-  mush-rgb-state-entity: var(--rgb-pink)
-
-  # Swiper
-  swiper-theme-color: var(--primary-color)
-
-  # Video
-  video-max-height: none
-
-  # States
-  rgb-state-default-color: var(--rgb-accent-color)
-  rgb-state-inactive-color: var(--rgb-secondary-background-color)
-  rgb-state-unavailable-color: var(--rgb-disabled-text-color)
-  rgb-state-alarm-armed-color: var(--rgb-success-color)
-  rgb-state-alarm-arming-color: var(--rgb-warning-color)
-  rgb-state-alarm-disarmed-color: var(--rgb-secondary-background-color)
-  rgb-state-alarm-pending-color: var(--rgb-warning-color)
-  rgb-state-alarm-triggered-color: var(--rgb-error-color)
-  rgb-state-alert-color: var(--rgb-error-color)
-  rgb-state-automation-color: var(--rgb-primary-color)
-  rgb-state-binary-sensor-alerting-color: var(--rgb-error-color)
-  rgb-state-binary-sensor-color: var(--rgb-primary-color)
-  rgb-state-calendar-color: var(--rgb-primary-color)
-  rgb-state-camera-color: var(--rgb-primary-color)
-  rgb-state-climate-auto-color: var(--rgb-success-color)
-  rgb-state-climate-cool-color: var(--rgb-blue-color)
-  rgb-state-climate-dry-color: var(--rgb-warning-color)
-  rgb-state-climate-fan-only-color: var(--rgb-cyan-color)
-  rgb-state-climate-heat-color: var(--rgb-deep-orange-color)
-  rgb-state-climate-heat-cool-color: var(--rgb-primary-color)
-  rgb-state-climate-idle-color: var(--rgb-secondary-background-color)
-  rgb-state-cover-color: var(--rgb-purple-color)
-  rgb-state-fan-color: var(--rgb-cyan-color)
-  rgb-state-group-color: var(--rgb-primary-color)
-  rgb-state-humidifier-color: var(--rgb-blue-color)
-  rgb-state-input-boolean-color: var(--rgb-primary-color)
-  rgb-state-light-color: var(--rgb-primary-color)
-  rgb-state-lock-jammed-color: var(--rgb-error-color)
-  rgb-state-lock-locked-color: var(--rgb-success-color)
-  rgb-state-lock-pending-color: var(--rgb-warning-color)
-  rgb-state-lock-unlocked-color: var(--rgb-error-color)
-  rgb-state-media-player-color: var(--rgb-primary-color)
-  rgb-state-person-home-color: var(--rgb-success-color)
-  rgb-state-person-not-home-color: var(--rgb-secondary-background-color)
-  rgb-state-person-zone-color: var(--rgb-warning-color)
-  rgb-state-remote-color: var(--rgb-primary-color)
-  rgb-state-script-color: var(--rgb-primary-color)
-  rgb-state-sensor-battery-high-color: var(--rgb-success-color)
-  rgb-state-sensor-battery-low-color: var(--rgb-error-color)
-  rgb-state-sensor-battery-medium-color: var(--rgb-warning-color)
-  rgb-state-siren-color: var(--rgb-error-color)
-  rgb-state-sun-day-color: var(--rgb-primary-color)
-  rgb-state-sun-night-color: var(--rgb-secondary-background-color)
-  rgb-state-switch-color: var(--rgb-primary-color)
-  rgb-state-timer-color: var(--rgb-primary-color)
-  rgb-state-update-color: var(--rgb-success-color)
-  rgb-state-update-installing-color: var(--rgb-warning-color)
-  rgb-state-vacuum-color: var(--rgb-primary-color)
-
-  # Background Colors
-  mdc-ripple-color: "#AAAAAA"
-  rgb-mdc-ripple-color: "170,170,170"
-
-  # Text Colors
-  primary-text-color: "rgb(255,255,255)"
-  rgb-primary-text-color: "255,255,255"
-  secondary-text-color: "rgba(255,255,255,.75)"
-  rgb-secondary-text-color: "192,192,192"
-  disabled-text-color: "rgba(255,255,255,.55)"
-  rgb-disabled-text-color: "140,140,140"
-
-  # Other Mode Specific Variables
-  mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.5)"
-  dialog-backdrop-filter: blur(5px)
-  dialog-box-shadow: var(--rgb-accent-color)
-  slider-thumb-color: "#121212"
-
-  sidebar-icon-color: var(--secondary-text-color)
-  sidebar-background-color: var(--secondary-background-color)
-
+  card-title-font-size: 1.5rem
+  card-title-font-weight: 600
+  card-title-line-height: normal
+  title-font-size: 3.5rem
+  title-font-weight: 600
+  title-line-height: normal
+  subtitle-font-size: 1rem
+  subtitle-font-weight: 600
+  subtitle-line-height: normal
