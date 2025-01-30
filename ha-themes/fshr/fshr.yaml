@@ -309,7 +309,6 @@ fshr:
 
 
 
-
   primary-color: "#0078d7"
   rgb-primary-color: "0,120,215"
   rgb-primary-color-darker: "0,91,163"
@@ -330,7 +329,7 @@ fshr:
   rgb-secondary-background-color: "24,24,24"
   card-background-color: "rgb(19,19,19)"
   rgb-card-background-color: "19,19,19"
- 
+
   ha-card-border-radius: 20px
   ha-config-card-border-radius: 20px
   ha-dialog-border-radius: 20px
