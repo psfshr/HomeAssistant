@@ -98,6 +98,9 @@ fshr:
         --mdc-icon-size: 24px;
         color: var(--accent-color) !important;
       }
+      ha-card.type-heading .subtitle > p {
+        font-size: 1.0em !important;
+      }
       ha-card.type-heading .subtitle ha-icon {
         color: var(--accent-color) !important;
       }
@@ -128,6 +131,12 @@ fshr:
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
+        border-radius: 0;
+        border-bottom: 1px solid var(--accent-color) !important;
+        --title-font-size: 3em !important;
+        --subtitle-font-size: 1.5em !important;
+        --title-color: var(--accent-color);
+        --subtitle-color: var(--secondary-text-color);
       }
 
 
@@ -245,6 +254,7 @@ fshr:
           backdrop-filter: blur(5px);
           -webkit-backdrop-filter: blur(5px);
           background-color: rgba(var(--app-header-background-color),.66);
+          box-shadow: 0px 2px 2px rgba(var(--rgb-primary-background-color),.66);
         }
       }
       app-toolbar [main-title] {
@@ -265,7 +275,7 @@ fshr:
 
   card-mod-sidebar: |
     .menu .title {
-      font-weight: 600;
+      font-weight: 600
     }
     :host([expanded]) paper-icon-item {
       width: 100%;
