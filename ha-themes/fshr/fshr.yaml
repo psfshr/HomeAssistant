@@ -28,7 +28,7 @@ fshr:
   lovelace-background: var(--primary-background-color)
 
   # Header
-  app-header-background-color: var(--primary-background-color)
+  app-header-background-color: var(--card-background-color)
   app-header-text-color: var(--primary-text-color)
   app-header-selection-bar-color: var(--primary-color)
   app-header-edit-background-color: var(--rgb-primary-color-darker)
@@ -38,7 +38,7 @@ fshr:
   # Sidebar Menu
   sidebar-icon-color: rgb(169, 177, 188)
   sidebar-text-color: rgb(198, 203, 210)
-  sidebar-background-color: rgb(32, 33, 36)
+  sidebar-background-color: var(--card-background-color)
   sidebar-selected-icon-color: rgb(138, 180, 248)
   sidebar-selected-text-color: var(--sidebar-selected-icon-color)
 
