@@ -75,6 +75,11 @@ wifi:
   ap:
     ssid: ${name}
     password: ${name}
+  manual_ip:
+    static_ip: 192.168.2.251
+    gateway: 192.168.2.1
+    subnet: 255.255.255.0
+    dns1: 192.168.2.1
 
 captive_portal:
 
@@ -296,6 +301,29 @@ text_sensor:
       then:
         - lambda: 'id(data_updated) = true;'
 
+
+  - platform: homeassistant
+    entity_id: sensor.bins_garden
+    id: days_to_bins_garden
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.bins_general_food
+    id: days_to_bins_general_food
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.bins_recycling_food
+    id: days_to_bins_recycling_food
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+
 ##
 
 ###############################################################################
@@ -403,6 +431,19 @@ font:
       weight: 500
     id: text_small
     size: 20
+    extras:
+      file:
+        type: gfonts
+        family: Montserrat
+        weight: 500
+      glyphs: [ "'", "£" ]
+
+  - file:
+      type: gfonts
+      family: Montserrat
+      weight: 500
+    id: text_mid
+    size: 30
     extras:
       file:
         type: gfonts
@@ -528,39 +569,45 @@ display:
       int panel_x_34 = (panel_x / 4) * 3;
 
       if (id(initial_data_received) == false) {
+        it.fill(COLOR_ON);
 
         // Show loading screen before data is received.
-        it.printf(panel_x_mid, panel_y_mid - 35, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, font_icon_map["clock-alert-outline"].c_str());
-        it.printf(panel_x_mid, panel_y_mid + 35, id(text_large), COLOR_ON, TextAlign::CENTER, "WAITING FOR DATA");
+        it.printf(panel_x_mid, panel_y_mid - 35, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, font_icon_map["clock-alert-outline"].c_str());
+        it.printf(panel_x_mid, panel_y_mid + 35, id(text_large), COLOR_OFF, TextAlign::CENTER, "WAITING FOR DATA");
 
       } else {
+        it.fill(COLOR_OFF);
 
         // Top Panel - Header
         it.printf(panel_x_mid, 35, id(text_title), COLOR_ON, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
         it.strftime(panel_x_mid, 85, id(text_large), COLOR_ON, TextAlign::CENTER, "%A %e %b", id(homeassistant_time).now());
 
-        // Dividers
-        it.filled_rectangle(0, 119, panel_x, 3, COLOR_ON); // Top Horizontal
+        // Top Horizontal
+        it.filled_rectangle(0, 119, panel_x, 3, COLOR_ON);
 
         // Left-Top - Daily Forecast
         it.printf(panel_x_14, 150, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "NOW");
         it.printf(panel_x_14, 210, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(weather_now).state.c_str()].c_str());
         it.printf(panel_x_14, 270, id(text_large), COLOR_ON, TextAlign::CENTER, "%.0f°C", id(temperature_now).state);
 
-
-        it.filled_rectangle(panel_x_mid-1, 120, 3, 450, COLOR_ON); // Vertical
+        // Vertical
+        it.filled_rectangle(panel_x_mid-1, 120, 3, 180, COLOR_ON);
 
         // Right-Top - Daily Forecast
         it.printf(panel_x_34, 150, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "TODAY");
         it.printf(panel_x_34, 210, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
         it.printf(panel_x_34, 270, id(text_large), COLOR_ON, TextAlign::CENTER, "%.0f - %.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
 
+        // Mid Horizontal
+        it.filled_rectangle(0, 300, panel_x, 3, COLOR_ON);
 
-        it.filled_rectangle(0, 450, panel_x, 3, COLOR_ON); // Top Horizontal
-
+        // Bottom - Bins
+        it.printf(panel_x_mid, 640, id(text_mid), COLOR_ON, TextAlign::CENTER, "Garden - %s", id(days_to_bins_garden).state.c_str());
+        it.printf(panel_x_mid, 690, id(text_mid), COLOR_ON, TextAlign::CENTER, "General/Food - %s", id(days_to_bins_general_food).state.c_str());
+        it.printf(panel_x_mid, 740, id(text_mid), COLOR_ON, TextAlign::CENTER, "Recycling/Food - %s", id(days_to_bins_recycling_food).state.c_str());
 
         // Refresh Timestamp
-        it.strftime(panel_x - 10, panel_y - 10, id(text_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
+        it.strftime(panel_x_mid, panel_y-15, id(text_small), COLOR_ON, TextAlign::BOTTOM_CENTER, "%H:%M", id(homeassistant_time).now());
       }
 
 ###############################################################################
