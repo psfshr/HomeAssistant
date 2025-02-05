@@ -1,0 +1,24 @@
+influxdb:
+  api_version: 2
+  ssl: false
+  host: bluey.tgv.home
+  port: 8086
+  token: !secret influxdb_bucket_token
+  organization: fshr
+  bucket: HomeAssistant
+  precision: s
+  default_measurement: units
+  tags:
+    source: HA-Tadpole
+  tags_attributes:
+    - friendly_name
+  include:
+    entity_globs:
+      - sensor.front_garden_climate_*
+      - sensor.hallway_climate_*
+      - sensor.landing_climate_*
+      - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_total_consumption
+      - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate
+      - sensor.octopus_energy_gas_e6s14581362361_7624447310_current_total_consumption_m3
+      - sensor.octopus_energy_gas_e6s14581362361_7624447310_current_total_consumption_kwh
+      - sensor.octopus_energy_gas_e6s14581362361_7624447310_current_rate
