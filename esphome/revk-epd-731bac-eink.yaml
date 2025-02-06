@@ -301,28 +301,29 @@ text_sensor:
       then:
         - lambda: 'id(data_updated) = true;'
 
-
   - platform: homeassistant
-    entity_id: sensor.bins_garden
-    id: days_to_bins_garden
+    entity_id: sensor.weather_forecast_daily
+    attribute: datetime1
+    id: daily_forecast_datetime1
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
 
   - platform: homeassistant
-    entity_id: sensor.bins_general_food
-    id: days_to_bins_general_food
+    entity_id: sensor.weather_forecast_daily
+    attribute: shorttime1
+    id: daily_forecast_shorttime1
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
 
   - platform: homeassistant
-    entity_id: sensor.bins_recycling_food
-    id: days_to_bins_recycling_food
+    entity_id: sensor.weather_forecast_daily
+    attribute: condition1
+    id: daily_forecast_condition1
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
-
 
 ##
 
@@ -413,6 +414,38 @@ sensor:
     entity_id: sensor.weather_forecast_daily
     attribute: wind_bearing0
     id: wind_bearing0
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_daily
+    attribute: temperature1
+    id: daily_forecast_temperature1
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_daily
+    attribute: templow1
+    id: daily_forecast_templow1
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_daily
+    attribute: wind_speed1
+    id: wind_speed1
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast_daily
+    attribute: wind_bearing1
+    id: wind_bearing1
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
@@ -528,13 +561,12 @@ display:
       number: 35
       inverted: True
     reset_pin: GPIO36
-    reset_duration: 2ms
+    #reset_duration: 2ms
     model: 7.50inV2
     update_interval: never
     rotation: 270°
     lambda: |-
       // https://stackoverflow.com/questions/4479017/storing-std-map-in-map
-
 
       std::map<std::string, std::string> font_icon_map
       {
@@ -576,38 +608,49 @@ display:
         it.printf(panel_x_mid, panel_y_mid + 35, id(text_large), COLOR_OFF, TextAlign::CENTER, "WAITING FOR DATA");
 
       } else {
-        it.fill(COLOR_OFF);
+        it.fill(COLOR_ON);
 
         // Top Panel - Header
-        it.printf(panel_x_mid, 35, id(text_title), COLOR_ON, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
-        it.strftime(panel_x_mid, 85, id(text_large), COLOR_ON, TextAlign::CENTER, "%A %e %b", id(homeassistant_time).now());
+        it.printf(panel_x_mid, 35, id(text_title), COLOR_OFF, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
+        it.strftime(panel_x_mid, 85, id(text_large), COLOR_OFF, TextAlign::CENTER, "%A %e %b", id(homeassistant_time).now());
 
         // Top Horizontal
-        it.filled_rectangle(0, 119, panel_x, 3, COLOR_ON);
+        it.line(0, 119, panel_x, 119, COLOR_OFF);
+        it.line(0, 120, panel_x, 120, COLOR_OFF);
+        it.line(0, 121, panel_x, 121, COLOR_OFF);
 
-        // Left-Top - Daily Forecast
-        it.printf(panel_x_14, 150, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "NOW");
-        it.printf(panel_x_14, 210, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(weather_now).state.c_str()].c_str());
-        it.printf(panel_x_14, 270, id(text_large), COLOR_ON, TextAlign::CENTER, "%.0f°C", id(temperature_now).state);
+        // Left-Top - Weather Forecast - Now
+        it.printf(panel_x_14, 150, id(text_large_bold), COLOR_OFF, TextAlign::CENTER, "Now");
+        it.printf(panel_x_14, 210, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(weather_now).state.c_str()].c_str());
+        it.printf(panel_x_14, 270, id(text_large), COLOR_OFF, TextAlign::CENTER, "%1.0f°C", id(temperature_now).state);
 
         // Vertical
-        it.filled_rectangle(panel_x_mid-1, 120, 3, 180, COLOR_ON);
-
-        // Right-Top - Daily Forecast
-        it.printf(panel_x_34, 150, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "TODAY");
-        it.printf(panel_x_34, 210, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
-        it.printf(panel_x_34, 270, id(text_large), COLOR_ON, TextAlign::CENTER, "%.0f - %.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
+        it.line(panel_x_mid-1, 120, panel_x_mid-1, panel_y, COLOR_OFF);
+        it.line(panel_x_mid, 120, panel_x_mid, panel_y, COLOR_OFF);
+        it.line(panel_x_mid+1, 120, panel_x_mid+1, panel_y, COLOR_OFF);
 
         // Mid Horizontal
-        it.filled_rectangle(0, 300, panel_x, 3, COLOR_ON);
+        it.line(0, 299, panel_x, 299, COLOR_OFF);
+        it.line(0, 300, panel_x, 300, COLOR_OFF);
+        it.line(0, 301, panel_x, 301, COLOR_OFF);
 
-        // Bottom - Bins
-        it.printf(panel_x_mid, 640, id(text_mid), COLOR_ON, TextAlign::CENTER, "Garden - %s", id(days_to_bins_garden).state.c_str());
-        it.printf(panel_x_mid, 690, id(text_mid), COLOR_ON, TextAlign::CENTER, "General/Food - %s", id(days_to_bins_general_food).state.c_str());
-        it.printf(panel_x_mid, 740, id(text_mid), COLOR_ON, TextAlign::CENTER, "Recycling/Food - %s", id(days_to_bins_recycling_food).state.c_str());
+        // Left-Mid - Daily Forecast - Today
+        it.printf(panel_x_14, 330, id(text_large_bold), COLOR_OFF, TextAlign::CENTER, "Today");
+        it.printf(panel_x_14, 390, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
+        it.printf(panel_x_14, 450, id(text_large), COLOR_OFF, TextAlign::CENTER, "%1.0f - %1.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
+
+        // Right-Mid - Daily Forecast - Tomorrow
+        it.printf(panel_x_34, 330, id(text_large_bold), COLOR_OFF, TextAlign::CENTER, "%s", id(daily_forecast_shorttime1).state.c_str());
+        it.printf(panel_x_34, 390, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition1).state.c_str()].c_str());
+        it.printf(panel_x_34, 450, id(text_large), COLOR_OFF, TextAlign::CENTER, "%1.0f - %1.0f°C", id(daily_forecast_templow1).state, id(daily_forecast_temperature1).state);
+
+        // Mid Horizontal
+        it.line(0, 479, panel_x, 479, COLOR_OFF);
+        it.line(0, 480, panel_x, 480, COLOR_OFF);
+        it.line(0, 481, panel_x, 481, COLOR_OFF);
 
         // Refresh Timestamp
-        it.strftime(panel_x_mid, panel_y-15, id(text_small), COLOR_ON, TextAlign::BOTTOM_CENTER, "%H:%M", id(homeassistant_time).now());
+        it.strftime(panel_x-5, panel_y-5, id(text_small), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
       }
 
 ###############################################################################
