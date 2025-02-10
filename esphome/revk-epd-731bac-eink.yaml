@@ -601,56 +601,56 @@ display:
       int panel_x_34 = (panel_x / 4) * 3;
 
       if (id(initial_data_received) == false) {
-        it.fill(COLOR_ON);
+        it.fill(COLOR_OFF);
 
         // Show loading screen before data is received.
-        it.printf(panel_x_mid, panel_y_mid - 35, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, font_icon_map["clock-alert-outline"].c_str());
-        it.printf(panel_x_mid, panel_y_mid + 35, id(text_large), COLOR_OFF, TextAlign::CENTER, "WAITING FOR DATA");
+        it.printf(panel_x_mid, panel_y_mid - 35, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, font_icon_map["clock-alert-outline"].c_str());
+        it.printf(panel_x_mid, panel_y_mid + 35, id(text_large), COLOR_ON, TextAlign::CENTER, "WAITING FOR DATA");
 
       } else {
-        it.fill(COLOR_ON);
+        it.fill(COLOR_OFF);
 
         // Top Panel - Header
-        it.printf(panel_x_mid, 35, id(text_title), COLOR_OFF, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
-        it.strftime(panel_x_mid, 85, id(text_large), COLOR_OFF, TextAlign::CENTER, "%A %e %b", id(homeassistant_time).now());
+        it.printf(panel_x_mid, 35, id(text_title), COLOR_ON, TextAlign::CENTER, "Good %s", id(timeofday_greeting).state.c_str());
+        it.strftime(panel_x_mid, 85, id(text_large), COLOR_ON, TextAlign::CENTER, "%A %e %b", id(homeassistant_time).now());
 
         // Top Horizontal
-        it.line(0, 119, panel_x, 119, COLOR_OFF);
-        it.line(0, 120, panel_x, 120, COLOR_OFF);
-        it.line(0, 121, panel_x, 121, COLOR_OFF);
+        it.line(0, 119, panel_x, 119, COLOR_ON);
+        it.line(0, 120, panel_x, 120, COLOR_ON);
+        it.line(0, 121, panel_x, 121, COLOR_ON);
 
         // Left-Top - Weather Forecast - Now
-        it.printf(panel_x_14, 150, id(text_large_bold), COLOR_OFF, TextAlign::CENTER, "Now");
-        it.printf(panel_x_14, 210, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(weather_now).state.c_str()].c_str());
-        it.printf(panel_x_14, 270, id(text_large), COLOR_OFF, TextAlign::CENTER, "%1.0f°C", id(temperature_now).state);
+        it.printf(panel_x_14, 150, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "Now");
+        it.printf(panel_x_14, 210, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(weather_now).state.c_str()].c_str());
+        it.printf(panel_x_14, 270, id(text_large), COLOR_ON, TextAlign::CENTER, "%1.0f°C", id(temperature_now).state);
 
         // Vertical
-        it.line(panel_x_mid-1, 120, panel_x_mid-1, panel_y, COLOR_OFF);
-        it.line(panel_x_mid, 120, panel_x_mid, panel_y, COLOR_OFF);
-        it.line(panel_x_mid+1, 120, panel_x_mid+1, panel_y, COLOR_OFF);
+        it.line(panel_x_mid-1, 120, panel_x_mid-1, panel_y, COLOR_ON);
+        it.line(panel_x_mid, 120, panel_x_mid, panel_y, COLOR_ON);
+        it.line(panel_x_mid+1, 120, panel_x_mid+1, panel_y, COLOR_ON);
 
         // Mid Horizontal
-        it.line(0, 299, panel_x, 299, COLOR_OFF);
-        it.line(0, 300, panel_x, 300, COLOR_OFF);
-        it.line(0, 301, panel_x, 301, COLOR_OFF);
+        it.line(0, 299, panel_x, 299, COLOR_ON);
+        it.line(0, 300, panel_x, 300, COLOR_ON);
+        it.line(0, 301, panel_x, 301, COLOR_ON);
 
         // Left-Mid - Daily Forecast - Today
-        it.printf(panel_x_14, 330, id(text_large_bold), COLOR_OFF, TextAlign::CENTER, "Today");
-        it.printf(panel_x_14, 390, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
-        it.printf(panel_x_14, 450, id(text_large), COLOR_OFF, TextAlign::CENTER, "%1.0f - %1.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
+        it.printf(panel_x_14, 330, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "Today");
+        it.printf(panel_x_14, 390, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition0).state.c_str()].c_str());
+        it.printf(panel_x_14, 450, id(text_large), COLOR_ON, TextAlign::CENTER, "%1.0f - %1.0f°C", id(daily_forecast_templow0).state, id(daily_forecast_temperature0).state);
 
         // Right-Mid - Daily Forecast - Tomorrow
-        it.printf(panel_x_34, 330, id(text_large_bold), COLOR_OFF, TextAlign::CENTER, "%s", id(daily_forecast_shorttime1).state.c_str());
-        it.printf(panel_x_34, 390, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition1).state.c_str()].c_str());
-        it.printf(panel_x_34, 450, id(text_large), COLOR_OFF, TextAlign::CENTER, "%1.0f - %1.0f°C", id(daily_forecast_templow1).state, id(daily_forecast_temperature1).state);
+        it.printf(panel_x_34, 330, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "%s", id(daily_forecast_shorttime1).state.c_str());
+        it.printf(panel_x_34, 390, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(daily_forecast_condition1).state.c_str()].c_str());
+        it.printf(panel_x_34, 450, id(text_large), COLOR_ON, TextAlign::CENTER, "%1.0f - %1.0f°C", id(daily_forecast_templow1).state, id(daily_forecast_temperature1).state);
 
         // Mid Horizontal
-        it.line(0, 479, panel_x, 479, COLOR_OFF);
-        it.line(0, 480, panel_x, 480, COLOR_OFF);
-        it.line(0, 481, panel_x, 481, COLOR_OFF);
+        it.line(0, 479, panel_x, 479, COLOR_ON);
+        it.line(0, 480, panel_x, 480, COLOR_ON);
+        it.line(0, 481, panel_x, 481, COLOR_ON);
 
         // Refresh Timestamp
-        it.strftime(panel_x-5, panel_y-5, id(text_small), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
+        it.strftime(panel_x-5, panel_y-5, id(text_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
       }
 
 ###############################################################################
