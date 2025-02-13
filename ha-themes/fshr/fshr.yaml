@@ -24,7 +24,7 @@ fshr:
   text-accent-color: var(--accent-text-color)
 
   # Main
-  divider-color: var(--primary-background-color) 
+  divider-color: var(--primary-background-color)
   lovelace-background: var(--primary-background-color)
 
   # Header
@@ -57,7 +57,7 @@ fshr:
   dialog-box-shadow: var(--rgb-accent-color)
   mdc-theme-surface: var(--card-background-color)
   rgb-mdc-theme-surface: "12,12,12"
-  
+
   # Borders
   ha-card-border-radius: 20px
   ha-config-card-border-radius: 20px
@@ -136,7 +136,7 @@ fshr:
 
   body-font-size: 1rem
   body-font-weight: normal
-  body-line-height: normal  
+  body-line-height: normal
 
   h1-font-size: 2.85rem
   h2-font-size: 2.25rem
@@ -161,7 +161,6 @@ fshr:
   subtitle-font-size: 1rem
   subtitle-font-weight: 600
   subtitle-line-height: normal
-
 
   card-mod-theme: "fshr"
 
@@ -200,8 +199,8 @@ fshr:
     .: |
       ha-card {
         --mdc-icon-size: 20px;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
+        #backdrop-filter: blur(5px);
+        #-webkit-backdrop-filter: blur(5px);
         background-color: rgba(var(--rgb-card-background-color),.33);
       }
       ha-card .value {
@@ -302,7 +301,6 @@ fshr:
         --title-color: var(--accent-color);
         --subtitle-color: var(--secondary-text-color);
       }
-
 
   card-mod-glance-yaml: |
     .: |
