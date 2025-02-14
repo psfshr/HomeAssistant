@@ -26,6 +26,7 @@ fshr:
   # Main
   divider-color: var(--primary-background-color)
   lovelace-background: var(--primary-background-color)
+  # lovelace-background: 'center / cover no-repeat url("/local/autumn.jpg") fixed'
 
   # Header
   app-header-background-color: var(--card-background-color)
@@ -224,7 +225,7 @@ fshr:
       }
       ha-card .measurement {
         font-size: var(--h6-font-size);
-        font-weight: 700;
+        font-weight: var(--h6-font-weight);
         color: var(--secondary-text-color);
       }
       .card-header, .card-header .name, :host ::slotted(.card-header), ha-card.type-area .name, ha-card.type-picture-entity .footer.single, ha-card.type-media-control hui-marquee {
@@ -243,7 +244,6 @@ fshr:
       .entities {
         align-items: flex-start !important;
       }
-
       ha-card.type-heading {
         background-color: transparent !important;
         border-radius: 0 !important;
@@ -262,25 +262,21 @@ fshr:
       ha-card.type-heading .subtitle ha-icon {
         color: var(--accent-color) !important;
       }
-      
       ha-card.type-entities > div.card-content > div {
         margin: 0 !important;
       }
       ha-card.type-entities > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
         padding: 0 !important;
       }
-
       ha-card.type-media-control {
         .background.no-image > * {
           background-color: transparent !important;
         }  
       }
-
       ha-card.type-custom-mushroom-chips-card {
         background-color: transparent !important;
         --chip-background: rgba(var(--rgb-card-background-color),.33);
       }
-
       ha-card.type-custom-mushroom-title-card {
         background-color: transparent !important;
         border-radius: 0;
@@ -312,10 +308,8 @@ fshr:
 
   card-mod-more-info-yaml: |
     $: |
-      @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-        .mdc-dialog__surface {
-          background-color: rgba(var(--rgb-mdc-theme-surface), .9) !important;
-        }
+      .mdc-dialog__surface {
+        background-color: rgba(var(--rgb-mdc-theme-surface), .9) !important;
       }
     ha-header-bar$: |
       .mdc-top-app-bar {
@@ -380,7 +374,6 @@ fshr:
       .data-entry:last-child .value {
         margin-bottom: 0;
       }
-
     ha-more-info-info$more-info-content$more-info-default$ha-attributes$ha-expansion-panel$: |
       div.top {
         border-radius: 0px !important;
@@ -388,7 +381,6 @@ fshr:
       div.top.focused {
         background-color: background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
       }
-
     ha-more-info-history$state-history-charts:
       $:
         state-history-chart-timeline$: |
@@ -430,9 +422,8 @@ fshr:
       width: 100%;
     }
     .iron-selected paper-icon-item {
-      border-left: 3px solid var(--accent-color) !important;
-      #border-radius: var(--ha-card-border-radius) !important;
-      padding-left: 9px !important;
+      border-right: 3px solid var(--accent-color) !important;
+      padding-right: 9px !important;
     }
     .profile.iron-selected paper-icon-item {
       padding-left: 1px !important;
