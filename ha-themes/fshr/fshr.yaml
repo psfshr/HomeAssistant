@@ -199,8 +199,6 @@ fshr:
     .: |
       ha-card {
         --mdc-icon-size: 20px;
-        #backdrop-filter: blur(5px);
-        #-webkit-backdrop-filter: blur(5px);
         background-color: rgba(var(--rgb-card-background-color),.33);
       }
       ha-card .value {
@@ -228,7 +226,6 @@ fshr:
         font-size: var(--h6-font-size);
         font-weight: 700;
         color: var(--secondary-text-color);
-        text-transform: uppercase;
       }
       .card-header, .card-header .name, :host ::slotted(.card-header), ha-card.type-area .name, ha-card.type-picture-entity .footer.single, ha-card.type-media-control hui-marquee {
         font-size: var(--card-title-font-size) !important;
@@ -248,8 +245,6 @@ fshr:
       }
 
       ha-card.type-heading {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
         border-radius: 0 !important;
         border-bottom: 1px solid var(--accent-color) !important;
@@ -277,22 +272,16 @@ fshr:
 
       ha-card.type-media-control {
         .background.no-image > * {
-          backdrop-filter: none !important;
-          -webkit-backdrop-filter: none !important;
           background-color: transparent !important;
         }  
       }
 
       ha-card.type-custom-mushroom-chips-card {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
         --chip-background: rgba(var(--rgb-card-background-color),.33);
       }
 
       ha-card.type-custom-mushroom-title-card {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
         background-color: transparent !important;
         border-radius: 0;
         border-bottom: 1px solid var(--accent-color) !important;
@@ -334,7 +323,6 @@ fshr:
       }
     .: |
       .mdc-top-app-bar__title, .main-title {
-        text-transform: uppercase;
         font-size: var(--body-font-size);
         font-weight: 600;
         line-height: 1.1;
@@ -356,12 +344,17 @@ fshr:
       .layout.horizontal {
         flex-direction: column-reverse !important;
       }
-      state-info { margin-left: -8px; margin-top: -42px; }
+      state-info {
+        margin-left: -8px; margin-top: -42px;
+      }
     ha-more-info-info$state-card-display$state-info$: |
-      .name { display: none; }
-      .time-ago { margin-top: 42px; 
+      .name {
+        display: none;
+      }
+      .time-ago {
+        margin-top: 42px; 
         font-size: var(--h6-font-size);
-        text-transform: uppercase;}
+      }
       state-badge {
         width: 32px !important;
         height: 32px !important;
@@ -372,9 +365,10 @@ fshr:
         margin: 0 0 0 8px !important;
       }
     ha-more-info-info$more-info-content$more-info-default$ha-attributes$: |
-      .data-entry { flex-direction: column !important; }
+      .data-entry {
+        flex-direction: column !important;
+      }
       .key {
-        text-transform: uppercase;
         line-height: 1.1;
       }
       .data-entry .value {
@@ -407,24 +401,17 @@ fshr:
           $: |
             state-history-charts, statistics-chart {
               filter: hue-rotate(calc(var(--hue-primary-color) - 212deg)) saturate(3) brightness(0.66)
-                    }
+            }
 
   card-mod-root-yaml: |
     .: |
-      @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-        app-header, app-toolbar, div.header {
-          backdrop-filter: blur(5px);
-          -webkit-backdrop-filter: blur(5px);
-        }
-      }
       app-header, app-toolbar, div.header {
-        background-color: rgba(var(--app-header-background-color),.66);
+        background-color: var(--app-header-background-color);
         }
       app-toolbar [main-title] {
         font-size: var(--h5-font-size);
         line-height: 1.1;
         font-weight: var(--h5-font-weight);
-        #text-transform: uppercase;
         margin-left: 8px !important;
       }
     app-header$: |
@@ -458,11 +445,9 @@ fshr:
     .main-title {
       font-size: 10pt;
       font-weight: 600;
-      text-transform: uppercase;
     }
     #tabbar {
       font-size: 10pt;
-      text-transform: uppercase;
       font-weight: 600;
     }
     #tabbar:not(.bottom-bar) {
