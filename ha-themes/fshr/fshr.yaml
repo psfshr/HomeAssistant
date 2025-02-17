@@ -8,6 +8,10 @@ fshr:
   rgb-primary-background-color: "12,24,36"
   secondary-background-color: rgb(24,36,48)
   rgb-secondary-background-color: "24,36,48"
+  primary-card-color: rgb(0,12,24)
+  rgb-primary-card-color: "0,12,24"
+  secondary-card-color: rgb(12,24,36)
+  rgb-secondary-card-color: "12,24,36"
   accent-color: rgb(0,141,253)
   rgb-accent-color: "0,141,253"
   hue-primary-color: "207deg"
@@ -26,38 +30,37 @@ fshr:
   # Main
   divider-color: var(--primary-background-color)
   lovelace-background: var(--primary-background-color)
-  # lovelace-background: 'center / cover no-repeat url("/local/autumn.jpg") fixed'
 
   # Header
-  app-header-background-color: var(--card-background-color)
+  app-header-background-color: rgba(var(--rgb-primary-card-color), 1)
   app-header-text-color: var(--primary-text-color)
   app-header-selection-bar-color: var(--primary-color)
-  app-header-edit-background-color: var(--rgb-primary-color-darker)
+  app-header-edit-background-color: rgba(var(--rgb-primary-card-color), 1)
   app-header-edit-text-color: var(--accent-text-color)
   app-header-border-bottom: 1px solid var(--divider-color)
 
   # Sidebar Menu
   sidebar-icon-color: rgb(169, 177, 188)
   sidebar-text-color: rgb(198, 203, 210)
-  sidebar-background-color: var(--card-background-color)
+  sidebar-background-color: var(--primary-card-color)
   sidebar-selected-icon-color: rgb(138, 180, 248)
   sidebar-selected-text-color: var(--sidebar-selected-icon-color)
 
   # Cards
-  card-background-color: rgb(0,12,24)
-  rgb-card-background-color: "0,12,24"
-  ha-card-background: var(--card-background-color)
-  paper-dialog-background-color: var(--card-background-color)
-  paper-listbox-background-color: var(--card-background-color)
-  paper-card-background-color: var(--card-background-color)
+  card-background-color: var(--primary-card-color)
+  rgb-card-background-color: var(--rgb-primary-card-color)
+  ha-card-background: var(--primary-card-color)
+  paper-dialog-background-color: var(--primary-card-color)
+  paper-listbox-background-color: var(--primary-card-color)
+  paper-card-background-color: var(--primary-card-color)
 
   # Dropdowns / Dialogs
   material-background-color: var(--table-row-background-color)
   material-secondary-background-color: var(--table-row-alternative-background-color)
-  dialog-backdrop-filter: blur(5px)
+  dialog-backdrop-filter: none
   dialog-box-shadow: var(--rgb-accent-color)
-  mdc-theme-surface: var(--card-background-color)
-  rgb-mdc-theme-surface: "12,12,12"
+  mdc-theme-surface: var(--secondary-card-color)
+  rgb-mdc-theme-surface: var(--rgb-secondary-card-color)
 
   # Borders
   ha-card-border-radius: 20px
@@ -105,9 +108,9 @@ fshr:
   paper-toggle-button-unchecked-bar-color: var(--switch-unchecked-track-color)
 
   # Table
-  table-row-background-color: var(--card-background-color)
-  table-row-alternative-background-color: var(--card-background-color)
-  data-table-background-color: var(--card-background-color)
+  table-row-background-color: var(--primary-card-color)
+  table-row-alternative-background-color: var(--primary-card-color)
+  data-table-background-color: var(--primary-card-color)
 
   # Pre/Code
   markdown-code-background-color: rgb(23, 23, 23)
@@ -165,6 +168,56 @@ fshr:
 
   card-mod-theme: "fshr"
 
+  card-mod-root-yaml: |
+    .: |
+      app-header, app-toolbar, div.header {
+        background-color: var(--app-header-background-color);
+        }
+      app-toolbar [main-title] {
+        font-size: var(--h5-font-size);
+        line-height: 1.1;
+        font-weight: var(--h5-font-weight);
+        margin-left: 8px !important;
+      }
+    app-header$: |
+      :host::before {
+        box-shadow: inset 0px 4px 6px -4px rgb(0 0 0 / 10%) !important;
+      }
+    ha-app-layout$app-header$app-toolbar$ha-tabs$: |
+      .iron-selected paper-tab {
+      }
+
+  card-mod-view: |
+    .main-title {
+      font-size: var(--h4-font-size);
+      font-weight: var(--h4-font-weight);
+    }
+    #tabbar {
+      font-size: 10pt;
+      font-weight: 600;
+    }
+    #tabbar:not(.bottom-bar) {
+      justify-content: left;
+    }
+
+  card-mod-sidebar: |
+    .menu .title {
+      font-weight: 600
+    }
+    :host([expanded]) paper-icon-item {
+      width: 100%;
+    }
+    .iron-selected paper-icon-item {
+      border-right: 3px solid var(--accent-color) !important;
+      padding-right: 9px !important;
+    }
+    .profile.iron-selected paper-icon-item {
+      padding-left: 1px !important;
+    }
+    paper-icon-item span {
+      font-weight: normal !important;
+    }
+
   card-mod-row-yaml: |
     .: |
       hui-generic-entity-row {
@@ -200,7 +253,7 @@ fshr:
     .: |
       ha-card {
         --mdc-icon-size: 20px;
-        background-color: rgba(var(--rgb-card-background-color),.33);
+        background-color: rgba(var(--rgb-primary-card-color),.33);
       }
       ha-card .value {
         font-size: var(--h1-font-size);
@@ -275,7 +328,7 @@ fshr:
       }
       ha-card.type-custom-mushroom-chips-card {
         background-color: transparent !important;
-        --chip-background: rgba(var(--rgb-card-background-color),.33);
+        --chip-background: rgba(var(--rgb-primary-card-color),.33);
       }
       ha-card.type-custom-mushroom-title-card {
         background-color: transparent !important;
@@ -308,12 +361,13 @@ fshr:
 
   card-mod-more-info-yaml: |
     $: |
-      .mdc-dialog__surface {
+      .mdc-dialog_surface {
         background-color: rgba(var(--rgb-mdc-theme-surface), .9) !important;
       }
     ha-header-bar$: |
       .mdc-top-app-bar {
         background: none !important;
+        background-color: var(--app-header-background-color);
       }
     .: |
       .mdc-top-app-bar__title, .main-title {
@@ -394,53 +448,3 @@ fshr:
             state-history-charts, statistics-chart {
               filter: hue-rotate(calc(var(--hue-primary-color) - 212deg)) saturate(3) brightness(0.66)
             }
-
-  card-mod-root-yaml: |
-    .: |
-      app-header, app-toolbar, div.header {
-        background-color: var(--app-header-background-color);
-        }
-      app-toolbar [main-title] {
-        font-size: var(--h5-font-size);
-        line-height: 1.1;
-        font-weight: var(--h5-font-weight);
-        margin-left: 8px !important;
-      }
-    app-header$: |
-      :host::before {
-        box-shadow: inset 0px 4px 6px -4px rgb(0 0 0 / 10%) !important;
-      }
-    ha-app-layout$app-header$app-toolbar$ha-tabs$: |
-      .iron-selected paper-tab {
-      }
-
-  card-mod-sidebar: |
-    .menu .title {
-      font-weight: 600
-    }
-    :host([expanded]) paper-icon-item {
-      width: 100%;
-    }
-    .iron-selected paper-icon-item {
-      border-right: 3px solid var(--accent-color) !important;
-      padding-right: 9px !important;
-    }
-    .profile.iron-selected paper-icon-item {
-      padding-left: 1px !important;
-    }
-    paper-icon-item span {
-      font-weight: normal !important;
-    }
-
-  card-mod-view: |
-    .main-title {
-      font-size: 10pt;
-      font-weight: 600;
-    }
-    #tabbar {
-      font-size: 10pt;
-      font-weight: 600;
-    }
-    #tabbar:not(.bottom-bar) {
-      justify-content: left;
-    }
