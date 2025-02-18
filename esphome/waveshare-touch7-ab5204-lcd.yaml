@@ -241,41 +241,7 @@ sensor:
     update_interval: 60s
     entity_category: "diagnostic"
 
-  - platform: homeassistant
-    id: battery_charging
-    entity_id: sensor.1be6e4_Battery_Power
-    internal: true
-
-  - platform: homeassistant
-    id: grid_output
-    entity_id: sensor.grid_output
-    internal: true
-
-  - platform: homeassistant
-    id: grid_input
-    entity_id: sensor.grid_input
-    internal: true
-
-  - platform: homeassistant
-    id: solar_gen
-    entity_id: sensor.1be6e4_ac_output_total_power
-    internal: true
-
-  - platform: homeassistant
-    id: home_use
-    entity_id: sensor.1be6e4_total_consumption_power
-    internal: true
-
-  - platform: homeassistant
-    id: battery_soc
-    entity_id: sensor.1be6e4_remaining_battery_capacity
-    internal: true
-
-
-
-
-
-    # HomeAssistant Sensors
+  # HomeAssistant Sensors
 
   - platform: homeassistant
     entity_id: sensor.octopus_rates
@@ -476,7 +442,7 @@ lvgl:
     - timeout: 30s
       then:
         - lvgl.page.show: main_page
-    - timeout: 5min
+    - timeout: 15min
       then:
         - logger.log: "LVGL is idle"
         - switch.turn_off: display_backlight
@@ -674,6 +640,7 @@ lvgl:
             width: 240
             align: CENTER
             bg_color: 0xFFFFFF
+            bg_opa: TRANSP
             border_width: 0
             pad_all: 0
             widgets:
@@ -682,7 +649,8 @@ lvgl:
                   width: 100%
                   border_width: 0
                   pad_all: 0
-                  bg_opa: TRANSP
+                  bg_color: 0xEFEFEF
+                  bg_opa: COVER
                   align: CENTER
                   scales:
                     - range_from: -20
@@ -721,14 +689,6 @@ lvgl:
                             r_mod: 12
                             value: 0
 
-              - meter: # Current demand meter
-                  height: 100%
-                  width: 100%
-                  border_width: 0
-                  pad_all: 0
-                  bg_opa: TRANSP
-                  align: CENTER
-                  scales:
                     - range_from: 10000
                       range_to: 0
                       angle_range: 120
