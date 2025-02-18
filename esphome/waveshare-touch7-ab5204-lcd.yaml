@@ -15,6 +15,11 @@ esphome:
     build_flags: "-DBOARD_HAS_PSRAM"
     board_build.arduino.memory_type: qio_opi
     board_upload.maximum_ram_size: 524288
+  on_boot:
+    - delay: 5s
+    - lvgl.widget.hide: boot_screen
+    - lvgl.page.show:
+        id: main_page
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -44,7 +49,7 @@ esp32:
       CONFIG_LV_ATTRIBUTE_FAST_MEM: "y"
 
 psram:
-  mode: quad
+  mode: octal
   speed: 120MHz
 
 
@@ -58,6 +63,10 @@ wifi:
     ssid: ${name}
     password: ${name}
   power_save_mode: NONE
+  on_connect:
+    - lvgl.widget.show: lbl_wifistatus
+  on_disconnect:
+    - lvgl.widget.hide: lbl_wifistatus
 
 captive_portal:
 
@@ -371,6 +380,10 @@ touchscreen:
       ch422g: ch422g_hub
       number: 1
       mode: OUTPUT
+    transform:
+      mirror_x: true
+      mirror_y: false
+      swap_xy: true
     on_touch:
       - lambda: |-
             ESP_LOGI("Touch:touch : ", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
@@ -382,7 +395,7 @@ touchscreen:
             - logger.log: "LVGL resuming"
             - lvgl.resume:
             - lvgl.page.show:
-                id: energy_page
+                id: main_page
             - lvgl.widget.redraw:
             - switch.turn_on: display_backlight
 
@@ -392,6 +405,7 @@ display:
     id: my_display
     update_interval: never
     auto_clear_enabled: false
+    rotation: 90
     color_order: RGB
     pclk_frequency: 16MHZ
     dimensions:
@@ -449,9 +463,10 @@ lvgl:
   log_level: none #INFO
   color_depth: 16
   buffer_size: 25%
-  width: 320
-  height: 480
+  width: 480
+  height: 800
   align: center
+  disp_bg_color: 0xffffff
 
   displays:
     - my_display
@@ -460,13 +475,103 @@ lvgl:
   on_idle:
     - timeout: 30s
       then:
-        - lvgl.page.show: energy_page
+        - lvgl.page.show: main_page
     - timeout: 5min
       then:
         - logger.log: "LVGL is idle"
         - switch.turn_off: display_backlight
         - lvgl.pause:
             show_snow: true
+
+  theme:
+    label:
+      text_font: montserrat_14
+    button:
+      bg_color: 0x2F8CD8
+      bg_grad_color: 0x005782
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_color: 0x0077b3
+      border_width: 1
+      text_color: 0xFFFFFF
+      pressed: # set some button colors to be different in pressed state
+        bg_color: 0x006699
+        bg_grad_color: 0x00334d
+      checked: # set some button colors to be different in checked state
+        bg_color: 0x1d5f96
+        bg_grad_color: 0x03324A
+        text_color: 0xfff300
+    buttonmatrix:
+      bg_opa: TRANSP
+      border_color: 0x0077b3
+      border_width: 0
+      text_color: 0xFFFFFF
+      pad_all: 0
+      items: # set all your buttonmatrix buttons to use your custom defined styles and font
+        bg_color: 0x2F8CD8
+        bg_grad_color: 0x005782
+        bg_grad_dir: VER
+        bg_opa: COVER
+        border_color: 0x0077b3
+        border_width: 1
+        text_color: 0xFFFFFF
+        text_font: montserrat_20
+        pressed:
+          bg_color: 0x006699
+          bg_grad_color: 0x00334d
+        checked:
+          bg_color: 0x1d5f96
+          bg_grad_color: 0x03324A
+          text_color: 0x005580
+    switch:
+      bg_color: 0xC0C0C0
+      bg_grad_color: 0xb0b0b0
+      bg_grad_dir: VER
+      bg_opa: COVER
+      checked:
+        bg_color: 0x1d5f96
+        bg_grad_color: 0x03324A
+        bg_grad_dir: VER
+        bg_opa: COVER
+      knob:
+        bg_color: 0xFFFFFF
+        bg_grad_color: 0xC0C0C0
+        bg_grad_dir: VER
+        bg_opa: COVER
+    slider:
+      border_width: 1
+      border_opa: 15%
+      bg_color: 0xcccaca
+      bg_opa: 15%
+      indicator:
+        bg_color: 0x1d5f96
+        bg_grad_color: 0x03324A
+        bg_grad_dir: VER
+        bg_opa: COVER
+      knob:
+        bg_color: 0x2F8CD8
+        bg_grad_color: 0x005782
+        bg_grad_dir: VER
+        bg_opa: COVER
+        border_color: 0x0077b3
+        border_width: 1
+        text_color: 0xFFFFFF
+  style_definitions:
+    - id: header_footer
+      bg_color: 0x2F8CD8
+      bg_grad_color: 0x005782
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_opa: TRANSP
+      radius: 0
+      pad_all: 0
+      pad_row: 0
+      pad_column: 0
+      border_color: 0x0077b3
+      text_color: 0xFFFFFF
+      width: 100%
+      height: 50
+      text_font: montserrat_20
 
   top_layer:
     widgets:
@@ -495,41 +600,78 @@ lvgl:
                   arc_width: 8
           on_press:
             - lvgl.widget.hide: boot_screen
+
       - obj:
-          id: icon_screen
-          x: 0
-          y: 0
-          height: 100%
+          id: icon_area
+          styles: header_footer
           width: 100%
-          align: CENTER
-          bg_color: 0xffffff
-          bg_opa: TRANSP
-          radius: 0
-          pad_all: 0
+          pad_left: 20px
+          pad_right: 20px
+          pad_top: 10px
           border_width: 0
+          layout:
+            type: FLEX
+            flex_flow: ROW
+            flex_align_main: space_between
+            flex_align_cross: center
+            pad_column: 20px
           widgets:
+            - label:
+                text: "Hello"
+                text_font: montserrat_24
+                flex_grow: 1
+                align: left_mid
             - label:
                 text: "\uF015" # HA Connectivity Icon
                 id: lbl_hastatus
-                align: BOTTOM_MID
-                y: -10
-                text_align: CENTER
-                text_color: 0x0000FF
+                text_font: montserrat_24
+                align: center
+            - label:
+                text: "\uF1EB" # WiFI Connectivity Icon
+                id: lbl_wifistatus
+                text_font: montserrat_24
+                align: center
+
+      - buttonmatrix:
+          align: bottom_mid
+          styles: header_footer
+          pad_all: 0
+          outline_width: 0
+          id: button_matrix
+          items:
+            styles: header_footer
+          rows:
+            - buttons:
+              - id: page_prev
+                text: "\uF053"
+                on_press:
+                  then:
+                    lvgl.page.show: first_page
+              - id: page_home
+                text: "\uF015"
+                on_press:
+                  then:
+                    lvgl.page.show: main_page
+              - id: page_next
+                text: "\uF054"
+                on_press:
+                  then:
+                    lvgl.page.show: last_page
 
   pages:
-    # - id: main_page
-    #   skip: true
-    #   widgets:
-    #     - label:
-    #         align: CENTER
-    #         text: 'Hello World!'
-    - id: energy_page
+    - id: first_page
+      #skip: true
       widgets:
-        - obj:
+        - label:
+            align: CENTER
+            text: 'First Page'
+    - id: main_page
+      widgets:
+        - obj: # Container for the Energy gauge?
             x: 0
             y: 0
-            height: 100%
-            width: 100%
+            height: 240
+            width: 240
             align: CENTER
             bg_color: 0xFFFFFF
             border_width: 0
@@ -652,3 +794,12 @@ lvgl:
                   x: 35
                   y: 25
                   text: "W"
+
+
+
+    - id: last_page
+      #skip: true
+      widgets:
+        - label:
+            align: CENTER
+            text: 'Last Page'

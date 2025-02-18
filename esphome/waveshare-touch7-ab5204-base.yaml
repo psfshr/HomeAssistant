@@ -4,7 +4,8 @@
 
 substitutions:
   name: waveshare-touch7-ab5204
-  friendly_name: WaveShare Touch7 LCD ab5204
+  friendly_name: WaveShare Touch7 Base ab5204
+
 
 esphome:
   name: ${name}
@@ -26,12 +27,26 @@ esp32:
     sdkconfig_options:
       CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
       CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
-      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
-      CONFIG_SPIRAM_RODATA: y
+
+      CONFIG_FREERTOS_HZ: "1000"
+      CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240: "y"
+      CONFIG_ESPTOOLPY_FLASHMODE_QIO: "y"
+      CONFIG_ESPTOOLPY_FLASHFREQ_120M: "y" #[should align with PSRAM]
+      CONFIG_SPIRAM_MODE_OCT: "y"
+      CONFIG_IDF_EXPERIMENTAL_FEATURES: "y"
+      CONFIG_SPIRAM_SPEED_120M: "y" #[should align with FLASH]
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "y"
+      CONFIG_SPIRAM_RODATA: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_COMPILER_OPTIMIZATION_PERF: "y"
+
+      CONFIG_LV_MEM_CUSTOM: "y"
+      CONFIG_LV_MEMCPY_MEMSET_STD: "y"
+      CONFIG_LV_ATTRIBUTE_FAST_MEM: "y"
 
 psram:
-  mode: quad
-  speed: 80MHz
+  mode: octal
+  speed: 120MHz
 
 
 ################################################################################
