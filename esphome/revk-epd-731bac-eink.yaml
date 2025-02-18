@@ -507,6 +507,18 @@ sensor:
       then:
         - lambda: 'id(data_updated) = true;'
 
+
+  # Thermal Comfort
+  - platform: homeassistant
+    entity_id: sensor.thermal_comfort_heat_index
+    id: feels_like_temperature
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+
+
+
   # Weather Sensors - Daily
   - platform: homeassistant
     entity_id: sensor.weather_forecast_daily
@@ -609,31 +621,6 @@ sensor:
     entity_id: sensor.weather_forecast_hourly
     attribute: temperature4
     id: hourly_forecast_temperature4
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  # Octopus Sensors
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: min_rate
-    id: octopus_min_rate
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: max_rate
-    id: octopus_max_rate
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: average_rate
-    id: octopus_average_rate
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
@@ -845,13 +832,19 @@ display:
 
         it.line(panel_x_14, 375, panel_x_34, 375);
 
-        // Octopus
 
-        it.printf(20, 425, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER_LEFT, font_icon_map["transmission_tower"].c_str());
-        it.printf(panel_x - 20, 425, id(text_medium), COLOR_ON, TextAlign::CENTER_RIGHT, "%1.2f - %1.2f £/kWh", id(octopus_min_rate).state, id(octopus_max_rate).state);
+        it.printf(panel_x_14, 425, id(text_medium_bold), COLOR_ON, TextAlign::CENTER, "NOW");
+        it.printf(panel_x_14, 475, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(weather_now).state.c_str()].c_str());
+        it.printf(panel_x_14, 525, id(text_medium), COLOR_ON, TextAlign::CENTER, "%.0f°C", id(temperature_now).state);
+        it.printf(panel_x_14, 575, id(text_medium), COLOR_ON, TextAlign::CENTER, "(%.0f°C)", id(feels_like_temperature).state);
+        it.printf(panel_x_14, 625, id(text_medium), COLOR_ON, TextAlign::CENTER, "%.0f%%", id(humidity_now).state);
 
-        //it.printf(panel_x_34 - 50, 425, id(text_medium), COLOR_ON, TextAlign::CENTER, "%1.2f - %1.2f (%1.2f)", id(octopus_min_rate).state, id(octopus_max_rate).state, id(octopus_average_rate).state);
+        it.line(panel_x_12, 400, panel_x_12, 650);
 
+        // weather_now
+        // temperature_now
+        // humidity_now
+        // pressure_now
 
         // Refresh Timestamp
         it.strftime(panel_x-5, panel_y-5, id(text_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
