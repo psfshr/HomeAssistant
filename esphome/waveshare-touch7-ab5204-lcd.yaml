@@ -631,13 +631,14 @@ lvgl:
         - label:
             align: CENTER
             text: 'First Page'
+
     - id: main_page
       widgets:
         - obj: # Container for the Energy gauge?
             x: 0
-            y: 0
-            height: 240
-            width: 240
+            y: 50
+            height: 200
+            width: 200
             align: CENTER
             bg_color: 0xFFFFFF
             bg_opa: TRANSP
@@ -719,8 +720,8 @@ lvgl:
                             width: 1
 
               - obj: # Cover the middle part of meter indicator line
-                  height: 146
-                  width: 146
+                  height: 140
+                  width: 140
                   radius: 72
                   align: CENTER
                   border_width: 0
