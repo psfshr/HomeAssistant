@@ -109,7 +109,9 @@ spi:
 #    interface: any
 
 i2c:
-  sda: GPIO06ESP32-S3-Touch-LCD-7
+  sda: GPIO06
+  scl: GPIO07
+  scan: true
   id: bus_a
 
 uart:
