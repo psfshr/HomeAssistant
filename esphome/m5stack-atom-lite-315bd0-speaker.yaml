@@ -59,8 +59,9 @@ binary_sensor:
       inverted: true
     id: top_button
     name: Button
-    on_click:
-      - media_player.toggle: media_out
+    # on_click:
+    #   then:
+    #     - media_player.toggle: media_out
 
 light:
   - platform: fastled_clockless
