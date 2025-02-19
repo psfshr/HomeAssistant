@@ -118,6 +118,20 @@ button:
 # DISPLAY #####################################################################
 ###############################################################################
 
+font:
+  - file:
+      type: gfonts
+      family: Montserrat
+      weight: 500
+    id: text_large
+    size: 30
+    extras:
+      file:
+        type: gfonts
+        family: Montserrat
+        weight: 500
+      glyphs: [ "'", "£" ]
+
 display:
   - platform: ili9xxx
     model: ST7789V
@@ -128,3 +142,12 @@ display:
     invert_colors: false
     color_order: rgb
     show_test_card: true
+
+    # lambda: |-
+    #   // Panel
+    #   int panel_x = it.get_width();
+    #   int panel_y = it.get_height();
+    #   int panel_x_mid = panel_x / 2;
+    #   int panel_y_mid = panel_y / 2;
+
+    #   it.printf(panel_x_mid, panel_y_mid, id(text_large), TextAlign::CENTER, "X");
