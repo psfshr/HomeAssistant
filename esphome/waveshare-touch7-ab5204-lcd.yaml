@@ -59,6 +59,7 @@ psram:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  use_address: ${name}.tgv.home
   ap:
     ssid: ${name}
     password: ${name}
@@ -348,8 +349,8 @@ touchscreen:
       mode: OUTPUT
     transform:
       mirror_x: true
-      mirror_y: false
-      swap_xy: true
+      mirror_y: true
+      swap_xy: false
     on_touch:
       - lambda: |-
             ESP_LOGI("Touch:touch : ", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
@@ -371,7 +372,7 @@ display:
     id: my_display
     update_interval: never
     auto_clear_enabled: false
-    rotation: 90
+    rotation: 180
     color_order: RGB
     pclk_frequency: 16MHZ
     dimensions:
@@ -426,12 +427,12 @@ display:
 ###############################################################################
 
 lvgl:
-  log_level: none #INFO
-  color_depth: 16
-  buffer_size: 25%
-  width: 480
-  height: 800
-  align: center
+  #log_level: none #INFO
+  #color_depth: 16
+  #buffer_size: 25%
+  #width: 800
+  #height: 480
+  #align: center
   disp_bg_color: 0xffffff
 
   displays:
@@ -608,49 +609,53 @@ lvgl:
             styles: header_footer
           rows:
             - buttons:
-              - id: page_prev
-                text: "\uF053"
-                on_press:
-                  then:
-                    lvgl.page.show: first_page
-              - id: page_home
+              - id: main_page_btn
                 text: "\uF015"
                 on_press:
                   then:
                     lvgl.page.show: main_page
-              - id: page_next
-                text: "\uF054"
+              - id: second_page_btn
+                text: "2"
                 on_press:
                   then:
-                    lvgl.page.show: last_page
+                    lvgl.page.show: second_page
+              - id: third_page_btn
+                text: "3"
+                on_press:
+                  then:
+                    lvgl.page.show: third_page
+              - id: fourth_page_btn
+                text: "4"
+                on_press:
+                  then:
+                    lvgl.page.show: fourth_page
+              - id: fifth_page_btn
+                text: "5"
+                on_press:
+                  then:
+                    lvgl.page.show: fifth_page
 
   pages:
-    - id: first_page
-      #skip: true
-      widgets:
-        - label:
-            align: CENTER
-            text: 'First Page'
-
     - id: main_page
       widgets:
         - obj: # Container for the Energy gauge?
-            x: 0
-            y: 50
+            x: 10
+            y: 60
             height: 200
             width: 200
-            align: CENTER
+            align: TOP_LEFT
             bg_color: 0xFFFFFF
             bg_opa: TRANSP
             border_width: 0
             pad_all: 0
+            text_font: montserrat_10
             widgets:
               - meter: # Current rate meter
                   height: 100%
                   width: 100%
                   border_width: 0
                   pad_all: 0
-                  bg_color: 0xEFEFEF
+                  bg_color: 0xDEDEDE
                   bg_opa: COVER
                   align: CENTER
                   scales:
@@ -668,26 +673,26 @@ lvgl:
                           width: 2
                           length: 10
                           color: 0x404040
-                          label_gap: 10
+                          label_gap: 15
                       indicators:
                         - arc:
                             id: val_arc_minmax
-                            color: 0xff0000
+                            color: 0x0000BD
                             end_value: 10
                             r_mod: 0
                             start_value: -10
                             width: 5
                         - line:
                             id: val_needle_current_rate
-                            color: 0x0000bd
-                            width: 4
-                            r_mod: 12
+                            color: 0xBD0000
+                            width: 3
+                            r_mod: -5
                             value: 0
                         - line:
                             id: val_needle_next_rate
-                            color: 0x666666
+                            color: 0x00BD00
                             width: 2
-                            r_mod: 12
+                            r_mod: -5
                             value: 0
 
                     - range_from: 10000
@@ -704,13 +709,13 @@ lvgl:
                           width: 2
                           length: 10
                           color: 0x404040
-                          label_gap: 10
+                          label_gap: 15
                       indicators:
                         - line:
                             id: val_needle_current_demand
-                            color: 0xbd0000
-                            width: 4
-                            r_mod: 12
+                            color: 0xBD0000
+                            width: 3
+                            r_mod: -5
                             value: 0
                         - tick_style:
                             start_value: 10000
@@ -720,9 +725,9 @@ lvgl:
                             width: 1
 
               - obj: # Cover the middle part of meter indicator line
-                  height: 140
-                  width: 140
-                  radius: 72
+                  height: 110
+                  width: 110
+                  radius: 55
                   align: CENTER
                   border_width: 0
                   bg_color: 0xFFFFFF
@@ -730,37 +735,56 @@ lvgl:
 
               - label: # Current rate numeric indicator
                   id: val_text_current_rate
-                  text_font: montserrat_26
+                  text_font: montserrat_18
                   align: CENTER
-                  x: -35
-                  y: 0
+                  x: -22
+                  y: -10
                   text: "0"
               - label: # Current rate unit label
-                  text_font: montserrat_14
+                  text_font: montserrat_10
                   align: CENTER
-                  x: -35
-                  y: 25
+                  x: -22
+                  y: 14
                   text: "p/kWh"
 
               - label: # Current demand numeric indicator
                   id: val_text_current_demand
-                  text_font: montserrat_26
+                  text_font: montserrat_18
                   align: CENTER
-                  x: 35
-                  y: 0
+                  x: 22
+                  y: -10
                   text: "0"
               - label: # Current demand unit label
-                  text_font: montserrat_14
+                  text_font: montserrat_10
                   align: CENTER
-                  x: 35
-                  y: 25
+                  x: 22
+                  y: 14
                   text: "W"
 
-
-
-    - id: last_page
+    - id: second_page
       #skip: true
       widgets:
         - label:
             align: CENTER
-            text: 'Last Page'
+            text: 'Second Page'
+
+    - id: third_page
+      #skip: true
+      widgets:
+        - label:
+            align: CENTER
+            text: 'Third Page'
+
+    - id: fourth_page
+      #skip: true
+      widgets:
+        - label:
+            align: CENTER
+            text: 'Fourth Page'
+
+    - id: fifth_page
+      #skip: true
+      widgets:
+        - label:
+            align: CENTER
+            text: 'Fifth Page'
