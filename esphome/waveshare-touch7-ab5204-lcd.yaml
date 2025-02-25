@@ -64,6 +64,7 @@ wifi:
     ssid: ${name}
     password: ${name}
   power_save_mode: NONE
+  use_address: ${name}.tgv.home
   on_connect:
     - lvgl.widget.show: lbl_wifistatus
   on_disconnect:
