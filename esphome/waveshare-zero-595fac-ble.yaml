@@ -44,6 +44,8 @@ wifi:
   ap:
     ssid: ${name}
     password: ${name}
+  power_save_mode: NONE
+  use_address: ${name}.tgv.home
 
 captive_portal:
 
