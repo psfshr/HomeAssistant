@@ -51,7 +51,7 @@ wifi:
   ap:
     ssid: ${name}
     password: ${name}
-  use_address: ${name}.tgv.home
+#  use_address: ${name}.tgv.home
 
 captive_portal:
 
