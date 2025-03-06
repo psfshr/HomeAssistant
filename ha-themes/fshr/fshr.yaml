@@ -156,7 +156,7 @@ fshr:
   card-title-font-weight: 600
   card-title-line-height: normal
   title-font-size: 3.5rem
-  title-font-weight: 600
+  title-font-weight: 400
   title-line-height: normal
   subtitle-font-size: 1rem
   subtitle-font-weight: 600
@@ -213,6 +213,25 @@ fshr:
     #tabbar:not(.bottom-bar) {
       justify-content: left;
     }
+
+  card-mod-view-yaml: |
+    hui-sections-view$hui-view-header$: |
+      div.container {
+        border-bottom: 1px solid var(--accent-color) !important;
+        border-radius: 0 !important;
+        padding-bottom: 4px;
+      }
+    hui-sections-view$hui-view-header$hui-markdown-card$:
+      ha-markdown$: |
+        h1 {
+          font-size: var(--title-font-size) !important;
+          color: var(--accent-color);
+          font-weight: var(--title-font-weight) !important;
+        }
+        p {
+          font-size: 1.5em !important;
+          color: var(--secondary-text-color);
+        }
 
   card-mod-row-yaml: |
     .: |
