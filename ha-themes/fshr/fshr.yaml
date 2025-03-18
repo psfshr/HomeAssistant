@@ -268,7 +268,7 @@ fshr:
     .: |
       ha-card {
         --mdc-icon-size: 20px;
-        background-color: rgba(var(--rgb-card-background-color),.33);
+        background-color: rgba(var(--rgb-card-background-color),.66);
       }
       ha-card .value {
         font-size: var(--h1-font-size);
@@ -343,7 +343,7 @@ fshr:
       }
       ha-card.type-custom-mushroom-chips-card {
         background-color: transparent !important;
-        --chip-background: rgba(var(--rgb-card-background-color),.33);
+        --chip-background: rgba(var(--rgb-card-background-color),.66);
       }
       ha-card.type-custom-mushroom-title-card {
         background-color: transparent !important;
