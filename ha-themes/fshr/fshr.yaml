@@ -226,6 +226,7 @@ fshr:
         h1 {
           font-size: var(--title-font-size) !important;
           font-weight: var(--title-font-weight) !important;
+          color: var(--secondary-text-color) !important;
         }
         p {
           font-size: 1.5em !important;
