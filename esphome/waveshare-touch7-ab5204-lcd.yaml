@@ -47,6 +47,8 @@ esp32:
       CONFIG_LV_MEM_CUSTOM: "y"
       CONFIG_LV_MEMCPY_MEMSET_STD: "y"
       CONFIG_LV_ATTRIBUTE_FAST_MEM: "y"
+    advanced:
+      enable_idf_experimental_features: true
 
 psram:
   mode: octal
