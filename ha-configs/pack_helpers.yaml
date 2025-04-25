@@ -9,6 +9,7 @@ template:
             | selectattr('state', 'eq', 'on')
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
+              | rejectattr('attributes.friendly_name','search','Backlight')
             | map(attribute='attributes.friendly_name')
             | list
             | count }}
@@ -18,6 +19,7 @@ template:
               | selectattr('state', 'eq', 'on')
               | rejectattr('attributes.entity_id', 'defined')
               | rejectattr('attributes.friendly_name','search','Screen')
+              | rejectattr('attributes.friendly_name','search','Backlight')
               | map(attribute='attributes.friendly_name')
               | list }}
       - name: "Count Of Switches On"
@@ -29,6 +31,7 @@ template:
             | selectattr('state', 'eq', 'on')
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
+            | rejectattr('attributes.friendly_name','search','Podpoint')
             | map(attribute='attributes.friendly_name')
             | list
             | count }}
@@ -38,5 +41,6 @@ template:
             | selectattr('state', 'eq', 'on')
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
+            | rejectattr('attributes.friendly_name','search','Podpoint')
             | map(attribute='attributes.friendly_name')
             | list }}

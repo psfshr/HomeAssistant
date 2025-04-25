@@ -1,0 +1,10 @@
+notify:
+  - name: "logs_smtp"
+    platform: smtp
+    sender: "homeassistant@tgv.home"
+    recipient: "logs@fshr.uk"
+    server: mail.tgv.home
+    port: 587
+    sender_name: "HomeAssistant"
+    verify_ssl: false
+    encryption: none

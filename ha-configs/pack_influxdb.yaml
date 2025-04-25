@@ -1,7 +1,7 @@
 influxdb:
   api_version: 2
   ssl: false
-  host: bluey.tgv.home
+  host: influxdb.tgv.home
   port: 8086
   token: !secret influxdb_bucket_token
   organization: fshr

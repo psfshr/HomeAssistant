@@ -40,7 +40,6 @@ rest:
           - grassIndex
           - treeIndex
           - weedIndex
-
 # template:
 #   - sensor:
 #       - name: Pollen - Grass
