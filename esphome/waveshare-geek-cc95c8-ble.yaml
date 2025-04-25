@@ -19,7 +19,7 @@
 
 substitutions:
   name: waveshare-geek-cc95c8
-  friendly_name: WaveShare Geek cc95c8 Base
+  friendly_name: WaveShare Geek BLE cc95c8
 
 esphome:
   name: ${name}
