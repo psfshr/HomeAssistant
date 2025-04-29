@@ -97,7 +97,6 @@ light:
     rgb_order: GRB
     pin: GPIO2
     num_leds: 25
-    rmt_channel: 0
     chipset: ws2812
     name: "Edge LEDs"
     id: edge_leds

@@ -101,7 +101,6 @@ light:
     rgb_order: GRB
     pin: GPIO39
     num_leds: 2
-    rmt_channel: 0
     chipset: ws2812
     name: "Status Light"
     id: status_light
@@ -109,7 +108,6 @@ light:
     rgb_order: GRB
     pin: GPIO8
     num_leds: 2
-    rmt_channel: 1
     chipset: ws2812
     name: "Record Light"
     id: record_light

@@ -84,6 +84,7 @@ display:
     model: GC9A01A
     dc_pin: GPIO38
     #reset_pin: GPIOXX
+    invert_colors: false
     show_test_card: true
     dimensions:
       height: 480

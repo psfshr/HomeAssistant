@@ -435,8 +435,8 @@ touchscreen:
     calibration:
       x_min: 250
       x_max: 3800
-      y_min: 3896
-      y_max: 208
+      y_min: 208
+      y_max: 3896
     on_touch:
       - lambda: |-
             ESP_LOGI("Touch:touch : ", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
