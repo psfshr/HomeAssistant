@@ -30,8 +30,7 @@ wifi:
 
 # Enable Home Assistant API
 api:
-  encryption:
-    key: PDqaggnKXPtyz2GE4WA8j/kFTvauCuZ9kdugv4CRZUM=
+
 ota:
   platform: esphome
 
@@ -63,14 +62,15 @@ button:
 ###############################################################################
 
 # https://github.com/fonske/Modbus-configurations-esphome/tree/main/Fairland
-
-
+# https://github.com/Mosibi/Midea-heat-pump-ESPHome/tree/master
+# https://docs.m5stack.com/en/core/ATOM%20Lite
+# https://docs.m5stack.com/en/atom/Atomic%20RS485%20Base
 
 # Sync time
 time:
   - platform: sntp
     id: sntp_time
-    timezone: ${timezone}
+    timezone: UTC
     on_time_sync:
       then:
         - logger.log: "Synchronized sntp clock"
@@ -90,11 +90,11 @@ time:
 # uart for modbus rtu  NOT_TESTED_YET
 uart:
   id: mod_bus
-  baud_rate: 9600
+  baud_rate: 115200 #9600
 #  stop_bits: 1
 #  parity: even
-  tx_pin: GPIO6
-  rx_pin: GPIO5
+  tx_pin: GPIO22 #GPIO6
+  rx_pin: GPIO19 #GPIO5
 
 modbus:
   id: modbus1
