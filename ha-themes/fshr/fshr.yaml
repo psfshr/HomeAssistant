@@ -152,8 +152,8 @@ fshr:
   h5-font-weight: 400
   h6-font-weight: 400
 
-  card-title-font-size: 1.5rem
-  card-title-font-weight: 600
+  card-title-font-size: 1.75rem
+  card-title-font-weight: normal
   card-title-line-height: normal
   title-font-size: 3.5rem
   title-font-weight: 400
