@@ -4,10 +4,10 @@ fshr:
   rgb-primary-color: "0,120,215"
   primary-color-darker: rgb(0, 60, 107)
   rgb-primary-color-darker: "0,60,107"
-  primary-background-color: rgb(12,24,36)
-  rgb-primary-background-color: "12,24,36"
-  secondary-background-color: rgb(24,36,48)
-  rgb-secondary-background-color: "24,36,48"
+  primary-background-color: rgb(24,36, 48)
+  rgb-primary-background-color: "24,36,48"
+  secondary-background-color: rgb(36,48, 60)
+  rgb-secondary-background-color: "36,48,60"
   accent-color: rgb(0,141,253)
   rgb-accent-color: "0,141,253"
   hue-primary-color: "207deg"
