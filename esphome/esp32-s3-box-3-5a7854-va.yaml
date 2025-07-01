@@ -29,8 +29,7 @@ wifi:
   
 # Enable Home Assistant API
 api:
-  encryption:
-    key: lVB3Eddi7iRL1fYdX5PHH/0htdZgPkOCMZbuAWlgTgc=
+
 #ota:
 #  platform: esphome
   

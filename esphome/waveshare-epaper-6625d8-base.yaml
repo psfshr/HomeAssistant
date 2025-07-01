@@ -29,8 +29,7 @@ wifi:
 #  use_address: ${name}.tgv.home
 
 api:
-  encryption:
-    key: "VJMi9X5Fk8nSx/45ycpJzCBrWyF4XxG2TyTheGcjgdY="
+
 ota:
   platform: esphome
 

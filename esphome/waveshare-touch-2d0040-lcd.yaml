@@ -71,8 +71,6 @@ captive_portal:
 
 # Enable Home Assistant API
 api:
-  encryption:
-    key: "y7+oPSvCkFAQtx0elE6fIzDNnEw7+NDULyWp/kus/Xc="
   on_client_connected:
     - if:
         condition:
