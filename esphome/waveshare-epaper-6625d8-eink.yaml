@@ -218,6 +218,13 @@ binary_sensor:
       name: mmWave Presence
       id: mmwave_presence
 
+  - platform: homeassistant
+    entity_id: binary_sensor.sun_solar_rising
+    id: sun_solar_rising
+    on_state:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
 ###############################################################################
 # TEXT SENSORS ################################################################
 ###############################################################################
@@ -238,13 +245,6 @@ text_sensor:
   - platform: homeassistant
     entity_id: sensor.timeofday_greeting
     id: timeofday_greeting
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.sun_solar_rising
-    id: sun_solar_rising
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
@@ -1113,7 +1113,7 @@ display:
 
         it.filled_circle(530, sun_y_disp, 10, COLOR_ON);
 
-        if ( id(sun_solar_rising).state == "True" ) {
+        if ( id(sun_solar_rising).state == true ) {
           it.printf(530, sun_y_disp, id(mdi_glyphs_extra_small), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map["arrow_up_bold"].c_str());
         }
         else {
