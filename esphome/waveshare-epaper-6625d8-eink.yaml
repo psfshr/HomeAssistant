@@ -451,44 +451,25 @@ text_sensor:
       then:
         - lambda: 'id(data_updated) = true;'
 
-##
+## Pollen sensors
 
   - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: prev_rate_start
-    id: octopus_prev_rate_start
+    entity_id: sensor.kleenex_pollen_radar_home_grass_level
+    id: pollen_grass_level
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
 
   - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: curr_rate_start
-    id: octopus_curr_rate_start
+    entity_id: sensor.kleenex_pollen_radar_home_trees_level
+    id: pollen_trees_level
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
 
   - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: next_rate_start
-    id: octopus_next_rate_start
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: prev_curr_dir
-    id: octopus_prev_curr_dir
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: curr_next_dir
-    id: octopus_curr_next_dir
+    entity_id: sensor.kleenex_pollen_radar_home_weeds_level
+    id: pollen_weeds_level
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
@@ -912,6 +893,7 @@ font:
       - "\U000F013C" # chevron-double-down
       - "\U000F0DB9" # chevron-triple-down
       - "\U000F018C" # compass-outline
+      - "\U000F1885" # flower-pollen
 
   - file: "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf"
     id: mdi_glyphs_large
@@ -983,6 +965,7 @@ display:
         {"arrow_down_thin", "\U000F19B3"}, // arrow-down-thin
         {"arrow_down_bold", "\U000F072E"}, // arrow-down-bold
         {"compass-outline", "\U000F018C"}, // compass-outline
+        {"flower-pollen", "\U000F1885"}, // flower-pollen
       };
 
       std::map<std::string, std::string> moon_map
@@ -1128,23 +1111,16 @@ display:
         it.printf(715, 155, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(moon_phase).state.c_str()].c_str());
         it.printf(715, 205, id(text_extra_small_bold), COLOR_ON, TextAlign::CENTER, "%s", moon_map[id(moon_phase).state.c_str()].c_str());
 
-        // Right-Middle - Energy (250,225)
-        it.printf(295, 265, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["transmission_tower"].c_str());
-        it.printf(375, 255, id(text_small_bold), COLOR_ON, TextAlign::CENTER, "%s", id(octopus_prev_rate_start).state.c_str());
-        it.printf(375, 280, id(text_small), COLOR_ON, TextAlign::CENTER, "£%1.2f", id(octopus_prev_rate_value).state);
-        it.printf(445, 265, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(octopus_prev_curr_dir).state.c_str()].c_str());
-        it.printf(525, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "%s", id(octopus_curr_rate_start).state.c_str());
-        it.printf(525, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "£%1.2f", id(octopus_curr_rate_value).state);
-        it.printf(605, 265, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(octopus_curr_next_dir).state.c_str()].c_str());        
-        it.printf(675, 255, id(text_small_bold), COLOR_ON, TextAlign::CENTER, "%s", id(octopus_next_rate_start).state.c_str());
-        it.printf(675, 280, id(text_small), COLOR_ON, TextAlign::CENTER, "£%1.2f", id(octopus_next_rate_value).state);
-
-        it.printf(755, 265, id(mdi_glyphs_large), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[power_rate_indicator].c_str());
+        // Right-Middle - Pollen (250,225)
+        it.printf(300, 265, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["flower-pollen"].c_str());
+        it.printf(400, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Grass");
+        it.printf(400, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_grass_level).state.c_str());
+        it.printf(525, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Trees");
+        it.printf(525, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_trees_level).state.c_str());
+        it.printf(650, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Weeds");
+        it.printf(650, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_weeds_level).state.c_str());
 
         // Right-Bottom
-
-        //it.printf(445, 440, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(octopus_prev_curr_dir).state.c_str());
-        //it.printf(595, 440, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(octopus_curr_next_dir).state.c_str());        
 
         // Refresh Timestamp
         it.strftime(panel_x - 10, panel_y - 10, id(text_extra_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
