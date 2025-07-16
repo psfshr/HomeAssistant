@@ -13,7 +13,12 @@ runesphome ()
             exit
         fi
 
-        if [ $clean -eq 1 ]; then
+        if [ $logs -eq 1 ]; then
+            echo "Running esphome CLEAN for file => $filename"
+            source .venv/bin/activate
+            esphome logs $filename
+            deactivate
+        elif [ $clean -eq 1 ]; then
             echo "Running esphome CLEAN for file => $filename"
             source .venv/bin/activate
             esphome clean $filename
@@ -43,6 +48,8 @@ fi
 
 while [ "$1" != "" ]; do
     case $1 in
+        -l | --logs )       logs=1
+                            ;;
         -c | --clean )      clean=1
                             ;;
         -o | --override )   override=1
