@@ -9,8 +9,8 @@ template:
             | selectattr('state', 'eq', 'on')
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
-              | rejectattr('attributes.friendly_name','search','Backlight')
-            | map(attribute='attributes.friendly_name')
+            | rejectattr('attributes.friendly_name','search','Backlight')
+            | map(attribute='entity_id')
             | list
             | count }}
         attributes:
@@ -20,7 +20,7 @@ template:
               | rejectattr('attributes.entity_id', 'defined')
               | rejectattr('attributes.friendly_name','search','Screen')
               | rejectattr('attributes.friendly_name','search','Backlight')
-              | map(attribute='attributes.friendly_name')
+              | map(attribute='entity_id')
               | list }}
       - name: "Count Of Switches On"
         unique_id: "countswitcheson"
@@ -32,7 +32,7 @@ template:
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
             | rejectattr('attributes.friendly_name','search','Podpoint')
-            | map(attribute='attributes.friendly_name')
+            | map(attribute='entity_id')
             | list
             | count }}
         attributes:
@@ -42,5 +42,5 @@ template:
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
             | rejectattr('attributes.friendly_name','search','Podpoint')
-            | map(attribute='attributes.friendly_name')
+            | map(attribute='entity_id')
             | list }}

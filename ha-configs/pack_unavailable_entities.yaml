@@ -40,7 +40,7 @@ template:
         attributes:
           entityids: >
             {% set ignore_seconds = 120 %}
-            {% set ignored = state_attr('group.ignored_unavailable_entities', 'entity_id') %}
+            {% set ignored = state_attr('group.ignored_unknown_entities', 'entity_id') %}
             {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
             {% set entities = states
                 | rejectattr('domain','in',['button', 'event', 'group', 'image', 'input_button', 'input_text', 'remote', 'tts', 'scene', 'stt'])
@@ -60,7 +60,7 @@ template:
         attributes:
           entityids: >
             {% set ignore_seconds = 120 %}
-            {% set ignored = state_attr('group.ignored_unavailable_entities', 'entity_id') %}
+            {% set ignored = state_attr('group.ignored_none_entities', 'entity_id') %}
             {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
             {% set entities = states
                 | rejectattr('domain','in',['button', 'event', 'group', 'image', 'input_button', 'input_text', 'remote', 'tts', 'scene', 'stt'])
@@ -71,7 +71,30 @@ template:
 
 # OPTIONAL - Add entities you want to ignore to this group.  Delete if not using group.
 
-#group:
-#  ignored_unavailable_entities:
-#    entities:
-#      - sensor.example_ignored_entity
+group:
+  ignored_unavailable_entities:
+    entities:
+      - climate.air_conditioner
+      - select.air_freshener_power_on_behavior_on_startup
+      - sensor.epson_xp_4200_series
+      - sensor.epson_xp_4200_series_black_ink
+      - sensor.epson_xp_4200_series_cyan_ink
+      - sensor.epson_xp_4200_series_magenta_ink
+      - sensor.epson_xp_4200_series_yellow_ink
+  ignored_unknown_entities:
+    entities:
+      - select.driveway_ptz_preset
+      - select.front_door_doorbell_play_quick_reply_message
+      - siren.driveway_siren
+      - siren.front_door_doorbell_siren
+      - update.hallway_pir_firmware
+      - update.kitchen_door_contact_firmware
+      - update.kitchen_sink_leak_firmware
+      - update.landing_pir_firmware
+      - update.living_room_button_firmware
+      - update.our_bedroom_door_button_firmware
+      - update.playroom_button_firmware
+      - update.stairs_bottom_button_firmware
+      - update.stairs_top_button_firmware
+      - update.study_air_quality_firmware
+      - update.tz3000_mw1pqqqt_ts0003_firmware
