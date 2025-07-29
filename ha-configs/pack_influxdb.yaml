@@ -14,16 +14,14 @@ influxdb:
     - friendly_name
   include:
     entity_globs:
-      - sensor.front_garden_climate_*
-      - sensor.hallway_climate_*
-      - sensor.landing_climate_*
-      - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_total_consumption
-      - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate
-      - sensor.octopus_energy_gas_e6s14581362361_7624447310_current_total_consumption_m3
-      - sensor.octopus_energy_gas_e6s14581362361_7624447310_current_total_consumption_kwh
-      - sensor.octopus_energy_gas_e6s14581362361_7624447310_current_rate
-      - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_demand
-      - sensor.power_production_now
-      - sensor.energy_current_hour
-      - sensor.power_production_now_2
-      - sensor.energy_current_hour_2
+      - sensor.*_climate_temperature
+      - sensor.*_climate_humidity
+      - sensor.*_climate_pressure
+      - sensor.encharge_*
+      - binary_sensor.encharge_*
+      - sensor.envoy_*
+      - binary_sensor.envoy_*
+      - sensor.inverter_*
+      - binary_sensor.inverter_*
+      - sensor.*_power
+      - sensor.*_total_active_energy
