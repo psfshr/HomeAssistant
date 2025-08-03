@@ -3,7 +3,7 @@ notify:
     platform: smtp
     sender: "homeassistant@tgv.home"
     recipient: "logs@fshr.uk"
-    server: mail.tgv.home
+    server: phineas.tgv.home
     port: 587
     sender_name: "HomeAssistant"
     verify_ssl: false

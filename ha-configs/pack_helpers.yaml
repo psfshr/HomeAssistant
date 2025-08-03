@@ -31,7 +31,6 @@ template:
             | selectattr('state', 'eq', 'on')
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
-            | rejectattr('attributes.friendly_name','search','Podpoint')
             | map(attribute='entity_id')
             | list
             | count }}
@@ -41,6 +40,5 @@ template:
             | selectattr('state', 'eq', 'on')
             | rejectattr('attributes.entity_id', 'defined')
             | rejectattr('attributes.friendly_name','search','Screen')
-            | rejectattr('attributes.friendly_name','search','Podpoint')
             | map(attribute='entity_id')
             | list }}
