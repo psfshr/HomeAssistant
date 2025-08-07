@@ -70,6 +70,11 @@ fshr:
   paper-item-icon-active-color: rgb(138, 180, 248)
   mdc-button-outline-color: rgb(138, 180, 248)
 
+  button-color-fill-normal-active: rgb(223, 243, 252)
+  button-color-fill-normal-hover: rgb(185, 230, 252)
+  button-color-fill-loud-active: rgb(0, 154, 199)
+  button-color-fill-loud-hover: rgb(0, 103, 135)
+
   # States and Badges
   state-icon-color: var(--paper-item-icon-color)
   state-icon-active-color: var(--paper-item-icon-active-color)
