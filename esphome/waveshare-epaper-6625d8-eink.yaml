@@ -218,25 +218,12 @@ binary_sensor:
       name: mmWave Presence
       id: mmwave_presence
 
-  - platform: homeassistant
-    entity_id: binary_sensor.sun_solar_rising
-    id: sun_solar_rising
-    on_state:
-      then:
-        - lambda: 'id(data_updated) = true;'
 
 ###############################################################################
 # TEXT SENSORS ################################################################
 ###############################################################################
 
 text_sensor:
-  - platform: homeassistant
-    entity_id: sensor.moon_phase
-    id: moon_phase
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;' 
-
   - platform: ld2420
     fw_version:
       name: LD2420 Firmware
@@ -516,21 +503,6 @@ sensor:
 
   # Home Assistant General Sensors
 
-  # Sun Sensors
-  - platform: homeassistant
-    entity_id: sensor.sun_solar_azimuth
-    id: sun_solar_azimuth
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.sun_solar_elevation
-    id: sun_solar_elevation
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
   # Weather Sensors - Now
   - platform: homeassistant
     entity_id: sensor.front_garden_climate_temperature
@@ -693,31 +665,6 @@ sensor:
       then:
         - lambda: 'id(data_updated) = true;'
 
-##
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: prev_rate_value
-    id: octopus_prev_rate_value
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: curr_rate_value
-    id: octopus_curr_rate_value
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
-
-  - platform: homeassistant
-    entity_id: sensor.octopus_rates
-    attribute: next_rate_value
-    id: octopus_next_rate_value
-    on_value:
-      then:
-        - lambda: 'id(data_updated) = true;'
 
 
 ###############################################################################
@@ -968,32 +915,11 @@ display:
         {"flower-pollen", "\U000F1885"}, // flower-pollen
       };
 
-      std::map<std::string, std::string> moon_map
-      {
-        {"first_quarter", "First Quarter"}, // moon-first-quarter
-        {"full_moon", "Full Moon"}, // moon-full
-        {"last_quarter", "Last Quarter"}, // moon-last-quarter
-        {"new_moon", "New Moon"}, // moon-new
-        {"waning_crescent", "Waning Crescent"}, // moon-waning-crescent
-        {"waning_gibbous", "Waning Gibbous"}, // moon-waning-gibbous
-        {"waxing_crescent", "Waxing Crescent"}, // moon-waxing-crescent
-        {"waxing_gibbous", "Waxing Gibbous"}, // moon-waxing-gibbous
-      };
-
       // Panel
       int panel_x = it.get_width();
       int panel_y = it.get_height();
       int panel_x_mid = panel_x / 2;
       int panel_y_mid = panel_y / 2;
-
-      float power_rate_high_high = 0.30;
-      float power_rate_high = 0.25;
-      float power_rate_neutral = 0.20;
-      float power_rate_low = 0.15;
-      float power_rate_low_low = 0.10;
-
-      int sun_y_pos = 0;
-      int sun_y_disp = 0;
 
       if (id(initial_data_received) == false) {
 
@@ -1003,35 +929,10 @@ display:
 
       } else {
 
-        std::string power_rate_indicator;
-
-        if ( id(octopus_curr_rate_value).state >= power_rate_high_high ) {
-          power_rate_indicator = "chevron_triple_up";
-        }
-        else if ( power_rate_high_high > id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state >= power_rate_high ) {
-          power_rate_indicator = "chevron_double_up";
-        }
-        else if ( power_rate_high > id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state >= power_rate_neutral ) {
-          power_rate_indicator = "chevron_up";
-        }
-        else if ( power_rate_neutral > id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state > power_rate_low ) {
-          power_rate_indicator = "chevron_down";
-        }
-        else if ( power_rate_low >= id(octopus_curr_rate_value).state && id(octopus_curr_rate_value).state > power_rate_low_low ) {
-          power_rate_indicator = "chevron_double_down";
-        }
-        else if ( id(octopus_curr_rate_value).state <= power_rate_low_low ) {
-          power_rate_indicator = "chevron_triple_down";
-        }
-        else {
-          power_rate_indicator = "unknown";
-        }
-
         // Dividers
         it.line(0, 80, 800, 80, COLOR_ON); // Top Horizontal
         it.line(500, 80, 500, 225, COLOR_ON); // Top Middle Vertical
-        it.line(250, 225, 800, 225, COLOR_ON); // Middle Horizontal
-        it.line(250, 305, 800, 305, COLOR_ON); // Middle Horizontal 2        
+        it.line(250, 225, 800, 225, COLOR_ON); // Middle Horizontal 
         it.line(250, 225, 250, 480, COLOR_ON); // Bottom Left Vertical
 
         // Top Panel - Header
@@ -1083,42 +984,15 @@ display:
         it.printf(125, 440, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map[id(hourly_forecast_condition4).state.c_str()].c_str());
         it.printf(195, 440, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f°C", id(hourly_forecast_temperature4).state);
 
-        // Right-Top - Sun/Moon
-        it.printf(570, 105, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "Sun");
+        // Right-Top - Pollen
+        it.printf(570, 110, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Grass");
+        it.printf(715, 110, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_grass_level).state.c_str());
+        it.printf(570, 150, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Trees");
+        it.printf(715, 150, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_trees_level).state.c_str());
+        it.printf(570, 190, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Weeds");
+        it.printf(715, 190, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_weeds_level).state.c_str());
 
-        // Y Max/Min = 170 +- 45 = 215 / 125
-
-        //it.line(510, 170, 550, 170); // Horizon
-        it.filled_rectangle(510, 169, 40, 3, COLOR_ON); // Horizon
-
-        sun_y_pos = (int) id(sun_solar_elevation).state / 1.5;
-        sun_y_disp = 170 - sun_y_pos;
-
-        it.filled_circle(530, sun_y_disp, 10, COLOR_ON);
-
-        if ( id(sun_solar_rising).state == true ) {
-          it.printf(530, sun_y_disp, id(mdi_glyphs_extra_small), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map["arrow_up_bold"].c_str());
-        }
-        else {
-          it.printf(530, sun_y_disp, id(mdi_glyphs_extra_small), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map["arrow_down_bold"].c_str());
-        }
-
-        it.printf(590, 155, id(text_small), COLOR_ON, TextAlign::CENTER, "%3.0f°", id(sun_solar_azimuth).state);
-        it.printf(590, 185, id(text_small), COLOR_ON, TextAlign::CENTER, "%3.0f°", id(sun_solar_elevation).state);
-
-        it.printf(715, 105, id(text_large_bold), COLOR_ON, TextAlign::CENTER, "Moon");
-        it.filled_circle(715, 155, 30, COLOR_ON);
-        it.printf(715, 155, id(mdi_glyphs_large), COLOR_OFF, TextAlign::CENTER, "%s", font_icon_map[id(moon_phase).state.c_str()].c_str());
-        it.printf(715, 205, id(text_extra_small_bold), COLOR_ON, TextAlign::CENTER, "%s", moon_map[id(moon_phase).state.c_str()].c_str());
-
-        // Right-Middle - Pollen (250,225)
-        it.printf(300, 265, id(mdi_glyphs_med), COLOR_ON, TextAlign::CENTER, "%s", font_icon_map["flower-pollen"].c_str());
-        it.printf(400, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Grass");
-        it.printf(400, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_grass_level).state.c_str());
-        it.printf(525, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Trees");
-        it.printf(525, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_trees_level).state.c_str());
-        it.printf(650, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Weeds");
-        it.printf(650, 280, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_weeds_level).state.c_str());
+        // Right-Middle
 
         // Right-Bottom
 
