@@ -461,6 +461,29 @@ text_sensor:
       then:
         - lambda: 'id(data_updated) = true;'
 
+  # Power Sensors
+  - platform: homeassistant
+    entity_id: sensor.envoy_current_power_production_state
+    id: envoy_current_power_production_state
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.envoy_battery_combined_state
+    id: envoy_battery_combined_state
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.envoy_net_power_import_export_state
+    id: envoy_net_power_import_export_state
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+
 ###############################################################################
 # GENERAL SENSORS #############################################################
 ###############################################################################
@@ -664,6 +687,48 @@ sensor:
     on_value:
       then:
         - lambda: 'id(data_updated) = true;'
+
+  # Power Sensors
+  - platform: homeassistant
+    entity_id: sensor.envoy_122437003414_current_power_production
+    id: envoy_122437003414_current_power_production
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+    filters:
+      - multiply: 1000
+
+  - platform: homeassistant
+    entity_id: sensor.envoy_battery_combined_power
+    id: envoy_battery_combined_power
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.encharge_492447007140_battery
+    id: encharge_492447007140_battery
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+
+  - platform: homeassistant
+    entity_id: sensor.envoy_net_power_export
+    id: envoy_net_power_export
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+    filters:
+      - multiply: 1000
+
+  - platform: homeassistant
+    entity_id: sensor.envoy_net_power_import
+    id: envoy_net_power_import
+    on_value:
+      then:
+        - lambda: 'id(data_updated) = true;'
+    filters:
+      - multiply: 1000
 
 
 
@@ -992,12 +1057,33 @@ display:
         it.printf(570, 190, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Weeds");
         it.printf(715, 190, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", id(pollen_weeds_level).state.c_str());
 
-        // Right-Middle
-
         // Right-Bottom
 
+        it.printf(350, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Solar");
+        it.printf(350, 290, id(text_med), COLOR_ON, TextAlign::CENTER, "%s", 
+          id(envoy_current_power_production_state).state.c_str());
+        it.printf(350, 330, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f W", 
+          id(envoy_122437003414_current_power_production).state);
+
+        it.printf(525, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Battery");
+        it.printf(525, 290, id(text_med), COLOR_ON, TextAlign::CENTER, "%s",
+          id(envoy_battery_combined_state).state.c_str());
+        it.printf(525, 330, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f W",
+          id(envoy_battery_combined_power).state);
+        it.printf(525, 370, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f %%",
+          id(encharge_492447007140_battery).state);
+
+        it.printf(700, 250, id(text_med_bold), COLOR_ON, TextAlign::CENTER, "Grid");
+        it.printf(700, 290, id(text_med), COLOR_ON, TextAlign::CENTER, "%s",
+          id(envoy_net_power_import_export_state).state.c_str());
+        it.printf(700, 330, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f W",
+          id(envoy_net_power_export).state);
+        it.printf(700, 370, id(text_med), COLOR_ON, TextAlign::CENTER, "%2.0f W",
+          id(envoy_net_power_import).state);
+
+
         // Refresh Timestamp
-        it.strftime(panel_x - 10, panel_y - 10, id(text_extra_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, "%H:%M", id(homeassistant_time).now());
+        it.strftime(panel_x - 10, panel_y - 10, id(text_extra_small), COLOR_ON, TextAlign::BOTTOM_RIGHT, " Last Update : %H:%M", id(homeassistant_time).now());
       }
 
 ###############################################################################
