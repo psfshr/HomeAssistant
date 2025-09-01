@@ -27,56 +27,6 @@ template:
           {% endif %}
 
   ################################################################################
-  # SMARTFRAME ENERGY ############################################################
-  ################################################################################
-
-  - trigger:
-      - platform: state
-        entity_id:
-          - sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate
-          - sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate
-          - sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate
-    sensor:
-      - name: Octopus Rates
-        unique_id: octopus_rates
-        state: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') }}"
-        attributes:
-          timestamp: "{{ states('sensor.date_time_iso') }}"
-          prev_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate','start')) | timestamp_custom('%H:%M') }}"
-          prev_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate') }}"
-          prev_curr_dir: >
-            {% set rate1 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_previous_rate') %}
-            {% set rate2 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') %}
-            {% if rate1 < rate2 %}
-                rising
-            {% elif rate1 > rate2 %}
-                falling
-            {% elif rate1 == rate2 %}
-                same
-            {% else %}
-                unknown
-            {% endif %}
-          curr_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate','start')) | timestamp_custom('%H:%M') }}"
-          curr_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') }}"
-          curr_next_dir: >
-            {% set rate1 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_current_rate') %}
-            {% set rate2 = states('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate') %}
-            {% if rate1 < rate2 %}
-                rising
-            {% elif rate1 > rate2 %}
-                falling
-            {% elif rate1 == rate2 %}
-                same
-            {% else %}
-                unknown
-            {% endif %}
-          next_rate_start: "{{ as_timestamp(state_attr('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate','start')) | timestamp_custom('%H:%M') }}"
-          next_rate_value: "{{ states('sensor.octopus_energy_electricity_23l3520058_2700001750370_next_rate') }}"
-          max_rate: "{{ state_attr('event.octopus_energy_electricity_23l3520058_2700001750370_current_day_rates', 'max_rate') }}"
-          min_rate: "{{ state_attr('event.octopus_energy_electricity_23l3520058_2700001750370_current_day_rates', 'min_rate') }}"
-          average_rate: "{{ state_attr('event.octopus_energy_electricity_23l3520058_2700001750370_current_day_rates', 'average_rate') }}"
-
-  ################################################################################
   # SMARTFRAME WEATHER ###########################################################
   ################################################################################
 
