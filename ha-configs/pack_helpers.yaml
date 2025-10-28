@@ -5,40 +5,24 @@ template:
         state_class: measurement
         icon: mdi:lightbulb
         state: >
-          {{ states.light
-            | selectattr('state', 'eq', 'on')
-            | rejectattr('attributes.entity_id', 'defined')
-            | rejectattr('attributes.friendly_name','search','Screen')
-            | rejectattr('attributes.friendly_name','search','Backlight')
-            | map(attribute='entity_id')
-            | list
-            | count }}
+          {% set entities = label_entities('__MonitoredDevice') %}
+          {% set lights = entities | select('match', '^light\.') | list %}
+          {{ lights | select('is_state', 'on') | list | count }}
         attributes:
           entities: >
-            {{ states.light
-              | selectattr('state', 'eq', 'on')
-              | rejectattr('attributes.entity_id', 'defined')
-              | rejectattr('attributes.friendly_name','search','Screen')
-              | rejectattr('attributes.friendly_name','search','Backlight')
-              | map(attribute='entity_id')
-              | list }}
+            {% set entities = label_entities('__MonitoredDevice') %}
+            {% set lights = entities | select('match', '^light\.') | list %}
+            {{ lights | select('is_state', 'on') | list }}
       - name: "Count Of Switches On"
         unique_id: "countswitcheson"
         state_class: measurement
         icon: mdi:toggle-switch-variant
         state: >
-          {{ states.switch
-            | selectattr('state', 'eq', 'on')
-            | rejectattr('attributes.entity_id', 'defined')
-            | rejectattr('attributes.friendly_name','search','Screen')
-            | map(attribute='entity_id')
-            | list
-            | count }}
+          {% set entities = label_entities('__MonitoredDevice') %}
+          {% set switches = entities | select('match', '^switch\.') | list %}
+          {{ switches | select('is_state', 'on') | list | count }}
         attributes:
           entities: >
-            {{ states.switch
-            | selectattr('state', 'eq', 'on')
-            | rejectattr('attributes.entity_id', 'defined')
-            | rejectattr('attributes.friendly_name','search','Screen')
-            | map(attribute='entity_id')
-            | list }}
+            {% set entities = label_entities('__MonitoredDevice') %}
+            {% set switches = entities | select('match', '^switch\.') | list %}
+            {{ switches | select('is_state', 'on') | list }}

@@ -1,0 +1,64 @@
+# OpenAI Usage Tracking
+rest:
+  - resource: "https://api.openai.com/v1/usage"
+    method: GET
+    scan_interval: 3600 # Check hourly to avoid rate limits
+    timeout: 30
+    headers:
+      Authorization: "Bearer !secret openai_api_key"
+      Content-Type: "application/json"
+    params:
+      # Get usage for current month
+      date: "{{ now().strftime('%Y-%m') }}"
+    sensor:
+      # Total cost for current month
+      - name: "OpenAI Monthly Cost"
+        value_template: >
+          {% if value_json.total_usage %}
+            {{ (value_json.total_usage | float / 100) | round(2) }}
+          {% else %}
+            {{ states('sensor.openai_monthly_cost') | float(0) }}
+          {% endif %}
+        unit_of_measurement: "£"
+        device_class: monetary
+        state_class: total
+        availability_template: "{{ value_json is defined }}"
+        json_attributes:
+          - total_usage
+          - daily_costs
+
+      # Daily usage tracking
+      - name: "OpenAI Daily Cost"
+        value_template: >
+          {% set today = now().strftime('%Y-%m-%d') %}
+          {% if value_json.daily_costs %}
+            {% for day in value_json.daily_costs %}
+              {% if day.timestamp == today %}
+                {{ (day.line_items | sum(attribute='cost') / 100) | round(2) }}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        unit_of_measurement: "£"
+        device_class: monetary
+        state_class: total_increasing
+
+  # Alternative endpoint for organization usage (if you have org access)
+  - resource: "https://api.openai.com/v1/organization/usage"
+    method: GET
+    scan_interval: 3600
+    headers:
+      Authorization: "Bearer !secret openai_api_key"
+      Content-Type: "application/json"
+    params:
+      start_date: "{{ (now() - timedelta(days=30)).strftime('%Y-%m-%d') }}"
+      end_date: "{{ now().strftime('%Y-%m-%d') }}"
+    sensor:
+      - name: "OpenAI Organization Usage"
+        value_template: >
+          {% if value_json.data %}
+            {{ (value_json.data | sum(attribute='n_generated_tokens_total') / 1000) | round(0) }}
+          {% else %}
+            0
+          {% endif %}
+        unit_of_measurement: "k tokens"
+        state_class: total

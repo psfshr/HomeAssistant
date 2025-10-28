@@ -74,14 +74,11 @@ template:
 group:
   ignored_unavailable_entities:
     entities:
-      - climate.air_conditioner
       - sensor.epson_xp_4200_series
       - sensor.epson_xp_4200_series_black_ink
       - sensor.epson_xp_4200_series_cyan_ink
       - sensor.epson_xp_4200_series_magenta_ink
       - sensor.epson_xp_4200_series_yellow_ink
-      - number.downstairs_zone_quick_veto_duration
-      - number.upstairs_zone_quick_veto_duration
       - select.ohme_home_pro_charge_mode
   ignored_unknown_entities:
     entities:
@@ -89,7 +86,6 @@ group:
       - select.front_door_doorbell_play_quick_reply_message
       - siren.driveway_siren
       - siren.front_door_doorbell_siren
-      - update.hallway_pir_firmware
       - update.kitchen_door_contact_firmware
       - update.kitchen_sink_leak_firmware
       - update.landing_pir_firmware
@@ -102,7 +98,5 @@ group:
       - update.tz3000_mw1pqqqt_ts0003_firmware
       - update.front_door_contact_firmware
       - update.living_room_door_contact_firmware
-      - binary_sensor.downstairs_circuit_cooling_allowed
-      - binary_sensor.upstairs_circuit_cooling_allowed
-      - sensor.downstairs_zone_desired_cooling_temperature
-      - sensor.upstairs_zone_desired_cooling_temperature
+      - update.hot_water_tank_leak_firmware
+      - update.kitchen_pir_firmware
