@@ -1,7 +1,15 @@
+input_boolean:
+  var_is_tadpole_holiday:
+    name: Var - Is Tadpole Holiday
+    icon: mdi:account-school
+  var_working:
+    name: Var - Working
+    icon: mdi:flag
+
 template:
   - sensor:
-      - name: "Count Of Lights On"
-        unique_id: "countlightson"
+      - name: "Var - Count Of Lights On"
+        unique_id: var_count_of_lights_on
         state_class: measurement
         icon: mdi:lightbulb
         state: >
@@ -13,8 +21,8 @@ template:
             {% set entities = label_entities('__MonitoredDevice') %}
             {% set lights = entities | select('match', '^light\.') | list %}
             {{ lights | select('is_state', 'on') | list }}
-      - name: "Count Of Switches On"
-        unique_id: "countswitcheson"
+      - name: "Var - Count Of Switches On"
+        unique_id: var_count_of_switches_on
         state_class: measurement
         icon: mdi:toggle-switch-variant
         state: >
@@ -26,3 +34,13 @@ template:
             {% set entities = label_entities('__MonitoredDevice') %}
             {% set switches = entities | select('match', '^switch\.') | list %}
             {{ switches | select('is_state', 'on') | list }}
+
+  - trigger:
+      - platform: event
+        event_type: set_var_ai_response_weather
+    sensor:
+      - name: Var - AI Response - Weather
+        unique_id: var_ai_response_weather
+        state: "{{ now() }}"
+        attributes:
+          payload: "{{ trigger.event.data.payload }}"
