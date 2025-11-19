@@ -5,14 +5,14 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
-    - /hacsfiles/lovelace-card-mod/card-mod.js
+    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=<12345678901>
 
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
 recorder:
-  purge_keep_days: 365
+  purge_keep_days: 90
 
 logger:
   filters:

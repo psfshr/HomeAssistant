@@ -59,9 +59,9 @@ fshr:
   rgb-mdc-theme-surface: "12,12,12"
 
   # Borders
-  ha-card-border-radius: 20px
-  ha-config-card-border-radius: 20px
-  ha-dialog-border-radius: 20px
+  ha-card-border-radius: 10px
+  ha-config-card-border-radius: 10px
+  ha-dialog-border-radius: 10px
   ha-card-border-width: 0px
   ha-card-border-color: transparent
 
@@ -273,6 +273,7 @@ fshr:
       ha-card {
         --mdc-icon-size: 20px;
         background-color: rgba(var(--rgb-card-background-color),.50);
+        border-radius: 10px !important;
       }
       ha-card .value {
         font-size: var(--h1-font-size);
@@ -300,7 +301,7 @@ fshr:
         font-weight: var(--h6-font-weight);
         color: var(--secondary-text-color);
       }
-      .card-header, .card-header .name, :host ::slotted(.card-header), ha-card.type-area .name, ha-card.type-picture-entity .footer.single, ha-card.type-media-control hui-marquee {
+      .card-header, .card-header .name, :host ::slotted(.card-header), :host(.type-area) ha-card .name, :host(.type-picture-entity) ha-card .footer.single, :host(type-media-control) ha-card hui-marquee {
         font-size: var(--card-title-font-size) !important;
         line-height: var(--card-title-line-height) !important;
         font-weight: var(--card-title-font-weight) !important;
@@ -316,40 +317,40 @@ fshr:
       .entities {
         align-items: flex-start !important;
       }
-      ha-card.type-heading {
+      :host(.type-heading) ha-card {
         background-color: transparent !important;
         border-radius: 0 !important;
         border-bottom: 1px solid var(--accent-color) !important;
       }
-      ha-card.type-heading .title > p {
+      :host(.type-heading) ha-card .title > p {
         font-size: 1.25em !important;
       }
-      ha-card.type-heading .title ha-icon {
+      :host(.type-heading) ha-card .title ha-icon {
         --mdc-icon-size: 24px;
         color: var(--accent-color) !important;
       }
-      ha-card.type-heading .subtitle > p {
+      :host(.type-heading) ha-card .subtitle > p {
         font-size: 1.0em !important;
       }
-      ha-card.type-heading .subtitle ha-icon {
+      :host(.type-heading) ha-card .subtitle ha-icon {
         color: var(--accent-color) !important;
       }
-      ha-card.type-entities > div.card-content > div {
+      :host(.type-entities) ha-card > div.card-content > div {
         margin: 0 !important;
       }
-      ha-card.type-entities > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
+      :host(.type-entities) ha-card > div.card-content > div > hui-sensor-entity-row > hui-generic-entity-row {
         padding: 0 !important;
       }
-      ha-card.type-media-control {
+      :host(.type-media-control) ha-card {
         .background.no-image > * {
           background-color: transparent !important;
         }  
       }
-      ha-card.type-custom-mushroom-chips-card {
+      :host(.type-custom-mushroom-chips-card) ha-card {
         background-color: transparent !important;
         --chip-background: rgba(var(--rgb-card-background-color),.50);
       }
-      ha-card.type-custom-mushroom-title-card {
+      :host(.type-custom-mushroom-title-card) ha-card {
         background-color: transparent !important;
         border-radius: 0;
         border-bottom: 1px solid var(--accent-color) !important;
