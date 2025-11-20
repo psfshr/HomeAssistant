@@ -1,25 +1,70 @@
 mqtt:
   sensor:
+    #-----------------------------------------------
+    # New Local MQTT for additional heatpump entries
+    #-----------------------------------------------
+
+    - name: "ebusd HMU BuildingCircuitFlow"
+      state_topic: "ebusd/hmu/BuildingCircuitFlow"
+      value_template: "{{ ( value_json['value']['value'] | float(0) ) / 60 }}"
+      unit_of_measurement: "L/min"
+      state_class: "measurement"
+      device_class: "volume_flow_rate"
+      icon: mdi:pipe-valve
+
     - name: "ebusd HMU CurrentError Error"
       state_topic: "ebusd/hmu/Currenterror"
-      value_template: "{{ value_json.error.value }}"
+      value_template: >
+        {% if value_json['error']['value'] is none %}
+          None
+        {% else %}
+          {{ value_json['error']['value'] }}
+        {% endif %}
+      icon: mdi:alert-circle
+
     - name: "ebusd HMU CurrentError Error 1"
       state_topic: "ebusd/hmu/Currenterror"
-      value_template: "{{ value_json.error_1.value }}"
+      value_template: >
+        {% if value_json['error_1']['value'] is none %}
+          None
+        {% else %}
+          {{ value_json['error_1']['value'] }}
+        {% endif %}
+      icon: mdi:alert-circle
+
     - name: "ebusd HMU CurrentError Error 2"
       state_topic: "ebusd/hmu/Currenterror"
-      value_template: "{{ value_json.error_2.value }}"
+      value_template: >
+        {% if value_json['error_2']['value'] is none %}
+          None
+        {% else %}
+          {{ value_json['error_2']['value'] }}
+        {% endif %}
+      icon: mdi:alert-circle
+
     - name: "ebusd HMU CurrentError Error 3"
       state_topic: "ebusd/hmu/Currenterror"
-      value_template: "{{ value_json.error_3.value }}"
+      value_template: >
+        {% if value_json['error_3']['value'] is none %}
+          None
+        {% else %}
+          {{ value_json['error_3']['value'] }}
+        {% endif %}
+      icon: mdi:alert-circle
+
     - name: "ebusd HMU CurrentError Error 4"
       state_topic: "ebusd/hmu/Currenterror"
-      value_template: "{{ value_json.error_4.value }}"
-
-
+      value_template: >
+        {% if value_json['error_4']['value'] is none %}
+          None
+        {% else %}
+          {{ value_json['error_4']['value'] }}
+        {% endif %}
+      icon: mdi:alert-circle
 
     #---------------------------------------
     # New Local MQTT for Glow IHD
+    #---------------------------------------
 
     - name: "Smart Meter Electricity: Power"
       unique_id: "smart_meter_electricity_power"
