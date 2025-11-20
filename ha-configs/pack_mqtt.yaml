@@ -5,6 +5,7 @@ mqtt:
     #-----------------------------------------------
 
     - name: "ebusd HMU BuildingCircuitFlow"
+      unique_id: sensor.ebusd_hmu_buildingcircuitflow
       state_topic: "ebusd/hmu/BuildingCircuitFlow"
       value_template: "{{ ( value_json['value']['value'] | float(0) ) / 60 }}"
       unit_of_measurement: "L/min"
@@ -13,6 +14,7 @@ mqtt:
       icon: mdi:pipe-valve
 
     - name: "ebusd HMU CurrentError Error"
+      unique_id: sensor.ebusd_hmu_currenterror_error
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error']['value'] is none %}
@@ -23,6 +25,7 @@ mqtt:
       icon: mdi:alert-circle
 
     - name: "ebusd HMU CurrentError Error 1"
+      unique_id: sensor.ebusd_hmu_currenterror_error_1
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_1']['value'] is none %}
@@ -33,6 +36,7 @@ mqtt:
       icon: mdi:alert-circle
 
     - name: "ebusd HMU CurrentError Error 2"
+      unique_id: sensor.ebusd_hmu_currenterror_error_2
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_2']['value'] is none %}
@@ -43,6 +47,7 @@ mqtt:
       icon: mdi:alert-circle
 
     - name: "ebusd HMU CurrentError Error 3"
+      unique_id: sensor.ebusd_hmu_currenterror_error_3
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_3']['value'] is none %}
@@ -53,6 +58,7 @@ mqtt:
       icon: mdi:alert-circle
 
     - name: "ebusd HMU CurrentError Error 4"
+      unique_id: sensor.ebusd_hmu_currenterror_error_4
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_4']['value'] is none %}
@@ -61,6 +67,7 @@ mqtt:
           {{ value_json['error_4']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+
 
     #---------------------------------------
     # New Local MQTT for Glow IHD
