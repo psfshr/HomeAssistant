@@ -1,5 +1,23 @@
 mqtt:
   sensor:
+    - name: "ebusd HMU CurrentError Error"
+      state_topic: "ebusd/hmu/Currenterror"
+      value_template: "{{ value_json.error.value }}"
+    - name: "ebusd HMU CurrentError Error 1"
+      state_topic: "ebusd/hmu/Currenterror"
+      value_template: "{{ value_json.error_1.value }}"
+    - name: "ebusd HMU CurrentError Error 2"
+      state_topic: "ebusd/hmu/Currenterror"
+      value_template: "{{ value_json.error_2.value }}"
+    - name: "ebusd HMU CurrentError Error 3"
+      state_topic: "ebusd/hmu/Currenterror"
+      value_template: "{{ value_json.error_3.value }}"
+    - name: "ebusd HMU CurrentError Error 4"
+      state_topic: "ebusd/hmu/Currenterror"
+      value_template: "{{ value_json.error_4.value }}"
+
+
+
     #---------------------------------------
     # New Local MQTT for Glow IHD
 
