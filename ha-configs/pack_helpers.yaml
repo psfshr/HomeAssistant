@@ -1,12 +1,22 @@
 input_boolean:
-  var_is_tadpole_holiday:
-    name: Var - Is Tadpole Holiday
-    icon: mdi:account-school
-  var_working:
-    name: Var - Working
+  flag_is_tadpole_holiday:
+    name: Flag - Is Tadpole Holiday
+    icon: mdi:flag
+  flag_working:
+    name: Flag - Working
+    icon: mdi:flag
+  var_hallway_light_by_motion:
+    name: Var - Hallway Light By Motion
     icon: mdi:flag
 
 template:
+  - binary_sensor:
+      - name: "Flag - Is Weekday"
+        unique_id: flag_is_weekday
+        state: >
+          {{ now().weekday() < 5 }}
+        icon: mdi:flag
+
   - sensor:
       - name: "Var - Count Of Lights On"
         unique_id: var_count_of_lights_on
