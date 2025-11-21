@@ -13,6 +13,34 @@ mqtt:
       device_class: "volume_flow_rate"
       icon: mdi:pipe-valve
 
+    - name: "ebusd HMU COP HC"
+      unique_id: sensor.ebusd_hmu_cophc
+      state_topic: "ebusd/hmu/CopHc"
+      value_template: "{{ value_json['value']['value'] }}"
+      state_class: "measurement"
+      icon: mdi:information
+
+    - name: "ebusd HMU COP HC Month"
+      unique_id: sensor.ebusd_hmu_cophc_month
+      state_topic: "ebusd/hmu/CopHcMonth"
+      value_template: "{{ value_json['value']['value'] }}"
+      state_class: "measurement"
+      icon: mdi:information
+
+    - name: "ebusd HMU COP HWC"
+      unique_id: sensor.ebusd_hmu_cophwc
+      state_topic: "ebusd/hmu/CopHwc"
+      value_template: "{{ value_json['value']['value'] }}"
+      state_class: "measurement"
+      icon: mdi:information
+
+    - name: "ebusd HMU COP HWC Month"
+      unique_id: sensor.ebusd_hmu_cophwc_month
+      state_topic: "ebusd/hmu/CopHwcMonth"
+      value_template: "{{ value_json['value']['value'] }}"
+      state_class: "measurement"
+      icon: mdi:information
+
     - name: "ebusd HMU CurrentError Error"
       unique_id: sensor.ebusd_hmu_currenterror_error
       state_topic: "ebusd/hmu/Currenterror"
@@ -67,6 +95,7 @@ mqtt:
           {{ value_json['error_4']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+
 
 
     #---------------------------------------
