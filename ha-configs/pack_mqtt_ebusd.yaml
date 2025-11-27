@@ -14,6 +14,11 @@ mqtt:
       state_class: "measurement"
       device_class: "volume_flow_rate"
       icon: mdi:pipe-valve
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
+        name: "Heat Pump HMU - Custom"
+        manufacturer: "Vaillant"
+        model: "aroTHERM Plus"
 
     - name: "ebusd HMU COP HC"
       unique_id: sensor.ebusd_hmu_cophc
@@ -21,6 +26,8 @@ mqtt:
       value_template: "{{ value_json['value']['value'] }}"
       state_class: "measurement"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU COP HC Month"
       unique_id: sensor.ebusd_hmu_cophc_month
@@ -28,6 +35,8 @@ mqtt:
       value_template: "{{ value_json['value']['value'] }}"
       state_class: "measurement"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU COP HWC"
       unique_id: sensor.ebusd_hmu_cophwc
@@ -35,6 +44,8 @@ mqtt:
       value_template: "{{ value_json['value']['value'] }}"
       state_class: "measurement"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU COP HWC Month"
       unique_id: sensor.ebusd_hmu_cophwc_month
@@ -42,6 +53,8 @@ mqtt:
       value_template: "{{ value_json['value']['value'] }}"
       state_class: "measurement"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU CurrentError Error"
       unique_id: sensor.ebusd_hmu_currenterror_error
@@ -53,6 +66,8 @@ mqtt:
           {{ value_json['error']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU CurrentError Error 1"
       unique_id: sensor.ebusd_hmu_currenterror_error_1
@@ -64,6 +79,8 @@ mqtt:
           {{ value_json['error_1']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU CurrentError Error 2"
       unique_id: sensor.ebusd_hmu_currenterror_error_2
@@ -75,6 +92,8 @@ mqtt:
           {{ value_json['error_2']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU CurrentError Error 3"
       unique_id: sensor.ebusd_hmu_currenterror_error_3
@@ -86,6 +105,8 @@ mqtt:
           {{ value_json['error_3']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     - name: "ebusd HMU CurrentError Error 4"
       unique_id: sensor.ebusd_hmu_currenterror_error_4
@@ -97,6 +118,8 @@ mqtt:
           {{ value_json['error_4']['value'] }}
         {% endif %}
       icon: mdi:alert-circle
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
 
     # VR71
     - name: "ebusd VR71 MC1 Operation Status"
@@ -104,6 +127,11 @@ mqtt:
       state_topic: "ebusd/vr_71/Mc1Operation"
       value_template: "{{ value_json['status']['value'] }}"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+        name: "Heat Pump VR71 - Custom"
+        manufacturer: "Vaillant"
+        model: "aroTHERM Plus"
 
     - name: "ebusd VR71 MC1 Operation Flow Temp Desired"
       unique_id: sensor.ebusd_vr71_mc1_operation_flow_temp_desired
@@ -113,12 +141,16 @@ mqtt:
       unit_of_measurement: "°C"
       state_class: "measurement"
       device_class: "temperature"
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
 
     - name: "ebusd VR71 MC1 Operation Pump"
       unique_id: sensor.ebusd_vr71_mc1_operation_pump
       state_topic: "ebusd/vr_71/Mc1Operation"
       value_template: "{{ value_json['pump']['value'] }}"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
 
     - name: "ebusd VR71 MC1 Operation Mixer"
       unique_id: sensor.ebusd_vr71_mc1_operation_mixer
@@ -126,12 +158,16 @@ mqtt:
       value_template: "{{ value_json['mixer']['value'] | int(0) }}"
       icon: mdi:information
       state_class: measurement
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
 
     - name: "ebusd VR71 MC2 Operation Status"
       unique_id: sensor.ebusd_vr71_mc2_operation_status
       state_topic: "ebusd/vr_71/Mc2Operation"
       value_template: "{{ value_json['status']['value'] }}"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
 
     - name: "ebusd VR71 MC2 Operation Flow Temp Desired"
       unique_id: sensor.ebusd_vr71_mc2_operation_flow_temp_desired
@@ -141,12 +177,16 @@ mqtt:
       unit_of_measurement: "°C"
       state_class: "measurement"
       device_class: "temperature"
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
 
     - name: "ebusd VR71 MC2 Operation Pump"
       unique_id: sensor.ebusd_vr71_mc2_operation_pump
       state_topic: "ebusd/vr_71/Mc2Operation"
       value_template: "{{ value_json['pump']['value'] }}"
       icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
 
     - name: "ebusd VR71 MC2 Operation Mixer"
       unique_id: sensor.ebusd_vr71_mc2_operation_mixer
@@ -154,3 +194,104 @@ mqtt:
       value_template: "{{ value_json['mixer']['value'] | int (0) }}"
       icon: mdi:information
       state_class: measurement
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+      #----------------
+      # Test Below Here
+      #----------------
+    - name: "ebusd VR71 SetActorState R1"
+      unique_id: sensor.ebusd_vr71_setactorstate_r1
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r1']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R2"
+      unique_id: sensor.ebusd_vr71_setactorstate_r2
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r2']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R3"
+      unique_id: sensor.ebusd_vr71_setactorstate_r3
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r3']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R4"
+      unique_id: sensor.ebusd_vr71_setactorstate_r4
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r4']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R5"
+      unique_id: sensor.ebusd_vr71_setactorstate_r5
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r5']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R6"
+      unique_id: sensor.ebusd_vr71_setactorstate_r6
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r6']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R7"
+      unique_id: sensor.ebusd_vr71_setactorstate_r7
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r7']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R8"
+      unique_id: sensor.ebusd_vr71_setactorstate_r8
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r8']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R9"
+      unique_id: sensor.ebusd_vr71_setactorstate_r9
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r9']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R10"
+      unique_id: sensor.ebusd_vr71_setactorstate_r10
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r10']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R11"
+      unique_id: sensor.ebusd_vr71_setactorstate_r11
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r11']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
+
+    - name: "ebusd VR71 SetActorState R12"
+      unique_id: sensor.ebusd_vr71_setactorstate_r12
+      state_topic: "ebusd/vr_71/SetActorState"
+      value_template: "{{ value_json['r12']['value'] }}"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_vr71_custom"]
