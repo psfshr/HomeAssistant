@@ -136,6 +136,10 @@ fshr:
   input-idle-line-color: var(--primary-text-color)
   input-hover-line-color: var(--accent-color)
 
+  # Other
+  ha-color-fill-neutral-quiet-resting: var(--button-color-fill-loud-hover)
+  ha-color-surface-default: var(--paper-item-icon-color)
+
   #Fonts
   small-font-size: 0.9rem
 
