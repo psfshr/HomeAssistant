@@ -5,8 +5,11 @@ input_boolean:
   flag_working:
     name: Flag - Working
     icon: mdi:flag
-  var_hallway_light_by_motion:
-    name: Var - Hallway Light By Motion
+  flag_run_airer:
+    name: Flag - Run Airer
+    icon: mdi:flag
+  flag_hallway_light_by_motion:
+    name: Flag - Hallway Light By Motion
     icon: mdi:flag
 
 template:
@@ -18,8 +21,18 @@ template:
         icon: mdi:flag
 
   - sensor:
-      - name: "Var - Count Of Lights On"
-        unique_id: var_count_of_lights_on
+      - name: "State - Tadpole School Day"
+        unique_id: state_tadpole_school_day
+        state: >
+          {% if is_state('binary_sensor.calendar_tadpole_farm_school_holiday', 'on') %}Holiday
+          {% elif is_state('binary_sensor.calendar_tadpole_farm_inset_day', 'on') %}Inset Day
+          {% elif is_state('binary_sensor.flag_is_weekday', 'on') %}School Day
+          {% else %}Weekend
+          {% endif %}
+        icon: mdi:account-school
+
+      - name: "State - Count Of Lights On"
+        unique_id: state_count_of_lights_on
         state_class: measurement
         icon: mdi:lightbulb
         state: >
@@ -31,8 +44,8 @@ template:
             {% set entities = label_entities('__MonitoredDevice') %}
             {% set lights = entities | select('match', '^light\.') | list %}
             {{ lights | select('is_state', 'on') | list }}
-      - name: "Var - Count Of Switches On"
-        unique_id: var_count_of_switches_on
+      - name: "State - Count Of Switches On"
+        unique_id: state_count_of_switches_on
         state_class: measurement
         icon: mdi:toggle-switch-variant
         state: >
