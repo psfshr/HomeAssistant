@@ -5,7 +5,7 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
-    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=<12345678901>
+    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524410
 
 automation: !include automations.yaml
 script: !include scripts.yaml
@@ -28,6 +28,6 @@ homeassistant:
     pack_2: !include pack_helpers.yaml
     pack_3: !include pack_unavailable_entities.yaml
     pack_4: !include pack_waveshare_epaper_6625d8.yaml
-#    pack_5: !include pack_ai.yaml
+    pack_5: !include pack_mqtt_ebusd.yaml
 
 wake_on_lan:

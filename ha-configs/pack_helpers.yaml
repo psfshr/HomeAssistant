@@ -1,7 +1,4 @@
 input_boolean:
-  flag_is_tadpole_holiday:
-    name: Flag - Is Tadpole Holiday
-    icon: mdi:flag
   flag_working:
     name: Flag - Working
     icon: mdi:flag
@@ -30,7 +27,6 @@ template:
           {% else %}Weekend
           {% endif %}
         icon: mdi:account-school
-
       - name: "State - Count Of Lights On"
         unique_id: state_count_of_lights_on
         state_class: measurement
