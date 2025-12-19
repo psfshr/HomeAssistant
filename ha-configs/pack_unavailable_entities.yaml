@@ -73,6 +73,7 @@ template:
 
 group:
   ignored_unavailable_entities:
+    name: "Group - Ignored Unavailable Entities"
     entities:
       - sensor.epson_xp_4200_series
       - sensor.epson_xp_4200_series_black_ink
@@ -81,6 +82,7 @@ group:
       - sensor.epson_xp_4200_series_yellow_ink
       - select.ohme_home_pro_charge_mode
   ignored_unknown_entities:
+    name: "Group - Ignored Unknown Entities"
     entities:
       - select.driveway_ptz_preset
       - select.front_door_doorbell_play_quick_reply_message
