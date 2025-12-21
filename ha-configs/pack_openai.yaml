@@ -1,0 +1,91 @@
+rest:
+  - resource: "https://api.openai.com/v1/organization/costs"
+    method: GET
+    headers:
+      Authorization: !secret openai_admin_bearer
+      Content-Type: "application/json"
+    params:
+      # last 31 days (daily buckets)
+      start_time: "{{ (now() - timedelta(days=30)) | as_timestamp | int }}"
+      limit: 31
+      bucket_width: "1d"
+    scan_interval: 3600
+    sensor:
+      - name: "OpenAI Costs Raw"
+        # A “dummy” state; we’ll compute real totals via template sensors below
+        value_template: "{{ value_json.data | length }}"
+        json_attributes:
+          - data
+          - has_more
+          - next_page
+
+  - resource: "https://api.openai.com/v1/organization/usage/completions"
+    method: GET
+    headers:
+      Authorization: !secret openai_admin_bearer
+      Content-Type: "application/json"
+    params:
+      start_time: "{{ (now() - timedelta(days=30)) | as_timestamp | int }}"
+      limit: 31
+      bucket_width: "1d"
+    scan_interval: 3600
+    sensor:
+      - name: "OpenAI Completions Usage Raw"
+        value_template: "{{ value_json.data | length }}"
+        json_attributes:
+          - data
+
+template:
+  - sensor:
+      - name: "OpenAI - Spend Last 30 Days"
+        unique_id: "openai_spend_last_30_days"
+        unit_of_measurement: "USD"
+        state: >-
+          {% set buckets = state_attr('sensor.openai_costs_raw', 'data') or [] %}
+          {% set ns = namespace(total=0) %}
+          {% for b in buckets %}
+            {% for r in b.results %}
+              {% set ns.total = ns.total + (r.amount.value | float(0)) %}
+            {% endfor %}
+          {% endfor %}
+          {{ ns.total | round(2) }}
+
+      - name: "OpenAI - Spend Today"
+        unique_id: "openai_spend_today"
+        unit_of_measurement: "USD"
+        state: >-
+          {% set buckets = state_attr('sensor.openai_costs_raw', 'data') or [] %}
+          {% set today_start = as_timestamp(today_at('00:00')) | int %}
+          {% set ns = namespace(total=0) %}
+          {% for b in buckets %}
+            {% if (b.start_time | int) == today_start %}
+              {% for r in b.results %}
+                {% set ns.total = ns.total + (r.amount.value | float(0)) %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.total | round(2) }}
+
+  - sensor:
+      - name: "OpenAI - Tokens (30d) Input"
+        unique_id: "openai_tokens_30d_input"
+        state: >-
+          {% set buckets = state_attr('sensor.openai_completions_usage_raw','data') or [] %}
+          {% set ns = namespace(total=0) %}
+          {% for b in buckets %}
+            {% for r in b.results %}
+              {% set ns.total = ns.total + (r.input_tokens | int(0)) %}
+            {% endfor %}
+          {% endfor %}
+          {{ ns.total }}
+      - name: "OpenAI - Tokens (30d) Output"
+        unique_id: "openai_tokens_30d_output"
+        state: >-
+          {% set buckets = state_attr('sensor.openai_completions_usage_raw','data') or [] %}
+          {% set ns = namespace(total=0) %}
+          {% for b in buckets %}
+            {% for r in b.results %}
+              {% set ns.total = ns.total + (r.output_tokens | int(0)) %}
+            {% endfor %}
+          {% endfor %}
+          {{ ns.total }}
