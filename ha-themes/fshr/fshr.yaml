@@ -137,8 +137,10 @@ fshr:
   input-hover-line-color: var(--accent-color)
 
   # Other
+  ha-color-fill-primary-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-fill-neutral-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-surface-default: var(--paper-item-icon-color)
+  #clear-background-color:
 
   #Fonts
   small-font-size: 0.9rem
@@ -384,6 +386,7 @@ fshr:
       }
 
   card-mod-more-info-yaml: |
+
     $: |
       .mdc-dialog__surface {
         background-color: rgba(var(--rgb-mdc-theme-surface), .9) !important;
@@ -403,6 +406,17 @@ fshr:
       }
       .content {
         xmargin-top: -8px;
+      }
+    ha-more-info-info:
+      $:
+        ha-more-info-history:
+          $: |
+            state-history-charts, statistics-chart {
+              filter: hue-rotate(calc(var(--hue-primary-color) - 212deg)) saturate(3) brightness(0.66)
+            }
+    ha-more-info-info$more-info-content$more-info-light$ha-state-control-light-brightness$ha-control-slider$: |
+      .tooltip {
+        background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
       }
     ha-more-info-info$state-card-display$: |
       .state {
@@ -456,7 +470,7 @@ fshr:
         border-radius: 0px !important;
       }
       div.top.focused {
-        background-color: background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
+        background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
       }
     ha-more-info-history$state-history-charts:
       $:
@@ -464,10 +478,3 @@ fshr:
           .chartTooltip {
             margin-top: -200px;
           }
-    ha-more-info-info:
-      $:
-        ha-more-info-history:
-          $: |
-            state-history-charts, statistics-chart {
-              filter: hue-rotate(calc(var(--hue-primary-color) - 212deg)) saturate(3) brightness(0.66)
-            }
