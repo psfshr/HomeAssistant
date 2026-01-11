@@ -5,8 +5,8 @@ notify:
     recipient: "logs@fshr.uk"
     server: smtp-auth.mythic-beasts.com
     port: 587
-    username: home@fshr.uk
-    password: f8sWHBUg_tbFeZRU
+    username: !secret mail_relay_user
+    password: !secret mail_relay_password
     encryption: starttls
     sender_name: "HomeAssistant"
     verify_ssl: true
