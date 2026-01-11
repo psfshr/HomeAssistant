@@ -19,7 +19,7 @@ logger:
     moonraker_api.websockets.websocketclient:
       - ".*Websocket connection error: Cannot connect to host*"
 
-# My Additiona
+# My Additions
 homeassistant:
   allowlist_external_dirs:
     - "/media/ReolinkSnapshot/"

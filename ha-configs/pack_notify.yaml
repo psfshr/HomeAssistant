@@ -3,8 +3,10 @@ notify:
     platform: smtp
     sender: "homeassistant@tgv.home"
     recipient: "logs@fshr.uk"
-    server: phineas.tgv.home
+    server: smtp-auth.mythic-beasts.com
     port: 587
+    username: home@fshr.uk
+    password: f8sWHBUg_tbFeZRU
+    encryption: starttls
     sender_name: "HomeAssistant"
-    verify_ssl: false
-    encryption: none
+    verify_ssl: true

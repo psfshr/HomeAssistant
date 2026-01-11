@@ -4,6 +4,32 @@ mqtt:
     # New Local MQTT for additional heatpump entries
     #-----------------------------------------------
 
+    # BASV
+    - name: "ebusd BASV Cylinder Charge Hysteresis"
+      unique_id: sensor.ebusd_basv_cylinder_charge_hysteresis
+      state_topic: "ebusd/basv/CylinderChargeHyst"
+      value_template: "{{ value_json['value']['value'] }}"
+      icon: mdi:thermometer
+      unit_of_measurement: "°C"
+      state_class: "measurement"
+      device_class: "temperature"
+      device:
+        identifiers: ["vaillant_hp_basv_custom"]
+        name: "Heat Pump BASV - Custom"
+        manufacturer: "Vaillant"
+        model: "aroTHERM Plus"
+
+    - name: "ebusd BASV Cylinder Charge Offset"
+      unique_id: sensor.ebusd_basv_cylinder_charge_offset
+      state_topic: "ebusd/basv/CylinderChargeOffset"
+      value_template: "{{ value_json['value']['value'] }}"
+      icon: mdi:thermometer
+      unit_of_measurement: "°C"
+      state_class: "measurement"
+      device_class: "temperature"
+      device:
+        identifiers: ["vaillant_hp_basv_custom"]
+
     # HMU
     - name: "ebusd HMU BuildingCircuitFlow"
       unique_id: sensor.ebusd_hmu_buildingcircuitflow

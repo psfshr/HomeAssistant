@@ -69,6 +69,7 @@ template:
   - sensor:
       - name: "OpenAI - Tokens (30d) Input"
         unique_id: "openai_tokens_30d_input"
+        state_class: measurement
         state: >-
           {% set buckets = state_attr('sensor.openai_completions_usage_raw','data') or [] %}
           {% set ns = namespace(total=0) %}
@@ -80,6 +81,7 @@ template:
           {{ ns.total }}
       - name: "OpenAI - Tokens (30d) Output"
         unique_id: "openai_tokens_30d_output"
+        state_class: measurement
         state: >-
           {% set buckets = state_attr('sensor.openai_completions_usage_raw','data') or [] %}
           {% set ns = namespace(total=0) %}

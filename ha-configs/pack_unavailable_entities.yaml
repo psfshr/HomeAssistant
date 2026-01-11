@@ -91,8 +91,8 @@ group:
       - update.kitchen_door_contact_firmware
       - update.kitchen_sink_leak_firmware
       - update.landing_pir_firmware
+      - update.living_room_door_button_firmware
       - update.living_room_door_button_2_firmware
-      - update.playroom_door_button_firmware
       - update.stairs_bottom_button_firmware
       - update.stairs_top_button_firmware
       - update.study_air_quality_firmware
