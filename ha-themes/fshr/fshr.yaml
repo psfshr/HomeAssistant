@@ -140,6 +140,8 @@ fshr:
   ha-color-fill-primary-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-fill-neutral-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-surface-default: var(--paper-item-icon-color)
+
+  wa-color-text-normal: var(--primary-text-color)
   #clear-background-color:
 
   #Fonts
