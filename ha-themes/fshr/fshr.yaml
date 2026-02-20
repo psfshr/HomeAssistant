@@ -244,6 +244,10 @@ fshr:
         p {
           font-size: 1.5em !important;
         }
+        ha-icon { 
+          --mdc-icon-size: 50px;
+          color: var(--accent-color) !important;
+        }
 
   card-mod-row-yaml: |
     .: |
