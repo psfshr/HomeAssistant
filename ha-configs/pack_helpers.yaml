@@ -10,14 +10,15 @@ input_boolean:
     icon: mdi:flag
 
 template:
-  - binary_sensor:
-      - name: "Flag - Is Weekday"
-        unique_id: flag_is_weekday
-        state: >
-          {{ now().weekday() < 5 }}
-        icon: mdi:flag
-
   - sensor:
+      - name: "State - Type of Day"
+        unique_id: state_type_of_day
+        state: >
+          {% if now().weekday() < 5 %}Weekday
+          {% else %}Weekend
+          {% endif %}
+        icon: mdi:calendar
+
       - name: "State - Tadpole School Day"
         unique_id: state_tadpole_school_day
         state: >
