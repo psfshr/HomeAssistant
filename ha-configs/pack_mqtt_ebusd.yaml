@@ -87,7 +87,7 @@ mqtt:
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error']['value'] is none %}
-          None
+          OK
         {% else %}
           {{ value_json['error']['value'] }}
         {% endif %}
@@ -100,7 +100,7 @@ mqtt:
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_1']['value'] is none %}
-          None
+          OK
         {% else %}
           {{ value_json['error_1']['value'] }}
         {% endif %}
@@ -113,7 +113,7 @@ mqtt:
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_2']['value'] is none %}
-          None
+          OK
         {% else %}
           {{ value_json['error_2']['value'] }}
         {% endif %}
@@ -126,7 +126,7 @@ mqtt:
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_3']['value'] is none %}
-          None
+          OK
         {% else %}
           {{ value_json['error_3']['value'] }}
         {% endif %}
@@ -139,7 +139,7 @@ mqtt:
       state_topic: "ebusd/hmu/Currenterror"
       value_template: >
         {% if value_json['error_4']['value'] is none %}
-          None
+          OK
         {% else %}
           {{ value_json['error_4']['value'] }}
         {% endif %}
