@@ -46,6 +46,15 @@ mqtt:
         manufacturer: "Vaillant"
         model: "aroTHERM Plus"
 
+    - name: "ebusd HMU Run Data High Pressure"
+      unique_id: sensor.ebusd_hmu_rundatahighpressure
+      state_topic: "ebusd/hmu/RunDataHighPressure"
+      value_template: "{{ value_json['value']['value'] }}"
+      state_class: "measurement"
+      icon: mdi:information
+      device:
+        identifiers: ["vaillant_hp_hmu_custom"]
+
     - name: "ebusd HMU COP HC"
       unique_id: sensor.ebusd_hmu_cophc
       state_topic: "ebusd/hmu/CopHc"
