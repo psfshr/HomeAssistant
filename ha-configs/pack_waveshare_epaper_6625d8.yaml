@@ -35,7 +35,7 @@ template:
         minutes: /15
         seconds: 0
     sensor:
-      - name: Weather Now
+      - name: Weather - Now
         unique_id: weather_now
         state: >
           {% set cond_now = states('weather.forecast_home') %}
@@ -59,7 +59,7 @@ template:
             - weather.forecast_home
         response_variable: forecast_hourly
     sensor:
-      - name: Weather Forecast Hourly
+      - name: Weather - Forecast Hourly
         unique_id: weather_forecast_hourly
         state: "none"
         attributes:
@@ -143,7 +143,7 @@ template:
             - weather.forecast_home
         response_variable: forecast_daily
     sensor:
-      - name: Weather Forecast Daily
+      - name: Weather - Forecast Daily
         unique_id: weather_forecast_daily
         state: "none"
         attributes: #0-5
