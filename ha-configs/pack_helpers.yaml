@@ -24,10 +24,12 @@ template:
         state: >
           {% if is_state('binary_sensor.calendar_tadpole_farm_school_holiday', 'on') %}Holiday
           {% elif is_state('binary_sensor.calendar_tadpole_farm_inset_day', 'on') %}Inset Day
-          {% elif is_state('binary_sensor.flag_is_weekday', 'on') %}School Day
-          {% else %}Weekend
+          {% elif is_state('sensor.state_type_of_day', 'Weekday') %}School Day
+          {% elif is_state('sensor.state_type_of_day', 'Weekend') %}Weekend
+          {% else %}Unknown
           {% endif %}
         icon: mdi:account-school
+
       - name: "State - Count Of Lights On"
         unique_id: state_count_of_lights_on
         state_class: measurement
@@ -41,6 +43,7 @@ template:
             {% set entities = label_entities('__MonitoredDevice') %}
             {% set lights = entities | select('match', '^light\.') | list %}
             {{ lights | select('is_state', 'on') | list }}
+
       - name: "State - Count Of Switches On"
         unique_id: state_count_of_switches_on
         state_class: measurement
