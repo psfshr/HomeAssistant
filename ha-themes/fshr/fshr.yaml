@@ -361,6 +361,9 @@ fshr:
       :host(.type-custom-mushroom-chips-card) ha-card {
         background-color: transparent !important;
         --chip-background: rgba(var(--rgb-card-background-color),.50);
+        --chip-font-size: 0.9rem;
+        --chip-font-weight: 500;
+        --chip-icon-size: 25px;
       }
       :host(.type-custom-mushroom-title-card) ha-card {
         background-color: transparent !important;
