@@ -11,25 +11,6 @@ input_boolean:
 
 template:
   - sensor:
-      - name: "State - Type of Day"
-        unique_id: state_type_of_day
-        state: >
-          {% if now().weekday() < 5 %}Weekday
-          {% else %}Weekend
-          {% endif %}
-        icon: mdi:calendar
-
-      - name: "State - Tadpole School Day"
-        unique_id: state_tadpole_school_day
-        state: >
-          {% if is_state('binary_sensor.calendar_tadpole_farm_school_holiday', 'on') %}Holiday
-          {% elif is_state('binary_sensor.calendar_tadpole_farm_inset_day', 'on') %}Inset Day
-          {% elif is_state('sensor.state_type_of_day', 'Weekday') %}School Day
-          {% elif is_state('sensor.state_type_of_day', 'Weekend') %}Weekend
-          {% else %}Unknown
-          {% endif %}
-        icon: mdi:account-school
-
       - name: "State - Count Of Lights On"
         unique_id: state_count_of_lights_on
         state_class: measurement
