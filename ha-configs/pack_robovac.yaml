@@ -1,0 +1,63 @@
+script:
+  vacuum_toggle_area_cleaning_label:
+    alias: Vacuum - Toggle Area Cleaning Label
+    description: ""
+    icon: mdi:robot-vacuum
+    fields:
+      area_id:
+        description: The area to toggle
+        example: kitchen
+    sequence:
+      - if:
+          - condition: template
+            value_template: "{{ area_id in label_areas('DownstairsCleaning') }}"
+        then:
+          - action: homeassistant.remove_label_from_area
+            data:
+              area_id: "{{ area_id }}"
+              label_id: downstairscleaning
+        else:
+          - action: homeassistant.add_label_to_area
+            data:
+              area_id: "{{ area_id }}"
+              label_id: downstairscleaning
+
+  vacuum_clean_area:
+    alias: Vacuum - Clean Area
+    description: ""
+    icon: mdi:robot-vacuum
+    fields:
+      area_id:
+        description: The area to clean
+        example: kitchen
+    sequence:
+      - action: vacuum.clean_area
+        metadata: {}
+        target:
+          entity_id: vacuum.downstairs_robovac
+        data:
+          cleaning_area_id:
+            - "{{ area_id }}"
+
+template:
+  - trigger:
+      # Trigger whenever the Spook service is called to add/remove labels
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: homeassistant
+          service: add_label_to_area
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: homeassistant
+          service: remove_label_from_area
+      # Also update every minute as a fallback
+      - platform: time_pattern
+        minutes: "/1"
+    sensor:
+      - name: "Vacuum - Cleaning Area Registry"
+        unique_id: vacuum_cleaning_area_registry
+        state: "{{ label_areas('DownstairsCleaning') | count }}"
+        attributes:
+          areas: "{{ label_areas('DownstairsCleaning') }}"
