@@ -139,6 +139,7 @@ fshr:
   # Other
   ha-color-fill-primary-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-fill-neutral-quiet-resting: var(--button-color-fill-loud-hover)
+  ha-color-fill-neutral-quiet-hover: var(--button-color-fill-loud-hover)
   ha-color-surface-default: var(--paper-item-icon-color)
   ha-color-form-background: var(--secondary-background-color)
   ha-color-form-background-hover: var(--primary-background-color)

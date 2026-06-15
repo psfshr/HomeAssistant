@@ -5,9 +5,6 @@ input_boolean:
   flag_run_airer:
     name: Flag - Run Airer
     icon: mdi:flag
-  flag_hallway_light_by_motion:
-    name: Flag - Hallway Light By Motion
-    icon: mdi:flag
 
 template:
   - sensor:
