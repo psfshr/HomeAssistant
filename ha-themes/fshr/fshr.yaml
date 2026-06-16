@@ -8,6 +8,8 @@ fshr:
   rgb-primary-background-color: "24,36,48"
   secondary-background-color: rgb(36,48,60)
   rgb-secondary-background-color: "36,48,60"
+  tertiary-background-color: rgb(60,72,84)
+  rgb-tertiary-background-color: "60,72,84"
   accent-color: rgb(0,141,253)
   rgb-accent-color: "0,141,253"
   hue-primary-color: "207deg"
@@ -140,10 +142,11 @@ fshr:
   ha-color-fill-primary-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-fill-neutral-quiet-resting: var(--button-color-fill-loud-hover)
   ha-color-fill-neutral-quiet-hover: var(--button-color-fill-loud-hover)
-  ha-color-surface-default: var(--paper-item-icon-color)
+  ha-color-surface-default: var(--tertiary-background-color)
+  ha-color-surface-low: var(--tertiary-background-color)
   ha-color-form-background: var(--secondary-background-color)
   ha-color-form-background-hover: var(--primary-background-color)
-  ha-color-form-background-disabled: var(--paper-item-icon-color)
+  ha-color-form-background-disabled: var(--tertiary-background-color)
 
   wa-color-text-normal: var(--primary-text-color)
   #clear-background-color:
