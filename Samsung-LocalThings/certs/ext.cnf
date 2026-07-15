@@ -1,0 +1,11 @@
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, serverAuth, 1.3.6.1.4.1.51414.0.1.2
+subjectAltName = @alt_names
+1.3.6.1.4.1.51414.1.3 = ASN1:UTF8String:samsung.role.hub
+
+[alt_names]
+URI.1 = urn:uuid:ab0b0ac4-aae9-4958-a04d-8ec36fe1b2f9
+URI.2 = uri:uuid:ab0b0ac4-aae9-4958-a04d-8ec36fe1b2f9
+URI.3 = uuid:ab0b0ac4-aae9-4958-a04d-8ec36fe1b2f9
+DNS.1 = ab0b0ac4-aae9-4958-a04d-8ec36fe1b2f9
