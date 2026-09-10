@@ -182,9 +182,9 @@ fshr:
   subtitle-font-weight: 600
   subtitle-line-height: normal
 
-  card-mod-theme: "fshr"
+  uix-theme: "fshr"
 
-  card-mod-root-yaml: |
+  uix-root-yaml: |
     .: |
       app-header, app-toolbar, div.header {
         background-color: var(--app-header-background-color);
@@ -203,7 +203,7 @@ fshr:
       .iron-selected paper-tab {
       }
 
-  card-mod-sidebar: |
+  uix-sidebar: |
     .menu .title {
       font-weight: 600
     }
@@ -221,20 +221,19 @@ fshr:
       font-weight: normal !important;
     }
 
-  card-mod-view: |
-    .main-title, .title, .toolbar {
-      font-size: var(--h3-font-size);
-      font-weight: var(--h3-font-weight);
-    }
-    #tabbar {
-      font-size: 10pt;
-      font-weight: 600;
-    }
-    #tabbar:not(.bottom-bar) {
-      justify-content: left;
-    }
-
-  card-mod-view-yaml: |
+  uix-view-yaml: |
+    .: |
+      .main-title, .title, .toolbar {
+        font-size: var(--h3-font-size);
+        font-weight: var(--h3-font-weight);
+      }
+      #tabbar {
+        font-size: 10pt;
+        font-weight: 600;
+      }
+      #tabbar:not(.bottom-bar) {
+        justify-content: left;
+      }
     hui-sections-view$hui-view-header$: |
       div.container {
         border-bottom: 1px solid var(--accent-color) !important;
@@ -256,7 +255,7 @@ fshr:
           color: var(--accent-color) !important;
         }
 
-  card-mod-row-yaml: |
+  uix-row-yaml: |
     .: |
       hui-generic-entity-row {
         padding-top: 4px;
@@ -287,7 +286,7 @@ fshr:
         font-weight: 400;
       }
 
-  card-mod-card-yaml: |
+  uix-card-yaml: |
     .: |
       ha-card {
         --mdc-icon-size: 20px;
@@ -382,7 +381,7 @@ fshr:
         --subtitle-color: var(--secondary-text-color);
       }
 
-  card-mod-glance-yaml: |
+  uix-glance-yaml: |
     .: |
       state-badge {
         --mdc-icon-size: 32px;
@@ -401,7 +400,7 @@ fshr:
         white-space: unset !important;
       }
 
-  card-mod-more-info-yaml: |
+  uix-more-info-yaml: |
 
     $: |
       .mdc-dialog__surface {
