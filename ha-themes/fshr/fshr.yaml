@@ -38,7 +38,7 @@ fshr:
   app-header-border-bottom: 1px solid var(--divider-color)
 
   # Sidebar Menu
-  sidebar-icon-color: rgb(169, 177, 188)
+  sidebar-icon-color: rgb(198, 203, 210)
   sidebar-text-color: rgb(198, 203, 210)
   sidebar-background-color: var(--card-background-color)
   sidebar-selected-icon-color: rgb(138, 180, 248)
@@ -54,7 +54,7 @@ fshr:
 
   # Sections
   section-background-color: rgb(12,24,36)
-  section-card-background-color: "12,24,36"
+  rgb-section-background-color: "12,24,36"
 
   # Dropdowns / Dialogs
   material-background-color: var(--table-row-background-color)
@@ -199,11 +199,11 @@ fshr:
         font-weight: var(--h3-font-weight);
         margin-left: 8px !important;
       }
-    app-header$: |
+    app-header $ : |
       :host::before {
         box-shadow: inset 0px 4px 6px -4px rgb(0 0 0 / 10%) !important;
       }
-    ha-app-layout$app-header$app-toolbar$ha-tabs$: |
+    ha-app-layout $ app-header $ app-toolbar $ ha-tabs $: |
       .iron-selected paper-tab {
       }
 
@@ -239,14 +239,14 @@ fshr:
       #tabbar:not(.bottom-bar) {
         justify-content: left;
       }
-    hui-sections-view$hui-view-header$: |
+    hui-sections-view $ hui-view-header $: |
       div.container {
         border-bottom: 1px solid var(--accent-color) !important;
         border-radius: 0 !important;
         padding-bottom: 4px;
       }
-    hui-sections-view$hui-view-header$hui-markdown-card$:
-      ha-markdown$: |
+    hui-sections-view $ hui-view-header $ hui-markdown-card $:
+      ha-markdown $: |
         h1 {
           font-size: var(--title-font-size) !important;
           font-weight: var(--title-font-weight) !important;
@@ -440,11 +440,11 @@ fshr:
             state-history-charts, statistics-chart {
               filter: hue-rotate(calc(var(--hue-primary-color) - 212deg)) saturate(3) brightness(0.66)
             }
-    ha-more-info-info$more-info-content$more-info-light$ha-state-control-light-brightness$ha-control-slider$: |
+    ha-more-info-info $ more-info-content $ more-info-light $ ha-state-control-light-brightness $ ha-control-slider $: |
       .tooltip {
         background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
       }
-    ha-more-info-info$state-card-display$: |
+    ha-more-info-info $ state-card-display $: |
       .state {
         margin-left: 46px !important;
         font-size: var(--h1-font-size);
@@ -458,7 +458,7 @@ fshr:
       state-info {
         margin-left: -8px; margin-top: -42px;
       }
-    ha-more-info-info$state-card-display$state-info$: |
+    ha-more-info-info $ state-card-display $ state-info $: |
       .name {
         display: none;
       }
@@ -475,7 +475,7 @@ fshr:
       state-badge[icon] {
         margin: 0 0 0 8px !important;
       }
-    ha-more-info-info$more-info-content$more-info-default$ha-attributes$: |
+    ha-more-info-info $ more-info-content $ more-info-default $ ha-attributes $: |
       .data-entry {
         flex-direction: column !important;
       }
@@ -491,14 +491,14 @@ fshr:
       .data-entry:last-child .value {
         margin-bottom: 0;
       }
-    ha-more-info-info$more-info-content$more-info-default$ha-attributes$ha-expansion-panel$: |
+    ha-more-info-info $ more-info-content $ more-info-default $ ha-attributes $ ha-expansion-panel $: |
       div.top {
         border-radius: 0px !important;
       }
       div.top.focused {
         background-color: rgba(var(--rgb-mdc-theme-surface), 1) !important;
       }
-    ha-more-info-history$state-history-charts:
+    ha-more-info-history $ state-history-charts:
       $:
         state-history-chart-timeline$: |
           .chartTooltip {
