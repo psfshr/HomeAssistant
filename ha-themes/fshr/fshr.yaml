@@ -52,6 +52,10 @@ fshr:
   paper-listbox-background-color: var(--card-background-color)
   paper-card-background-color: var(--card-background-color)
 
+  # Sections
+  section-background-color: rgb(12,24,36)
+  section-card-background-color: "12,24,36"
+
   # Dropdowns / Dialogs
   material-background-color: var(--table-row-background-color)
   material-secondary-background-color: var(--table-row-alternative-background-color)
@@ -203,23 +207,24 @@ fshr:
       .iron-selected paper-tab {
       }
 
-  uix-sidebar: |
-    .menu .title {
-      font-weight: 600
-    }
-    :host([expanded]) paper-icon-item {
-      width: 100%;
-    }
-    .iron-selected paper-icon-item {
-      border-right: 3px solid var(--accent-color) !important;
-      padding-right: 9px !important;
-    }
-    .profile.iron-selected paper-icon-item {
-      padding-left: 1px !important;
-    }
-    paper-icon-item span {
-      font-weight: normal !important;
-    }
+  uix-sidebar-yaml: |
+    .: |
+      .menu .title {
+        font-weight: 600
+      }
+      :host([expanded]) paper-icon-item {
+        width: 100%;
+      }
+      .iron-selected paper-icon-item {
+        border-right: 3px solid var(--accent-color) !important;
+        padding-right: 9px !important;
+      }
+      .profile.iron-selected paper-icon-item {
+        padding-left: 1px !important;
+      }
+      paper-icon-item span {
+        font-weight: normal !important;
+      }
 
   uix-view-yaml: |
     .: |
@@ -284,6 +289,13 @@ fshr:
       .state, .entity div {
         font-size: var(--h5-font-size);
         font-weight: 400;
+      }
+
+  uix-grid-section-yaml: |
+    .: |
+      :host {
+        --uix-section-background-color: var(--section-background-color);
+        --uix-section-background-opacity: 0.5;
       }
 
   uix-card-yaml: |
@@ -401,7 +413,6 @@ fshr:
       }
 
   uix-more-info-yaml: |
-
     $: |
       .mdc-dialog__surface {
         background-color: rgba(var(--rgb-mdc-theme-surface), .9) !important;
